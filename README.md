@@ -16,7 +16,8 @@ To set up your project:
 
 Add any instructions here for the markers on how to setup and run your Dash app.
 
-Add the URL to your GitHub repo here e.g. https://github.com/ucl-comp0035name_of_your_repo
+Add the URL to your GitHub repo here: https://github.com/ucl-comp0035/comp0034-cw1-g-team_7
+
 
 # Visualisation design
 
