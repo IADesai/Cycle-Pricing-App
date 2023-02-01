@@ -1,6 +1,11 @@
 # Import the required packages
-from dash import Dash, html
+from pathlib import Path
+import pandas as pd
+from dash import Dash, html, dcc
+import plotly.express as px
 import dash_bootstrap_components as dbc
+
+DATA_FILEPATH = Path(__file__).parent.joinpath("data_set_prepared.xlsx")
 
 # Creates the Dash app
 #app = Dash(__name__)
@@ -21,6 +26,7 @@ app = Dash(
         ]
 )
  """
+
 app.layout = dbc.Container(
     children=[
         html.H1(children='Hello, World!', className="display-1"),
