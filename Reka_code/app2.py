@@ -68,12 +68,20 @@ content = html.Div(id="page-content", style=CONTENT_STYLE)
 app.layout = html.Div([dcc.Location(id="url"), sidebar, content])
 
 
+
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
 def render_page_content(pathname):
     if pathname == "/":
         return html.P("This is the content of the home page!")
     elif pathname == "/page-1":
-        return html.P("This is the content of page 1. Yay!")
+        return html.Div(
+        [
+            html.H1("404: Not found", className="text-danger"),
+            html.Hr(),
+            html.P(f"The pathname {pathname} was not recognised..."),
+        ],
+        className="p-3 bg-light rounded-3",
+    )
     elif pathname == "/page-2":
         return html.P("Oh cool, this is page 2!")
     # If the user tries to reach a different page, return a 404 message
@@ -86,14 +94,33 @@ def render_page_content(pathname):
         className="p-3 bg-light rounded-3",
     )
 
-@app.callback(Output("page-content", "children"), [Input("url", "pathname")])
-def render_page_content(pathname):
-    if pathname == "/":
-        return html.P("This is the content of the home page!")
-    elif pathname == "/page-1": 
-        return dcc.Graph(id='bar-chart',
-              figure={'data': [{'x': df.iloc[:,1], 'y': df.iloc[:,2], 'type': 'bar'}],
-                      'layout': {'title': 'Montly Cycle Usage Bar Chart from Excel Data'}})
+# @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
+# def render_page_content(pathname):
+#     if pathname == "/":
+#         return html.P("This is the content of the home page!")
+#     elif pathname == "/page-1":
+#         return html.P("This is the content of page 1. Yay!")
+#     elif pathname == "/page-2":
+#         return html.P("Oh cool, this is page 2!")
+#     # If the user tries to reach a different page, return a 404 message
+#     return html.Div(
+#         [
+#             html.H1("404: Not found", className="text-danger"),
+#             html.Hr(),
+#             html.P(f"The pathname {pathname} was not recognised..."),
+#         ],
+#         className="p-3 bg-light rounded-3",
+#     )
+
+
+# @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
+# def render_page_content(pathname):
+#     if pathname == "/":
+#         return html.P("This is the content of the home page!")
+#     elif pathname == "/page-1": 
+#         return dcc.Graph(id='bar-chart',
+#               figure={'data': [{'x': df.iloc[:,1], 'y': df.iloc[:,2], 'type': 'bar'}],
+#                       'layout': {'title': 'Montly Cycle Usage Bar Chart from Excel Data'}})
 
    
 
