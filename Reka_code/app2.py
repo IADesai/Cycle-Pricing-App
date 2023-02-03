@@ -79,6 +79,9 @@ def render_page_content(pathname):
             html.H1("404: Not found", className="text-danger"),
             html.Hr(),
             html.P(f"The pathname {pathname} was not recognised..."),
+            dcc.Graph(id='bar-chart',
+              figure={'data': [{'x': df.iloc[:,1], 'y': df.iloc[:,2], 'type': 'bar'}],
+                      'layout': {'title': 'Montly Cycle Usage Bar Chart from Excel Data'}})
         ],
         className="p-3 bg-light rounded-3",
     )
