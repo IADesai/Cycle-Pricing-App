@@ -12,7 +12,7 @@ app.layout = html.Div([
     html.H1("Dash App"),
     dcc.Graph(id='bar-chart',
               figure={'data': [{'x': df.iloc[:,1], 'y': df.iloc[:,2], 'type': 'bar'}],
-                      'layout': {'title': 'Bar Chart from Excel Data'}})
+                      'layout': {'title': 'Montly Cycle Usage Bar Chart from Excel Data'}})
 ])
 
 if __name__ == "__main__":
