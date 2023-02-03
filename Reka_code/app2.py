@@ -13,6 +13,14 @@ documentation: https://dash.plot.ly/urls
 import dash
 import dash_bootstrap_components as dbc
 from dash import Input, Output, dcc, html
+from dash import dcc
+import pandas as pd
+
+df = pd.read_excel("data_set_prepared.xlsx", sheet_name=1)
+
+
+
+
 
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 
@@ -77,6 +85,24 @@ def render_page_content(pathname):
         ],
         className="p-3 bg-light rounded-3",
     )
+
+@app.callback(Output("page-content", "children"), [Input("url", "pathname")])
+def render_page_content(pathname):
+    if pathname == "/":
+        return html.P("This is the content of the home page!")
+    elif pathname == "/page-1": 
+        return dcc.Graph(id='bar-chart',
+              figure={'data': [{'x': df.iloc[:,1], 'y': df.iloc[:,2], 'type': 'bar'}],
+                      'layout': {'title': 'Montly Cycle Usage Bar Chart from Excel Data'}})
+
+   
+
+# app.layout = html.Div([
+#     html.H1("Dash App"),
+#     dcc.Graph(id='bar-chart',
+#               figure={'data': [{'x': df.iloc[:,1], 'y': df.iloc[:,2], 'type': 'bar'}],
+#                       'layout': {'title': 'Montly Cycle Usage Bar Chart from Excel Data'}})
+# , sidebar, content])
 
 
 if __name__ == "__main__":
