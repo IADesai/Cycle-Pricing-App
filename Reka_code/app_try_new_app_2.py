@@ -87,26 +87,21 @@ app.layout = dbc.Container(
             n_clicks=0,
         ),
         dbc.Collapse(
-            dbc.Card(dbc.CardBody("This content is hidden in the collapse")),
-            id="collapse",
-            is_open=False,
-        ),
-        dbc.Nav(
+            dbc.Card(dbc.CardBody(
+                dbc.Nav(
             [
                 dbc.NavLink("Home", href="/", active="exact"),
-                dbc.DropdownMenu(
-                    label="Charts",
-                    menu_variant = "dark",
-                    children =
-                    [dbc.DropdownMenuItem("Chart 1", href="/page-1", active="exact"), 
-                    dbc.DropdownMenuItem("Chart 2", href="/page-2", active="exact")],
-                    
-                    nav=True,
-                ),
+                dbc.NavLink("Chart 1", href="/page-1", active="exact"),
+                dbc.NavLink("Chart 2", href="/page-2", active="exact"),
             ],
             vertical=True,
             pills=True,
         ),
+            )),
+            id="collapse",
+            is_open=False,
+        ),
+        
     ],
     style=SIDEBAR_STYLE,
 ), 
