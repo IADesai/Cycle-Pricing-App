@@ -26,6 +26,7 @@ from dash import Input, Output, dcc, html
 from dash import dcc
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 
 df = pd.read_excel("data_set_prepared.xlsx", sheet_name=1)
 dp = pd.read_excel("data_set_prepared.xlsx", sheet_name=0)
@@ -46,13 +47,13 @@ def create_daily_chart(day_selected):
     grouped = grouped_sum/grouped_mean
 
     # Create the bar chart
-    fig = px.bar(x=grouped.index, y=grouped.iloc[:,0])
+    fig1 = px.bar(x=grouped.index, y=grouped.iloc[:,0])
 
-    fig.update_layout(
+    fig1.update_layout(
         xaxis_title="Hour",
         yaxis_title="Average Usage"
     )
-    return fig
+    return fig1
 
 #function for average monthly usage chart
 def create_monthly_barchart():
@@ -72,13 +73,32 @@ def create_monthly_barchart():
     grouped = df.groupby('month').mean()
 
     # Create the bar chart
-    fig = px.bar(x=grouped.index, y=grouped.iloc[:, 1])
+    fig2 = px.bar(x=grouped.index, y=grouped.iloc[:, 1])
 
-    fig.update_layout(
+    fig2.update_layout(
         xaxis_title="Month",
+        yaxis_title="Average Usage",
+        xaxis = dict(
+        tickmode = 'array',
+        tickvals = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+        ticktext = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    ))
+    return fig2
+
+#function for a monehtly line chart
+def create_monthly_linechart():
+
+    df = pd.read_excel("data_set_prepared.xlsx", sheet_name=1)
+
+    fig3 = px.line(df, x="Month", y="Number of Bicycle Hires.1")
+    fig3.update_layout(
+        xaxis_title="Time(year)",
         yaxis_title="Average Usage"
     )
-    return fig
+
+    return fig3
+
+
 
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 
@@ -107,8 +127,14 @@ tab2_content = html.Div(
         ],
         className="p-3 bg-light rounded-3",
     )
-
 tab3_content = html.Div(
+        [ 
+        dcc.Graph(figure=create_monthly_linechart())
+        ],
+        className="p-3 bg-light rounded-3",
+    )
+
+tab4_content = html.Div(
         [
             html.Hr(),
             html.P(f"Bar chart"),
@@ -161,8 +187,9 @@ def render_page_content(pathname):
     elif pathname == "/page-1":
         return dbc.Tabs(
             [
-                dbc.Tab(tab1_content, label="Chart 1"),
-                dbc.Tab(tab2_content, label="Chart 2"),
+                dbc.Tab(tab1_content, label="Daily Usage Bar Chart"),
+                dbc.Tab(tab2_content, label="Average Monthly Usage Bar Chart"),
+                dbc.Tab(tab3_content, label="Usage Vs Time Line Chart")
             ],
             id="tabs",
             active_tab="scatter",
@@ -170,7 +197,7 @@ def render_page_content(pathname):
     elif pathname == "/page-2":
         return dbc.Tabs(
             [
-                dbc.Tab(tab3_content, label="Chart 1"),
+                dbc.Tab(tab4_content, label="Chart 1"),
                 dbc.Tab(tab1_content, label="Chart 2"),
             ],
             id="tabs",
