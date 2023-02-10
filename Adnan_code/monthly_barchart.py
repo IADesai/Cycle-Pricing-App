@@ -13,6 +13,9 @@ df['Month'] = pd.to_datetime(df['Month'], format='%Y-%m-%d %H:%M:%S')
 # Extract the month from the datetime object
 df['month'] = df['Month'].dt.month
 
+# Slice the data frame to exclude the first 14 rows
+df = df.iloc[18:, :]
+
 # Group the data by month and average the usage
 grouped = df.groupby('month').mean()
 
