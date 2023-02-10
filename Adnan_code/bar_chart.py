@@ -5,6 +5,7 @@ import pandas as pd
 
 # Read the second sheet of the excel file
 df = pd.read_excel("data_set_prepared.xlsx", sheet_name=1)
+#look for read csv parse_dates
 
 app = dash.Dash()
 
@@ -17,3 +18,6 @@ app.layout = html.Div([
 
 if __name__ == "__main__":
     app.run_server()
+
+
+
