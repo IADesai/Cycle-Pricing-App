@@ -15,8 +15,11 @@ df['TimeString'] = pd.to_datetime(df['TimeString'], format='%H:%M:%S:%f')
 df['hour'] = df['TimeString'].dt.hour
 
 # Group the data by hour and sum the usage
-grouped = df.groupby('hour').sum()
+grouped_sum = df.groupby('hour').sum()
+grouped_mean = df.groupby('hour').mean()#
+grouped = grouped_sum/grouped_mean
 
+print(grouped)
 # Create the bar chart
 fig = px.bar(x=grouped.index, y=grouped.iloc[:,0])
 
