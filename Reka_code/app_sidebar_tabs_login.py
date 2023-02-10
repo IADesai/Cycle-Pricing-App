@@ -60,14 +60,15 @@ tab2_content = html.Div(
 
 email_input = html.Div(
     [
-        dbc.Label("Email", html_for="example-email"),
-        dbc.Input(type="email", id="example-email", placeholder="Enter email"),
-        dbc.FormText(
-            "Are you on email? You simply have to be these days",
-            color="secondary",
+        dbc.Label("Email"),
+        dbc.Input(id="email-input", type="email", value=""),
+        dbc.FormText("We only accept gmail..."),
+        dbc.FormFeedback("That looks like a gmail address :-)", type="valid"),
+        dbc.FormFeedback(
+            "Sorry, we only accept gmail for some reason...",
+            type="invalid",
         ),
-    ],
-    className="mb-3",
+    ]
 )
 
 password_input = html.Div(
@@ -158,7 +159,15 @@ def render_page_content(pathname):
         ],
         className="p-3 bg-light rounded-3",
     )
-
+@app.callback(
+    [Output("email-input", "valid"), Output("email-input", "invalid")],
+    [Input("email-input", "value")],
+)
+def check_validity(text):
+    if text:
+        is_gmail = text.endswith("@gmail.com")
+        return is_gmail, not is_gmail
+    return False, False
 # @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
 # def render_page_content(pathname):
 #     if pathname == "/":
