@@ -12,12 +12,13 @@ df = pd.read_excel("data_set_prepared.xlsx", sheet_name=0)
 with open('london_boroughs_proper.geojson') as f:
     geo = json.load(f)
 
-fig = px.choropleth(df, geojson=geo, color='Total PM 2.5',
-                        color_continuous_scale='Viridis',
-                        featureidkey='Borough',
-                        locations='Borough',
-                        center={"lat": 51.5074, "lon": -0.1278})
-
+fig = px.choropleth_mapbox(df, geojson=geo, color='Total PM 2.5',
+                           color_continuous_scale='Viridis',
+                           mapbox_style='carto-positron',
+                           featureidkey='Borough',
+                           locations='Borough',
+                           center={"lat": 51.5074, "lon": -0.1278},
+                           zoom=10)
 # Create Dash app
 app = dash.Dash()
 app.layout = html.Div(children=[
