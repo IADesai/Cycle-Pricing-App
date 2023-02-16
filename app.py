@@ -31,7 +31,7 @@ import plotly.graph_objects as go
 df = pd.read_excel("data_set_prepared.xlsx", sheet_name=1)
 dp = pd.read_excel("data_set_prepared.xlsx", sheet_name=0)
 
-
+# Function for the daily charts
 def create_daily_chart(day_selected):
     # Read the sheet from the excel file
     df = pd.read_excel("data_set_prepared.xlsx", sheet_name=sheet_names[day_selected])
@@ -64,9 +64,40 @@ sheet_names = [name.rstrip('.xlsx') for name in sheet_names]
 # Order the sheet names by date
 sheet_names = sorted(sheet_names, key=lambda x: pd.to_datetime(x, format="%A, %b %d %Y"))
 
-sheet_title=sheet_names
 # Add the '.xlsx' backl into the file
 sheet_names = [name + '.xlsx' for name in sheet_names]
+
+# # Function for the stats panel
+# def create_daily_stats(day_selected):
+#     df = pd.read_excel("data_set_prepared.xlsx", sheet_name=sheet_names[day_selected])
+#     # Convert the 'TimeString' column to a datetime type
+#     df['TimeString'] = pd.to_datetime(df['TimeString'], format='%H:%M:%S:%f')
+    
+#     # calculate the average usage per hour
+#     df['hour'] = df['TimeString'].dt.hour
+#     grouped_mean = df.groupby('hour').mean(numeric_only=True)
+#     avg_usage_per_hour = round(grouped_mean.iloc[:, 0].mean(), 2)
+
+#     # calculate the total usage for the day
+#     total_usage = round(df.iloc[:, 1].sum(), 2)
+
+#     # create the stats panel
+#     stats_panel = dbc.Card(
+#         [
+#             dbc.CardHeader("Daily Usage Stats"),
+#             dbc.CardBody(
+#                 [
+#                     html.P(f"Average Usage per Hour: {avg_usage_per_hour}"),
+#                     html.P(f"Total Usage: {total_usage}"),
+#                 ]
+#             ),
+#         ],
+#         color="light",
+#         inverse=True,
+#     )
+
+#     return stats_panel
+
 
 #function for average monthly usage chart
 def create_monthly_barchart():
@@ -131,11 +162,26 @@ tab1_content = html.Div(style={'display': 'flex'}, children=[
         dcc.Graph(id='daily-usage-graph', figure=create_daily_chart(day_selected=0))
     ]),
     html.Div(style={'flex': 0.5, 'padding': 20}, children=[
-        dcc.Dropdown(id='day-dropdown', options=[{'label': sheet_name, 'value': i} for i, sheet_name in enumerate(sheet_names)], value=0)
+        dcc.Dropdown(id='day-select', options=[{'label': sheet_name, 'value': i} for i, sheet_name in enumerate(sheet_names)], value=0),
+    
     ])
     ],
+    
         className="p-3 bg-light rounded-3",
     )
+
+# tab1_content = html.Div(style={'display': 'flex'}, children=[
+#     html.Div(style={'flex': 1}, children=[
+#         dcc.Graph(id='daily-usage-graph', figure=create_daily_chart(day_selected=0))
+#     ]),
+#     html.Div(style={'flex': 0.5, 'padding': 20}, children=[
+#         dcc.Dropdown(id='day-select', options=[{'label': sheet_name, 'value': x}
+#                                                for x, sheet_name in enumerate(sheet_names)], value=0),
+#         html.Br(),
+#         html.Div(id="stats-card"),
+#     ])
+# ], className="p-3 bg-light rounded-3", 
+# )
 tab2_content = html.Div(
         [ 
         dcc.Graph(figure=create_monthly_barchart())
@@ -271,7 +317,12 @@ def render_page_content(pathname):
 def update_graph(day_selected):
     return create_daily_chart(day_selected)
 
-
+# @app.callback(
+#     Output("stats-card", "children"),
+#     Input("day-select", "value"),
+# )
+# def update_daily_stats(day_selected):
+#     return create_daily_stats(day_selected=day_selected)
 # import dash
 # import dash_bootstrap_components as dbc
 # from dash import Input, Output, dcc, html
@@ -405,6 +456,7 @@ def update_graph(day_selected):
 #               figure={'data': [{'x': df.iloc[:,1], 'y': df.iloc[:,2], 'type': 'bar'}],
 #                       'layout': {'title': 'Montly Cycle Usage Bar Chart from Excel Data'}})
 # , sidebar, content])
+# create the stats panel for daily usage
 
 
 if __name__ == "__main__":
