@@ -42,8 +42,8 @@ def create_daily_chart(day_selected):
     df['hour'] = df['TimeString'].dt.hour
 
     # Group the data by hour and sum the usage
-    grouped_sum = df.groupby('hour').sum()
-    grouped_mean = df.groupby('hour').mean()
+    grouped_sum = df.groupby('hour').sum(numeric_only=True)
+    grouped_mean = df.groupby('hour').mean(numeric_only=True)
     grouped = grouped_sum/grouped_mean
     # Create the bar chart
     fig = px.bar(x=grouped.index, y=grouped.iloc[:,0])
