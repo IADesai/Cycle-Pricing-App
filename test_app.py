@@ -10,7 +10,7 @@ def test_rec001_h1_text_equals(dash_duo):
     WHEN the home page is available
     THEN the H1 heading element should include the text 'Waste and recycling' (not case sensitive)
     """
-    app = import_app(app_file="recycle_app.recycle_dash_app")
+    app = import_app(app_file="app")
     dash_duo.start_server(app)
     dash_duo.wait_for_element("h2", timeout=4)
     h1_text = dash_duo.find_element("h2").text
