@@ -14,10 +14,10 @@ with open('london_boroughs.json') as f:
     geo = json.load(f)
     
 # Create a DataFrame with the borough names and usage values
-data = pd.DataFrame({'Borough': grouped.index, 'Cycle Hire Price': grouped.iloc[:, 3]})
+data = pd.DataFrame({'Borough': grouped.index, 'Total PM 2.5': grouped.iloc[:, 3]})
 
 # Create map figure
-fig = px.choropleth_mapbox(data, geojson=geo, color='Cycle Hire Price',
+fig = px.choropleth_mapbox(data, geojson=geo, color='Total PM 2.5',
                            color_continuous_scale='RdYlGn_r',
                            opacity=0.8,
                            mapbox_style='carto-positron',
@@ -25,7 +25,6 @@ fig = px.choropleth_mapbox(data, geojson=geo, color='Cycle Hire Price',
                            locations='Borough',
                            center={"lat": 51.5, "lon": -0.1},
                            zoom=9)
-
 # Create Dash app layout
 app = dash.Dash()
 app.layout = dash.html.Div([
