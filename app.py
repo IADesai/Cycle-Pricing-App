@@ -31,10 +31,10 @@ import plotly.graph_objects as go
 df = pd.read_excel("data_set_prepared.xlsx", sheet_name=1)
 dp = pd.read_excel("data_set_prepared.xlsx", sheet_name=0)
 
-day_selected = 3
+
 def create_daily_chart(day_selected):
-    # Read the second sheet of the excel file
-    df = pd.read_excel("data_set_prepared.xlsx", sheet_name=day_selected)
+    # Read the sheet from the excel file
+    df = pd.read_excel("data_set_prepared.xlsx", sheet_name=sheet_names[day_selected])
     # Convert the 'TimeString' column to a datetime type
     df['TimeString'] = pd.to_datetime(df['TimeString'], format='%H:%M:%S:%f')
 
@@ -43,17 +43,30 @@ def create_daily_chart(day_selected):
 
     # Group the data by hour and sum the usage
     grouped_sum = df.groupby('hour').sum()
-    grouped_mean = df.groupby('hour').mean()#
+    grouped_mean = df.groupby('hour').mean()
     grouped = grouped_sum/grouped_mean
-
     # Create the bar chart
-    fig1 = px.bar(x=grouped.index, y=grouped.iloc[:,0])
+    fig = px.bar(x=grouped.index, y=grouped.iloc[:,0])
 
-    fig1.update_layout(
+    fig.update_layout(
         xaxis_title="Hour",
-        yaxis_title="Average Usage"
+        yaxis_title="Cycle hires",
+        title=f"Cycle Usage for {sheet_names[day_selected]}"
     )
-    return fig1
+    return fig
+
+# Get the sheet names from the excel file
+sheet_names = list(pd.read_excel("data_set_prepared.xlsx", sheet_name=None).keys())
+# Remove the first two sheets from the list
+sheet_names = sheet_names[2:]
+# Remove the .xlsx to allow the sheet names to be sorted 
+sheet_names = [name.rstrip('.xlsx') for name in sheet_names]
+# Order the sheet names by date
+sheet_names = sorted(sheet_names, key=lambda x: pd.to_datetime(x, format="%A, %b %d %Y"))
+
+sheet_title=sheet_names
+# Add the '.xlsx' backl into the file
+sheet_names = [name + '.xlsx' for name in sheet_names]
 
 #function for average monthly usage chart
 def create_monthly_barchart():
@@ -113,11 +126,14 @@ SIDEBAR_STYLE = {
     "background-color": "#f8f9fa",
 }
 
-tab1_content = html.Div(
-        [ 
-        dcc.Graph(figure=create_daily_chart(day_selected))
-            
-        ],
+tab1_content = html.Div(style={'display': 'flex'}, children=[
+    html.Div(style={'flex': 1}, children=[
+        dcc.Graph(id='daily-usage-graph', figure=create_daily_chart(day_selected=0))
+    ]),
+    html.Div(style={'flex': 0.5, 'padding': 20}, children=[
+        dcc.Dropdown(id='day-dropdown', options=[{'label': sheet_name, 'value': i} for i, sheet_name in enumerate(sheet_names)], value=0)
+    ])
+    ],
         className="p-3 bg-light rounded-3",
     )
 tab2_content = html.Div(
@@ -248,7 +264,12 @@ def render_page_content(pathname):
         className="p-3 bg-light rounded-3",
     )
 
-
+@app.callback(
+    dash.dependencies.Output('daily-usage-graph', 'figure'),
+    [dash.dependencies.Input('day-dropdown', 'value')]
+)
+def update_graph(day_selected):
+    return create_daily_chart(day_selected)
 
 
 # import dash
