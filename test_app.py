@@ -12,6 +12,6 @@ def test_rec001_h1_text_equals(dash_duo):
     """
     app = import_app(app_file="recycle_app.recycle_dash_app")
     dash_duo.start_server(app)
-    dash_duo.wait_for_element("h1", timeout=4)
-    h1_text = dash_duo.find_element("h1").text
+    dash_duo.wait_for_element("h2", timeout=4)
+    h1_text = dash_duo.find_element("h2").text
     assert h1_text.casefold() == "Sidebar".casefold()
