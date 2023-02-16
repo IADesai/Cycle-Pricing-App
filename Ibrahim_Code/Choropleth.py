@@ -14,22 +14,23 @@ with open('london_boroughs.json') as f:
     geo = json.load(f)
     
 # Create a DataFrame with the borough names and usage values
-data = pd.DataFrame({'locations': grouped.index, 'Total PM 2.5': grouped.iloc[:, 3]})
+data = pd.DataFrame({'Borough': grouped.index, 'Total PM 2.5': grouped.iloc[:, 3]})
 
 # Create map figure
 fig = px.choropleth_mapbox(data, geojson=geo, color='Total PM 2.5',
                            color_continuous_scale='RdYlGn_r',
+                           opacity=0.8,
                            mapbox_style='carto-positron',
                            featureidkey='properties.name',
-                           locations='locations',
-                           center={"lat": 51.5074, "lon": -0.1278},
-                           zoom=10)
+                           locations='Borough',
+                           center={"lat": 51.5, "lon": -0.1},
+                           zoom=9)
 
 # Create Dash app layout
 app = dash.Dash()
 app.layout = dash.html.Div([
     dash.html.H1('London Boroughs Choropleth Map'),
-    dash.dcc.Graph(id='london-map', figure=fig)
+    dash.dcc.Graph(id='london-map', figure=fig, style={'width': '1400px', 'height': '900px'})
 ])
 
 # Run the app

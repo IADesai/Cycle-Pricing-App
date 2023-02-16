@@ -21,6 +21,7 @@ For more details on building multi-page Dash applications, check out the Dash
 documentation: https://dash.plot.ly/urls
 """
 import dash
+import json
 import dash_bootstrap_components as dbc
 from dash import Input, Output, dcc, html
 from dash import dcc
@@ -142,6 +143,31 @@ def create_monthly_linechart():
 
     return fig3
 
+def create_choropleth_pollution_map():
+    # Load data
+    df = pd.read_excel("data_set_prepared.xlsx", sheet_name=0)
+
+    # Group the data by month and average the usage
+    grouped = df.groupby('Borough').sum('Total PM 2.5')
+
+    # Load GeoJSON file
+    with open('london_boroughs.json') as f:
+        geo = json.load(f)
+        
+    # Create a DataFrame with the borough names and usage values
+    data = pd.DataFrame({'Borough': grouped.index, 'Total PM 2.5': grouped.iloc[:, 3]})
+
+    # Create map figure
+    fig5 = px.choropleth_mapbox(data, geojson=geo, color='Total PM 2.5',
+                            color_continuous_scale='RdYlGn_r',
+                            opacity=0.8,
+                            mapbox_style='carto-positron',
+                            featureidkey='properties.name',
+                            locations='Borough',
+                            center={"lat": 51.5, "lon": -0.1},
+                            zoom=9.3)
+    return fig5
+
 
 
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
@@ -198,13 +224,19 @@ tab3_content = html.Div(
 tab4_content = html.Div(
         [
             html.Hr(),
-            html.P(f"Bar chart"),
+            html.P(f"Bar Chart Showing PM 2.5 Pollution in Each Borough of London"),
             html.Hr(),
             dcc.Graph(id='bar-chart2',
-              figure={'data': [{'x': dp.iloc[:,1], 'y': dp.iloc[:,4], 'type': 'bar'}],
-                      'layout': {'title': 'Borough PM 2.5 Pollution Bar Chart from Excel Data'}})
+              figure={'data': [{'x': dp.iloc[:,1], 'y': dp.iloc[:,4], 'type': 'bar'}]})
         ],
-
+)
+tab5_content = html.Div(
+        [
+            html.Hr(),
+            html.P(f'Choropleth Map Showing Total Recorded PM 2.5 Particle Data for Each Borough of London'),
+            html.Hr(),
+            dcc.Graph(id='london-map', figure=create_choropleth_pollution_map(), style={'width': '1400px', 'height': '800px'})
+        ],
 )
 
 # the styles for the main content position it to the right of the sidebar and
@@ -217,16 +249,17 @@ CONTENT_STYLE = {
 
 sidebar = html.Div(
     [
-        html.H2("Sidebar", className="display-4"),
+        html.H2("The Coding Cyclists", className="display-4"),
         html.Hr(),
         html.P(
-            "A simple sidebar layout with navigation links", className="lead"
+            "TFL Cycle Hire Pricing Data Made Easy", className="lead"
         ),
         dbc.Nav(
             [
                 dbc.NavLink("Home", href="/", active="exact"),
-                dbc.NavLink("Chart 1", href="/page-1", active="exact"),
-                dbc.NavLink("Chart 2", href="/page-2", active="exact"),
+                dbc.NavLink("Daily Data", href="/page-1", active="exact"),
+                dbc.NavLink("Monthly Data", href="/page-2", active="exact"),
+                dbc.NavLink("Pollution Data", href="/page-3", active="exact"),
             ],
             vertical=True,
             pills=True,
@@ -284,9 +317,7 @@ def render_page_content(pathname):
     elif pathname == "/page-1":
         return dbc.Tabs(
             [
-                dbc.Tab(tab1_content, label="Daily Usage Bar Chart"),
-                dbc.Tab(tab2_content, label="Average Monthly Usage Bar Chart"),
-                dbc.Tab(tab3_content, label="Usage Vs Time Line Chart")
+                dbc.Tab(tab1_content, label="Daily Usage Bar Chart")
             ],
             id="tabs",
             active_tab="scatter",
@@ -294,8 +325,17 @@ def render_page_content(pathname):
     elif pathname == "/page-2":
         return dbc.Tabs(
             [
-                dbc.Tab(tab4_content, label="Chart 1"),
-                dbc.Tab(tab1_content, label="Chart 2"),
+                dbc.Tab(tab2_content, label="Average Monthly Usage Bar Chart"),
+                dbc.Tab(tab3_content, label="Usage Vs Time Line Chart")
+            ],
+            id="tabs",
+            active_tab="scatter",
+        ),
+    elif pathname == "/page-3":
+        return dbc.Tabs(
+            [
+                dbc.Tab(tab5_content, label="London Borough Pollution Choropleth Map"),
+                dbc.Tab(tab4_content, label="London Borough Pollution Bar Chart"),
             ],
             id="tabs",
             active_tab="scatter",
