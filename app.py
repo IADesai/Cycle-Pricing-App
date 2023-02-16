@@ -120,7 +120,6 @@ tab1_content = html.Div(
         ],
         className="p-3 bg-light rounded-3",
     )
-
 tab2_content = html.Div(
         [ 
         dcc.Graph(figure=create_monthly_barchart())
@@ -180,41 +179,41 @@ app.layout = html.Div([dcc.Location(id="url"), sidebar, content])
 
 
 # Create the app layout using Bootstrap fluid container
-app.layout = dbc.Container(
-    fluid=True,
-    children=[
-        # Second row here
-        dbc.Row(
-            [
-                # This is for the London area selector and the statistics panel.
-                dbc.Col(
-                    width=3,
-                    children=[
-                        html.H4("Select day"),
-                        dcc.Dropdown(
-                            id="day-select",
-                            options=[
-                                {"label": x, "value": x}
-                                for x in data.area_list
-                            ],
-                            value="London",
-                        ),
-                        html.Br(),
-                        html.Div(id="stats-card"),
-                    ],
-                ),
-                # Add the second column here. This is for the figure.
-                dbc.Col(
-                    width=9,
-                    children=[
-                        html.H2("Usage"),
-                        dcc.Graph(id="recycle-chart", figure=fig1),
-                    ],
-                ),
-            ]
-        ),
-    ],
-)
+# app.layout = dbc.Container(
+#     fluid=True,
+#     children=[
+#         # Second row here
+#         dbc.Row(
+#             [
+#                 # This is for the London area selector and the statistics panel.
+#                 dbc.Col(
+#                     width=3,
+#                     children=[
+#                         html.H4("Select day"),
+#                         # dcc.Dropdown(
+#                         #     id="day-select",
+#                         #     options=[
+#                         #         {"label": x, "value": x}
+#                         #         for x in data.area_list
+#                         #     ],
+#                         #     value="London",
+#                         # ),
+#                         html.Br(),
+#                         html.Div(id="stats-card"),
+#                     ],
+#                 ),
+#                 # Add the second column here. This is for the figure.
+#                 dbc.Col(
+#                     width=9,
+#                     children=[
+#                         html.H2("Usage"),
+#                         dcc.Graph(id="recycle-chart", figure=create_daily_chart(day_selected)),
+#                     ],
+#                 ),
+#             ]
+#         ),
+#     ],
+# )
 
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
 def render_page_content(pathname):
