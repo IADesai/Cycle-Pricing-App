@@ -15,3 +15,19 @@ def test_rec001_h1_text_equals(dash_duo):
     dash_duo.wait_for_element("h2", timeout=4)
     h1_text = dash_duo.find_element("h2").text
     assert h1_text.casefold() == "Sidebar".casefold()
+    
+    
+def test_rec002_areadropdowncontainslondon(dash_duo):
+    """
+    GIVEN the Dash app is running
+    WHEN the home page has loaded
+    THEN 'London' should appear in the area dropdown
+    """
+    app = import_app(app_file="app")
+    dash_duo.start_server(app)
+    dash_duo.wait_for_element("h1", timeout=4)
+    dash_duo.driver.implicitly_wait(5)
+    assert (
+        "Sunday, Jul 1 2018.xlsx" in dash_duo.find_element("#date-select").text
+    ), "'Sunday, Jul 1 2018.xlsx' should appear in the area dropdown"
+
