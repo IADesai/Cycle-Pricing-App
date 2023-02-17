@@ -20,8 +20,8 @@ def test_cycle001_h1_text_equals(dash_duo):
 def test_cycle002_datedropdowncontainsjul1(dash_duo):
     """
     GIVEN the Dash app is running
-    WHEN the home page has loaded
-    THEN 'London' should appear in the area dropdown
+    WHEN the Daily data page has loaded
+    THEN 'Sunday, Jul 1 2018.xlsx' should appear in the area dropdown
     """
     app = import_app(app_file="app")
     dash_duo.start_server(app)
