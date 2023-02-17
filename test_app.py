@@ -4,7 +4,7 @@ from selenium.webdriver.common.keys import Keys
 
 # test case id format is an abbreviation in the pattern of mmffddd where m stands for module,
 # f for file, and d for three digits which convey the number of your test case.
-def test_rec001_h1_text_equals(dash_duo):
+def test_cycle001_h1_text_equals(dash_duo):
     """
     GIVEN the app is running
     WHEN the home page is available
@@ -17,7 +17,7 @@ def test_rec001_h1_text_equals(dash_duo):
     assert h1_text.casefold() == "Sidebar".casefold()
     
     
-def test_rec002_areadropdowncontainslondon(dash_duo):
+def test_cycle002_datedropdowncontainsjul1(dash_duo):
     """
     GIVEN the Dash app is running
     WHEN the home page has loaded
