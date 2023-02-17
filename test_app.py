@@ -8,13 +8,13 @@ def test_cycle001_h1_text_equals(dash_duo):
     """
     GIVEN the app is running
     WHEN the home page is available
-    THEN the H1 heading element should include the text 'Waste and recycling' (not case sensitive)
+    THEN the H1 heading element should include the text 'TFL Cycle Hire Pricing' (not case sensitive)
     """
     app = import_app(app_file="app")
     dash_duo.start_server(app)
-    dash_duo.wait_for_element("h2", timeout=4)
-    h1_text = dash_duo.find_element("h2").text
-    assert h1_text.casefold() == "Sidebar".casefold()
+    dash_duo.wait_for_element("h1", timeout=4)
+    h1_text = dash_duo.find_element("h1").text
+    assert h1_text.casefold() == "TFL Cycle Hire Pricing".casefold()
     
     
 def test_cycle002_datedropdowncontainsjul1(dash_duo):
