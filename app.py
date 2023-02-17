@@ -67,7 +67,6 @@ def create_pricing_choropleth_map():
                             zoom=9.2)
     return figprice
 
-# Function for the daily charts
 def create_daily_chart(day_selected):
     # Read the sheet from the excel file
     df = pd.read_excel("data_set_prepared.xlsx", sheet_name=sheet_names[day_selected])
@@ -100,6 +99,7 @@ sheet_names = [name.rstrip('.xlsx') for name in sheet_names]
 # Order the sheet names by date
 sheet_names = sorted(sheet_names, key=lambda x: pd.to_datetime(x, format="%A, %b %d %Y"))
 
+sheet_title=sheet_names
 # Add the '.xlsx' backl into the file
 sheet_names = [name + '.xlsx' for name in sheet_names]
 
@@ -234,11 +234,9 @@ tab1_content = html.Div(style={'display': 'flex'}, children=[
         dcc.Graph(id='daily-usage-graph', figure=create_daily_chart(day_selected=0))
     ]),
     html.Div(style={'flex': 0.5, 'padding': 20}, children=[
-        dcc.Dropdown(id='day-select', options=[{'label': sheet_name, 'value': i} for i, sheet_name in enumerate(sheet_names)], value=0),
-    
+        dcc.Dropdown(id='day-dropdown', options=[{'label': sheet_name, 'value': i} for i, sheet_name in enumerate(sheet_names)], value=0)
     ])
     ],
-    
         className="p-3 bg-light rounded-3",
     )
 
