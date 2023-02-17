@@ -228,7 +228,15 @@ home_content = html.Div(
             dcc.Graph(id='london-map', figure=create_pricing_choropleth_map(), style={'width': '1600px', 'height': '700px'})
         ],
 )
-
+daily_content = html.Div(
+    [
+        html.Hr(),
+        html.P(f'Choropleth Map Showing Pricing Data for Each Borough of London'),
+        html.Hr(),
+        html.P("The Coding Cyclists have tackled TFL's cycle hire pricing, masterminding an algorithm to adjust the price of the cycle hire dependent on hourly and monthly cycle hire data, alongside PM 2.5 pollution levels across the boroughs of London. The aim was to create a price map that increases TFL revenue by promoting cycle hire and taking advantage of rush hour prices, as well as, promoting cycle hire in highly polluted boroughs with hopes to reduce pollution across greater London."),
+         
+    ],
+)
 tab1_content = html.Div(style={'display': 'flex'}, children=[
     html.Div(style={'flex': 1}, children=[
         dcc.Graph(id='daily-usage-graph', figure=create_daily_chart(day_selected=0))
@@ -359,13 +367,19 @@ def render_page_content(pathname):
     if pathname == "/":
         return home_content
     elif pathname == "/page-1":
-        return dbc.Tabs(
-            [
-                dbc.Tab(tab1_content, label="Daily Usage Bar Chart")
-            ],
-            id="tabs",
-            active_tab="scatter",
-        ),
+        return html.Div([
+                html.Hr(),
+                html.P(f'Choropleth Map Showing Pricing Data for Each Borough of London'),
+                html.Hr(),
+                html.P("The Coding Cyclists have tackled TFL's cycle hire pricing, masterminding an algorithm to adjust the price of the cycle hire dependent on hourly and monthly cycle hire data, alongside PM 2.5 pollution levels across the boroughs of London. The aim was to create a price map that increases TFL revenue by promoting cycle hire and taking advantage of rush hour prices, as well as, promoting cycle hire in highly polluted boroughs with hopes to reduce pollution across greater London."),
+                dbc.Tabs(
+                [
+                    dbc.Tab(tab1_content, label="Daily Usage Bar Chart"),
+                ],
+                id="tabs",
+                active_tab=None,
+            ),
+        ])
     elif pathname == "/page-2":
         return dbc.Tabs(
             [
