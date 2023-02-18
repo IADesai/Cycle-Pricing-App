@@ -368,36 +368,48 @@ def render_page_content(pathname):
         return home_content
     elif pathname == "/page-1":
         return html.Div([
-                html.Hr(),
-                html.P(f'Choropleth Map Showing Pricing Data for Each Borough of London'),
-                html.Hr(),
-                html.P("The Coding Cyclists have tackled TFL's cycle hire pricing, masterminding an algorithm to adjust the price of the cycle hire dependent on hourly and monthly cycle hire data, alongside PM 2.5 pollution levels across the boroughs of London. The aim was to create a price map that increases TFL revenue by promoting cycle hire and taking advantage of rush hour prices, as well as, promoting cycle hire in highly polluted boroughs with hopes to reduce pollution across greater London."),
                 dbc.Tabs(
                 [
                     dbc.Tab(tab1_content, label="Daily Usage Bar Chart"),
                 ],
                 id="tabs",
                 active_tab=None,
-            ),
-        ])
+                ),
+                html.Hr(),
+                html.P(f'Daily Data'),
+                html.Hr(),
+                html.P("The daily data consists of recorded cycle hire data for every day in an entire month. We used this data to identify and visualize how many cycles were hired per hour of the day for each day in the month and then created a chart with the average of the entire month, to identify the average daily cycle hire pattern. This can be viewed in the tab above, where a selector can be used to view the data for each day. If you choose Monday and compare it to a Sunday for example, we see that the trends are slightly different. This can be seen throughout the month, where weekends have unusual patterns as opposed to working week days. This is only one of many trends visible.")
+            ]),
     elif pathname == "/page-2":
-        return dbc.Tabs(
+        return html.Div([
+            dbc.Tabs(
             [
                 dbc.Tab(tab2_content, label="Average Monthly Usage Bar Chart"),
                 dbc.Tab(tab3_content, label="Usage Vs Time Line Chart")
             ],
             id="tabs",
             active_tab="scatter",
-        ),
+            ),
+            html.Hr(),
+            html.P(f'Monthly Data'),
+            html.Hr(),
+            html.P("The monthly data consists of recorded cycle hire data for every month over multiple years. We used this data to identify and visualize how many cycles were hired in each month over multiple years, averaging the number of cycles for each month over the various years, to identify the average monthly cycle hire usage pattern. This can be viewed in the tab above. We also added a usage versus time line chart, to show the cycle hire trends from the beginning of TFL santander cycle history. This gives indications of monthly/seasonal trends aswell as for example, Covid effects in 2020.")
+        ]),
     elif pathname == "/page-3":
-        return dbc.Tabs(
+        return html.Div([
+            dbc.Tabs(
             [
                 dbc.Tab(tab5_content, label="London Borough Pollution Choropleth Map"),
                 dbc.Tab(tab4_content, label="London Borough Pollution Bar Chart"),
             ],
             id="tabs",
             active_tab="scatter",
-        ),
+            ),
+            html.Hr(),
+            html.P(f'Pollution Data'),
+            html.Hr(),
+            html.P("The pollution data consists of numerous recorded PM 2.5 particle data pieces from each borough of London. The recorded data was summed for each borough, providing data for the total PM 2.5 particles released from methods of transport, in each borough. This data was plotted onto a choropleth map, where it is possible to visibily see the levels of PM 2.5 in each specified borough. This can be seen above, accompanied by a bar chart for extra clarity.")
+        ]),
     # If the user tries to reach a different page, return a 404 message
     return html.Div(
         [
