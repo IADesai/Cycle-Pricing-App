@@ -1,6 +1,6 @@
 from dash.testing.application_runners import import_app
 from selenium.webdriver.common.keys import Keys
-
+# py -m pytest -v
 
 # test case id format is an abbreviation in the pattern of mmffddd where m stands for module,
 # f for file, and d for three digits which convey the number of your test case.

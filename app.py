@@ -32,7 +32,7 @@ import plotly.graph_objects as go
 df = pd.read_excel("data_set_prepared.xlsx", sheet_name=1)
 dp = pd.read_excel("data_set_prepared.xlsx", sheet_name=0)
 
-def create_pricing_choropleth_map():
+def create_pricing_choropleth_map(hour_selected,month_selected):
     # Load data
     df = pd.read_excel("data_set_prepared.xlsx", sheet_name=0)
 
@@ -43,15 +43,51 @@ def create_pricing_choropleth_map():
     with open('london_boroughs.json') as f:
         geo = json.load(f)
 
+    if hour_selected==1:
+        multiplier = 2.0
+    elif hour_selected==2:
+        multiplier = 1.5
+    elif hour_selected==3:
+        multiplier = 1.0
+    elif hour_selected==4:
+        multiplier = 1.0
+    else:
+        multiplier = 1.2
+
+    if month_selected==1:
+        multiplier2 = 2.0
+    elif month_selected==2:
+        multiplier2 = 1.5
+    elif month_selected==3:
+        multiplier2 = 1.0
+    elif month_selected==4:
+        multiplier2 = 1.0
+    elif month_selected==5:
+        multiplier2 = 1.0
+    elif month_selected==6:
+        multiplier2 = 1.5
+    elif month_selected==7:
+        multiplier2 = 1.0
+    elif month_selected==8:
+        multiplier2 = 1.0
+    elif month_selected==9:
+        multiplier2 = 1.0
+    elif month_selected==10:
+        multiplier2 = 1.5
+    elif month_selected==11:
+        multiplier2 = 1.0
+    else:
+        multiplier2 = 1.2
+    
     for i in range(0,33):
         if  grouped.iloc[i, 3]> 0 and grouped.iloc[i, 3] < 25:
-            grouped.iloc[i, 3]=1.65
+            grouped.iloc[i, 3]=1.65 * multiplier * multiplier2
         elif grouped.iloc[i, 3] > 25 and grouped.iloc[i, 3] < 50:
-            grouped.iloc[i, 3]=1.45
+            grouped.iloc[i, 3]=1.45 * multiplier * multiplier2
         elif grouped.iloc[i, 3] > 50 and grouped.iloc[i, 3] < 75:
-            grouped.iloc[i, 3]=1.25
+            grouped.iloc[i, 3]=1.25 * multiplier * multiplier2
         elif grouped.iloc[i, 3] > 75:
-            grouped.iloc[i, 3]=1.00
+            grouped.iloc[i, 3]=1.00 * multiplier * multiplier2
 
     # Create a DataFrame with the borough names and usage values
     data = pd.DataFrame({'Borough': grouped.index, 'Cycle Hire Price per Half Hour in Pounds': grouped.iloc[:, 3]})
@@ -103,6 +139,8 @@ sheet_title=sheet_names
 # Add the '.xlsx' backl into the file
 sheet_names = [name + '.xlsx' for name in sheet_names]
 
+hours=('00:00-06:00','06:00-09:00','09:00-16:00','16:00-19:00','19:00-24:00')
+months=('January','February','March','April','May','June','July','August','September','October','November','December')
 # # Function for the stats panel
 # def create_daily_stats(day_selected):
 #     df = pd.read_excel("data_set_prepared.xlsx", sheet_name=sheet_names[day_selected])
@@ -225,10 +263,20 @@ home_content = html.Div(
             html.Hr(),
             html.P(f'Choropleth Map Showing Pricing Data for Each Borough of London'),
             html.Hr(),
-            dcc.Graph(id='london-map', figure=create_pricing_choropleth_map(), style={'width': '1600px', 'height': '700px'})
+            dcc.Graph(id='london-map', figure=create_pricing_choropleth_map(hour_selected=0,month_selected=0), style={'width': '1600px', 'height': '700px'}),
+            dcc.Dropdown(id='hour-dropdown', options=[{'label': hour, 'value': i} for i, hour in enumerate(hours)], value=0),
+            dcc.Dropdown(id='month-dropdown', options=[{'label': month, 'value': i} for i, month in enumerate(months)], value=0)
         ],
 )
-
+daily_content = html.Div(
+    [
+        html.Hr(),
+        html.P(f'Choropleth Map Showing Pricing Data for Each Borough of London'),
+        html.Hr(),
+        html.P("The Coding Cyclists have tackled TFL's cycle hire pricing, masterminding an algorithm to adjust the price of the cycle hire dependent on hourly and monthly cycle hire data, alongside PM 2.5 pollution levels across the boroughs of London. The aim was to create a price map that increases TFL revenue by promoting cycle hire and taking advantage of rush hour prices, as well as, promoting cycle hire in highly polluted boroughs with hopes to reduce pollution across greater London."),
+         
+    ],
+)
 tab1_content = html.Div(style={'display': 'flex'}, children=[
     html.Div(style={'flex': 1}, children=[
         dcc.Graph(id='daily-usage-graph', figure=create_daily_chart(day_selected=0))
@@ -359,31 +407,49 @@ def render_page_content(pathname):
     if pathname == "/":
         return home_content
     elif pathname == "/page-1":
-        return dbc.Tabs(
-            [
-                dbc.Tab(tab1_content, label="Daily Usage Bar Chart")
-            ],
-            id="tabs",
-            active_tab="scatter",
-        ),
+        return html.Div([
+                dbc.Tabs(
+                [
+                    dbc.Tab(tab1_content, label="Daily Usage Bar Chart"),
+                ],
+                id="tabs",
+                active_tab=None,
+                ),
+                html.Hr(),
+                html.P(f'Daily Data'),
+                html.Hr(),
+                html.P("The daily data consists of recorded cycle hire data for every day in an entire month. We used this data to identify and visualize how many cycles were hired per hour of the day for each day in the month and then created a chart with the average of the entire month, to identify the average daily cycle hire pattern. This can be viewed in the tab above, where a selector can be used to view the data for each day. If you choose Monday and compare it to a Sunday for example, we see that the trends are slightly different. This can be seen throughout the month, where weekends have unusual patterns as opposed to working week days. This is only one of many trends visible.")
+            ]),
     elif pathname == "/page-2":
-        return dbc.Tabs(
+        return html.Div([
+            dbc.Tabs(
             [
                 dbc.Tab(tab2_content, label="Average Monthly Usage Bar Chart"),
                 dbc.Tab(tab3_content, label="Usage Vs Time Line Chart")
             ],
             id="tabs",
             active_tab="scatter",
-        ),
+            ),
+            html.Hr(),
+            html.P(f'Monthly Data'),
+            html.Hr(),
+            html.P("The monthly data consists of recorded cycle hire data for every month over multiple years. We used this data to identify and visualize how many cycles were hired in each month over multiple years, averaging the number of cycles for each month over the various years, to identify the average monthly cycle hire usage pattern. This can be viewed in the tab above. We also added a usage versus time line chart, to show the cycle hire trends from the beginning of TFL santander cycle history. This gives indications of monthly/seasonal trends aswell as for example, Covid effects in 2020.")
+        ]),
     elif pathname == "/page-3":
-        return dbc.Tabs(
+        return html.Div([
+            dbc.Tabs(
             [
                 dbc.Tab(tab5_content, label="London Borough Pollution Choropleth Map"),
                 dbc.Tab(tab4_content, label="London Borough Pollution Bar Chart"),
             ],
             id="tabs",
             active_tab="scatter",
-        ),
+            ),
+            html.Hr(),
+            html.P(f'Pollution Data'),
+            html.Hr(),
+            html.P("The pollution data consists of numerous recorded PM 2.5 particle data pieces from each borough of London. The recorded data was summed for each borough, providing data for the total PM 2.5 particles released from methods of transport, in each borough. This data was plotted onto a choropleth map, where it is possible to visibily see the levels of PM 2.5 in each specified borough. This can be seen above, accompanied by a bar chart for extra clarity.")
+        ]),
     # If the user tries to reach a different page, return a 404 message
     return html.Div(
         [
@@ -400,6 +466,14 @@ def render_page_content(pathname):
 )
 def update_graph(day_selected):
     return create_daily_chart(day_selected)
+
+@app.callback(
+    dash.dependencies.Output('london-map', 'figure'),
+    [dash.dependencies.Input('hour-dropdown', 'value')],
+    [dash.dependencies.Input('month-dropdown', 'value')]
+)
+def update_pricegraph(hour_selected,month_selected):
+    return create_pricing_choropleth_map(hour_selected,month_selected)
 
 # @app.callback(
 #     Output("stats-card", "children"),
