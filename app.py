@@ -180,7 +180,7 @@ top_card = dbc.Card(
         dbc.CardImg(src="https://lzqqcs.stripocdn.email/content/guids/CABINET_797e23668dad8bd7e5aee86260d52cc9/images/the_coding_cyclists.gif", top=True),
         
     ],
-    style={"width": "12rem"},
+    style={"width": "14rem"},
     
 )
 
@@ -343,16 +343,19 @@ home_content = html.Div(
             dash.html.H1('TFL Cycle Hire Pricing'),
            
             html.P("The Coding Cyclists have tackled TFL's cycle hire pricing, masterminding an algorithm to adjust the price of the cycle hire dependent on hourly and monthly cycle hire data, alongside PM 2.5 pollution levels across the boroughs of London. The aim was to create a price map that increases TFL revenue by promoting cycle hire and taking advantage of rush hour prices, as well as, promoting cycle hire in highly polluted boroughs with hopes to reduce pollution across greater London."),
-            html.Br(),
-        
-            html.Br(),
             html.Hr(),
             html.P(f'Choropleth Map Showing Pricing Data for Each Borough of London'),
             html.Hr(),
-            dcc.Graph(id='london-map', figure=create_pricing_choropleth_map(hour_selected=0,month_selected=0), style={'width': '1100px', 'height': '550px'}),
-            dcc.Dropdown(id='hour-dropdown', options=[{'label': hour, 'value': i} for i, hour in enumerate(hours)], value=0),
-            dcc.Dropdown(id='month-dropdown', options=[{'label': month, 'value': i} for i, month in enumerate(months)], value=0)
-        ],
+            html.Div([
+            dcc.Graph(id='london-map', figure=create_pricing_choropleth_map(hour_selected=0, month_selected=0), style={'width': '1100px', 'height': '650px'}),
+            html.Div([
+                html.P("Time of Day (24 Hour Clock):",style={'margin-top': '200px'}),
+                dcc.Dropdown(id='hour-dropdown', options=[{'label': hour, 'value': i} for i, hour in enumerate(hours)], value=0),
+                html.P("Month of Year:",style={'margin-top': '30px'}),
+                dcc.Dropdown(id='month-dropdown', options=[{'label': month, 'value': i} for i, month in enumerate(months)], value=0)
+            ], style={'float': 'right', 'width': '30%'})
+        ], style={'display': 'flex', 'justify-content': 'space-between'})
+    ]
 )
 daily_content = html.Div(
     [
@@ -429,11 +432,6 @@ CONTENT_STYLE = {
 
 sidebar = html.Div(
     [
-        html.H2("The Coding Cyclists", className="display-4"),
-        html.Hr(),
-        html.P(
-            "TFL Cycle Hire Pricing Data Made Easy", className="lead"
-        ),
         dbc.Row(
             [dbc.Col(top_card, width="auto"),
             ]),
@@ -441,7 +439,7 @@ sidebar = html.Div(
         dbc.Nav(
             [
                 dbc.NavLink("Home", href="/", active="exact"),
-                dbc.NavLink("Daily Data", href="/page-1", active="exact"),
+                dbc.NavLink("Daily/Hourly Data", href="/page-1", active="exact"),
                 dbc.NavLink("Monthly Data", href="/page-2", active="exact"),
                 dbc.NavLink("Pollution Data", href="/page-3", active="exact"),
             ],
