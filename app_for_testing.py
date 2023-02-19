@@ -94,15 +94,19 @@ app.layout = dbc.Container(
     # HTML layout elements here
     children=[
         html.Div(
-        [
-            dash.html.H1('TFL Cycle Hire Pricing'),
+        [  html.H2("The Coding Cyclists", className="display-4"),
+           html.Hr(),
+           html.P(
+            "TFL Cycle Hire Pricing Data Made Easy", className="lead"
+            ),
+            html.H1('TFL Cycle Hire Pricing'),
             html.P("The Coding Cyclists have tackled TFL's cycle hire pricing, masterminding an algorithm to adjust the price of the cycle hire dependent on hourly and monthly cycle hire data, alongside PM 2.5 pollution levels across the boroughs of London. The aim was to create a price map that increases TFL revenue by promoting cycle hire and taking advantage of rush hour prices, as well as, promoting cycle hire in highly polluted boroughs with hopes to reduce pollution across greater London."),
             html.Hr(),
             html.P(f'Choropleth Map Showing Pricing Data for Each Borough of London'),
-            html.Hr(),
             dcc.Graph(id='london-map', figure=create_pricing_choropleth_map(hour_selected=0,month_selected=0), style={'width': '1100px', 'height': '550px'}),
             dcc.Dropdown(id='hour-dropdown', options=[{'label': hour, 'value': i} for i, hour in enumerate(hours)], value=0),
             dcc.Dropdown(id='month-dropdown', options=[{'label': month, 'value': i} for i, month in enumerate(months)], value=0),
+            html.Br(),
             html.Hr(),
             html.Br(),
             html.Br(),
