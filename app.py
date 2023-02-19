@@ -174,6 +174,19 @@ sheet_names = sorted(sheet_names, key=lambda x: pd.to_datetime(x, format="%A, %b
 # Add the '.xlsx' back into the file
 sheet_names = [name + '.xlsx' for name in sheet_names]
 
+
+top_card = dbc.Card(
+    [
+        dbc.CardImg(src="https://lzqqcs.stripocdn.email/content/guids/CABINET_797e23668dad8bd7e5aee86260d52cc9/images/the_coding_cyclists.gif", top=True),
+        dbc.CardBody(
+            html.P("This card has an image at the top", className="card-text")
+        ),
+    ],
+    style={"width": "18rem"},
+)
+
+
+
 # Function for the stats panel
 def create_daily_stats(day_selected):
     df = pd.read_excel("data_set_prepared.xlsx", sheet_name=sheet_names[day_selected])
@@ -329,7 +342,13 @@ SIDEBAR_STYLE = {
 home_content = html.Div(
         [
             dash.html.H1('TFL Cycle Hire Pricing'),
+           
             html.P("The Coding Cyclists have tackled TFL's cycle hire pricing, masterminding an algorithm to adjust the price of the cycle hire dependent on hourly and monthly cycle hire data, alongside PM 2.5 pollution levels across the boroughs of London. The aim was to create a price map that increases TFL revenue by promoting cycle hire and taking advantage of rush hour prices, as well as, promoting cycle hire in highly polluted boroughs with hopes to reduce pollution across greater London."),
+            html.Br(),
+            dbc.Row(
+            [dbc.Col(top_card, width="auto"),
+            ]),
+            html.Br(),
             html.Hr(),
             html.P(f'Choropleth Map Showing Pricing Data for Each Borough of London'),
             html.Hr(),
