@@ -95,7 +95,7 @@ app.layout = dbc.Container(
     children=[
         html.Div(
         [  html.H2("The Coding Cyclists", className="display-4"),
-           html.Hr(),
+           
            html.P(
             "TFL Cycle Hire Pricing Data Made Easy", className="lead"
             ),
