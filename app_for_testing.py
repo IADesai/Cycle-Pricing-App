@@ -29,6 +29,8 @@ sheet_names = sorted(sheet_names, key=lambda x: pd.to_datetime(x, format="%A, %b
 # Add the '.xlsx' back into the file
 sheet_names = [name + '.xlsx' for name in sheet_names]
 
+
+
 def create_pricing_choropleth_map(hour_selected,month_selected):
     # Load data
     df = pd.read_excel("data_set_prepared.xlsx", sheet_name=0)
@@ -148,13 +150,8 @@ app.layout = dbc.Container(
             html.Br(),
             dcc.Dropdown(id='month-dropdown', options=[{'label': month, 'value': i} for i, month in enumerate(months)], value=0),
             html.Br(),
-            html.Hr(),
-            html.Hr(),
-            html.P(f'Daily Data'),
-            html.Hr(),
-            html.P("The daily data consists of recorded cycle hire data for every day in an entire month. We used this data to identify and visualize how many cycles were hired per hour of the day for each day in the month and then created a chart with the average of the entire month, to identify the average daily cycle hire pattern. This can be viewed in the tab above, where a selector can be used to view the data for each day. If you choose Monday and compare it to a Sunday for example, we see that the trends are slightly different. This can be seen throughout the month, where weekends have unusual patterns as opposed to working week days. This is only one of many trends visible."),
+            html.Br()
             
-            html.Br(),
             
     
            
@@ -162,6 +159,13 @@ app.layout = dbc.Container(
 ),
     html.Div(style={'display': 'flex'}, children=[
     html.Div(style={'flex': 1}, children=[
+    html.Br(),
+    html.Hr(),
+    html.Hr(),
+    html.P(f'Daily Data'),
+    html.Hr(),
+    html.P("The daily data consists of recorded cycle hire data for every day in an entire month. We used this data to identify and visualize how many cycles were hired per hour of the day for each day in the month and then created a chart with the average of the entire month, to identify the average daily cycle hire pattern. This can be viewed in the tab above, where a selector can be used to view the data for each day. If you choose Monday and compare it to a Sunday for example, we see that the trends are slightly different. This can be seen throughout the month, where weekends have unusual patterns as opposed to working week days. This is only one of many trends visible."),
+    html.Br(),
     dcc.Graph(id='daily-usage-graph', figure=create_daily_chart(day_selected=0))
     ]),
     html.Div(style={'flex': 0.5, 'padding': 20}, children=[
@@ -170,8 +174,11 @@ app.layout = dbc.Container(
     html.Div(id="stats-card"),
     ])
     ],
+    
         className="p-3 bg-light rounded-3",
+    
     )
+    
 
     ]
 )
