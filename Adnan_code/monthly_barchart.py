@@ -4,29 +4,30 @@ from dash import dcc
 import pandas as pd
 import plotly.express as px
 
-# Read the second sheet of the excel file
-df = pd.read_excel("data_set_prepared.xlsx", sheet_name=1)
+def create_monthly_barchart():
+    # Read the second sheet of the excel file
+    df = pd.read_excel("data_set_prepared.xlsx", sheet_name=1)
 
-# Convert the 'Month' column to a datetime type
-df['Month'] = pd.to_datetime(df['Month'], format='%Y-%m-%d %H:%M:%S')
+    # Convert the 'Month' column to a datetime type
+    df['Month'] = pd.to_datetime(df['Month'], format='%Y-%m-%d %H:%M:%S')
 
-# Extract the month from the datetime object
-df['month'] = df['Month'].dt.month
+    # Extract the month from the datetime object
+    df['month'] = df['Month'].dt.month
 
-# Slice the data frame to exclude the first 18 rows in order to prevent the skewing of the graph
-df = df.iloc[18:, :]
+    # Slice the data frame to exclude the first 18 rows in order to prevent the skewing of the graph
+    df = df.iloc[18:, :]
 
-# Group the data by month and average the usage
-grouped = df.groupby('month').mean()
+    # Group the data by month and average the usage
+    grouped = df.groupby('month').mean()
 
-# Create the bar chart
-fig = px.bar(x=grouped.index, y=grouped.iloc[:, 1])
+    # Create the bar chart
+    fig = px.bar(x=grouped.index, y=grouped.iloc[:, 1])
 
-fig.update_layout(
-    xaxis_title="Month",
-    yaxis_title="Average Usage"
-)
-
+    fig.update_layout(
+        xaxis_title="Month",
+        yaxis_title="Average Usage"
+    )
+    return fig
 # Create the Dash app
 app = dash.Dash()
 app.layout = html.Div([
