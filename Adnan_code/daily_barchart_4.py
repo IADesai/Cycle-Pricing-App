@@ -71,7 +71,7 @@ def create_daily_stats(day_selected):
                 ]
             ),
         ],
-        color="light",
+        color="dark",
         inverse=True,
     )
 
