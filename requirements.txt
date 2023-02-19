@@ -3,3 +3,8 @@ openpyxl
 dash
 dash-bootstrap-components
 pytest
+plotly
+colorlover
+pytest-cov 
+selenium
+dash[testing]
