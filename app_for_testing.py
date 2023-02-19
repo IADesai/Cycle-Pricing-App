@@ -15,6 +15,20 @@ app = dash.Dash(
     ],
 )
 
+df = pd.read_excel("data_set_prepared.xlsx", sheet_name=1)
+dp = pd.read_excel("data_set_prepared.xlsx", sheet_name=0)
+
+# Get the sheet names from the excel file
+sheet_names = list(pd.read_excel("data_set_prepared.xlsx", sheet_name=None).keys())
+# Remove the first two sheets from the list
+sheet_names = sheet_names[2:]
+# Remove the .xlsx to allow the sheet names to be sorted 
+sheet_names = [name.rstrip('.xlsx') for name in sheet_names]
+# Order the sheet names by date
+sheet_names = sorted(sheet_names, key=lambda x: pd.to_datetime(x, format="%A, %b %d %Y"))
+# Add the '.xlsx' back into the file
+sheet_names = [name + '.xlsx' for name in sheet_names]
+
 def create_pricing_choropleth_map(hour_selected,month_selected):
     # Load data
     df = pd.read_excel("data_set_prepared.xlsx", sheet_name=0)
@@ -86,6 +100,31 @@ def create_pricing_choropleth_map(hour_selected,month_selected):
                             zoom=8.7)
     return figprice
 
+
+def create_daily_chart(day_selected):
+    # Read the sheet from the excel file
+    df = pd.read_excel("data_set_prepared.xlsx", sheet_name=sheet_names[day_selected])
+    # Convert the 'TimeString' column to a datetime type
+    df['TimeString'] = pd.to_datetime(df['TimeString'], format='%H:%M:%S:%f')
+
+    # Extract the hour from the datetime object
+    df['hour'] = df['TimeString'].dt.hour
+
+    # Group the data by hour and sum the usage
+    grouped_sum = df.groupby('hour').sum(numeric_only=True)
+    grouped_mean = df.groupby('hour').mean(numeric_only=True)
+    grouped = grouped_sum/grouped_mean
+
+    # Create the bar chart
+    fig = px.bar(x=grouped.index, y=grouped.iloc[:,0])
+
+    fig.update_layout(
+        xaxis_title="Hour",
+        yaxis_title="Cycle hires",
+        title=f"Cycle Usage for {sheet_names[day_selected]}"
+    )
+    return fig
+
 hours=('00:00-06:00','06:00-09:00','09:00-16:00','16:00-19:00','19:00-24:00')
 months=('January','February','March','April','May','June','July','August','September','October','November','December')
 
@@ -94,13 +133,13 @@ app.layout = dbc.Container(
     # HTML layout elements here
     children=[
         html.Div(
-        [  html.H2("The Coding Cyclists", className="display-4"),
+        [  html.H1("The Coding Cyclists", className="display-4"),
            
            html.P(
             "TFL Cycle Hire Pricing Data Made Easy", className="lead"
             ),
             html.Hr(),
-            html.H1('TFL Cycle Hire Pricing'),
+            html.H2('TFL Cycle Hire Pricing'),
             html.P("The Coding Cyclists have tackled TFL's cycle hire pricing, masterminding an algorithm to adjust the price of the cycle hire dependent on hourly and monthly cycle hire data, alongside PM 2.5 pollution levels across the boroughs of London. The aim was to create a price map that increases TFL revenue by promoting cycle hire and taking advantage of rush hour prices, as well as, promoting cycle hire in highly polluted boroughs with hopes to reduce pollution across greater London."),
             html.Hr(),
             html.P(f'Choropleth Map Showing Pricing Data for Each Borough of London'),
@@ -110,12 +149,30 @@ app.layout = dbc.Container(
             dcc.Dropdown(id='month-dropdown', options=[{'label': month, 'value': i} for i, month in enumerate(months)], value=0),
             html.Br(),
             html.Hr(),
+            html.Hr(),
+            html.P(f'Daily Data'),
+            html.Hr(),
+            html.P("The daily data consists of recorded cycle hire data for every day in an entire month. We used this data to identify and visualize how many cycles were hired per hour of the day for each day in the month and then created a chart with the average of the entire month, to identify the average daily cycle hire pattern. This can be viewed in the tab above, where a selector can be used to view the data for each day. If you choose Monday and compare it to a Sunday for example, we see that the trends are slightly different. This can be seen throughout the month, where weekends have unusual patterns as opposed to working week days. This is only one of many trends visible."),
+            
             html.Br(),
-            html.Br(),
-            html.Br(),
-            html.Hr()
+            
+    
+           
         ],
-)
+),
+    html.Div(style={'display': 'flex'}, children=[
+    html.Div(style={'flex': 1}, children=[
+    dcc.Graph(id='daily-usage-graph', figure=create_daily_chart(day_selected=0))
+    ]),
+    html.Div(style={'flex': 0.5, 'padding': 20}, children=[
+    dcc.Dropdown(id='day-dropdown', options=[{'label': sheet_name, 'value': i} for i, sheet_name in enumerate(sheet_names)], value=0),
+    html.Br(),
+    html.Div(id="stats-card"),
+    ])
+    ],
+        className="p-3 bg-light rounded-3",
+    )
+
     ]
 )
 
