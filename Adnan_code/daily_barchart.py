@@ -6,7 +6,6 @@ import plotly.express as px
 
 # Read the second sheet of the excel file
 df = pd.read_excel("data_set_prepared.xlsx", sheet_name=2)
-#look for read csv parse_dates
 
 # Convert the 'TimeString' column to a datetime type
 df['TimeString'] = pd.to_datetime(df['TimeString'], format='%H:%M:%S:%f')
