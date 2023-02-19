@@ -309,8 +309,11 @@ app.layout = dbc.Container(
     html.Hr(),
     html.P("The monthly data consists of recorded cycle hire data for every month over multiple years. We used this data to identify and visualize how many cycles were hired in each month over multiple years, averaging the number of cycles for each month over the various years, to identify the average monthly cycle hire usage pattern. This can be viewed in the tab above. We also added a usage versus time line chart, to show the cycle hire trends from the beginning of TFL santander cycle history. This gives indications of monthly/seasonal trends aswell as for example, Covid effects in 2020."),  
     html.Hr(),
+    html.P(f'London Borough Pollution Choropleth Map'),
     dcc.Graph(figure=create_monthly_barchart()),
     html.Br(),
+    html.Hr(),
+    html.P(f'London Borough Pollution Bar Chart'),
     dcc.Graph(figure=create_monthly_linechart()),
     ]),
    
@@ -327,20 +330,17 @@ app.layout = dbc.Container(
 
     html.Div(style={'display': 'flex'}, children=[
     html.Div(style={'flex': 1}, children=[
-    html.Hr(),
     html.P(f'Pollution Data'),
     html.Hr(),
     html.P("The pollution data consists of numerous recorded PM 2.5 particle data pieces from each borough of London. The recorded data was summed for each borough, providing data for the total PM 2.5 particles released from methods of transport, in each borough. This data was plotted onto a choropleth map, where it is possible to visibily see the levels of PM 2.5 in each specified borough. This can be seen above, accompanied by a bar chart for extra clarity."),    
     html.Hr(),
     html.P(f'Choropleth Map Showing Total Recorded PM 2.5 Particle Data for Each Borough of London'),
-    html.Hr(),
     dcc.Graph(id='london-map', figure=create_choropleth_pollution_map(), style={'width': '1100px', 'height': '600px'}),
     html.Hr(),
     html.P(f"Bar Chart Showing PM 2.5 Pollution in Each Borough of London"),
-    html.Hr(),
     dcc.Graph(id='bar-chart2',
-    figure={'data': [{'x': dp.iloc[:,1], 'y': dp.iloc[:,4], 'type': 'bar'}]})
-       
+    figure={'data': [{'x': dp.iloc[:,1], 'y': dp.iloc[:,4], 'type': 'bar'}]}),
+    html.Br()   
     ]),
    
     ],
