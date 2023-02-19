@@ -93,7 +93,6 @@ months=('January','February','March','April','May','June','July','August','Septe
 app.layout = dbc.Container(
     # HTML layout elements here
     children=[
-        html.H1(children='Hello, World!', className="display-1"),
         html.Div(
         [
             dash.html.H1('TFL Cycle Hire Pricing'),
