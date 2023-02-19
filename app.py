@@ -175,6 +175,7 @@ sheet_names = sorted(sheet_names, key=lambda x: pd.to_datetime(x, format="%A, %b
 sheet_names = [name + '.xlsx' for name in sheet_names]
 
 # src for the gif created by using the free version of the Stripo aplication, ref: https://stripo.email
+# The gif logo was created by Canva
 top_card = dbc.Card(
     [
         dbc.CardImg(src="https://lzqqcs.stripocdn.email/content/guids/CABINET_797e23668dad8bd7e5aee86260d52cc9/images/the_coding_cyclists.gif", top=True),

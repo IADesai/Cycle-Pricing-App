@@ -42,7 +42,7 @@ def test_cycle003_monthdropdowncontainsjanuary(dash_duo):
         "January" in dash_duo.find_element("#month-dropdown").text
     ), "'January' should appear in the month dropdown"
 
-def test_cyclle004_monthdropdownchangesstats(dash_duo):
+def test_cycle004_monthdropdownchangesdropdown(dash_duo):
     """
     GIVEN the recycle Dash app is running
     WHEN the area dropdown is changed to Hackney
