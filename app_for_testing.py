@@ -30,6 +30,16 @@ sheet_names = sorted(sheet_names, key=lambda x: pd.to_datetime(x, format="%A, %b
 sheet_names = [name + '.xlsx' for name in sheet_names]
 
 
+top_card = dbc.Card(
+    [
+        dbc.CardImg(src="https://lzqqcs.stripocdn.email/content/guids/CABINET_797e23668dad8bd7e5aee86260d52cc9/images/the_coding_cyclists.gif", top=True),
+        
+    ],
+    style={"width": "18rem"},
+)
+
+
+
 
 def create_pricing_choropleth_map(hour_selected,month_selected):
     # Load data
@@ -168,12 +178,19 @@ months=('January','February','March','April','May','June','July','August','Septe
 app.layout = dbc.Container(
     # HTML layout elements here
     children=[
+        
         html.Div(
         [  html.H1("The Coding Cyclists", className="display-4"),
            
            html.P(
             "TFL Cycle Hire Pricing Data Made Easy", className="lead"
             ),
+        
+    dbc.Row(
+    [
+        dbc.Col(top_card, width="auto"),
+    ]
+),
             html.Hr(),
             html.H2('TFL Cycle Hire Pricing'),
             html.P("The Coding Cyclists have tackled TFL's cycle hire pricing, masterminding an algorithm to adjust the price of the cycle hire dependent on hourly and monthly cycle hire data, alongside PM 2.5 pollution levels across the boroughs of London. The aim was to create a price map that increases TFL revenue by promoting cycle hire and taking advantage of rush hour prices, as well as, promoting cycle hire in highly polluted boroughs with hopes to reduce pollution across greater London."),
