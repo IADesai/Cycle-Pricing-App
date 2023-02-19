@@ -14,14 +14,26 @@ def test_cycle001_h1_text_equals(dash_duo):
     dash_duo.start_server(app)
     dash_duo.wait_for_element("h1", timeout=4)
     h1_text = dash_duo.find_element("h1").text
+    assert h1_text.casefold() == "The Coding Cyclists".casefold()
+
+def test_cycle002_h2_text_equals(dash_duo):
+    """
+    GIVEN the app is running
+    WHEN the home page is available
+    THEN the H1 heading element should include the text 'TFL Cycle Hire Pricing' (not case sensitive)
+    """
+    app = import_app(app_file="app_for_testing")
+    dash_duo.start_server(app)
+    dash_duo.wait_for_element("h2", timeout=4)
+    h1_text = dash_duo.find_element("h2").text
     assert h1_text.casefold() == "TFL Cycle Hire Pricing".casefold()
     
 
-def test_cycle002_datedropdowncontainsjul1(dash_duo):
+def test_cycle003_monthdropdowncontainsjanuary(dash_duo):
     """
     GIVEN the Dash app is running
     WHEN the Choropleth Map Showing Pricing Data for Each Borough of London has loaded
-    THEN 'January' should appear in the area dropdown created for month
+    THEN 'January' should appear in the area dropdown created for months
     """
     app = import_app(app_file="app_for_testing")
     dash_duo.start_server(app)
