@@ -90,18 +90,54 @@ def create_pricing_choropleth_map(hour_selected,month_selected):
             grouped.iloc[i, 3]=1.00 * multiplier * multiplier2
 
     # Create a DataFrame with the borough names and usage values
-    data = pd.DataFrame({'Borough': grouped.index, 'Cycle Hire Price per Half Hour in Pounds': grouped.iloc[:, 3]})
+    data = pd.DataFrame({'Borough': grouped.index, 'Cycle Hire Price (£/30min)': grouped.iloc[:, 3]})
 
     # Create map figure
-    figprice = px.choropleth_mapbox(data, geojson=geo, color='Cycle Hire Price per Half Hour in Pounds',
+    figprice = px.choropleth_mapbox(data, geojson=geo, color='Cycle Hire Price (£/30min)',
                             color_continuous_scale='RdYlGn_r',
                             opacity=0.8,
                             mapbox_style='carto-positron',
                             featureidkey='properties.name',
                             locations='Borough',
                             center={"lat": 51.4933, "lon": -0.1},
-                            zoom=8)
+                            zoom=8.7)
     return figprice
+
+# def create_daily_chart(day_selected):
+#     # Read the sheet from the excel file
+#     df = pd.read_excel("data_set_prepared.xlsx", sheet_name=sheet_names[day_selected])
+#     # Convert the 'TimeString' column to a datetime type
+#     df['TimeString'] = pd.to_datetime(df['TimeString'], format='%H:%M:%S:%f')
+
+#     # Extract the hour from the datetime object
+#     df['hour'] = df['TimeString'].dt.hour
+
+#     # Group the data by hour and sum the usage
+#     grouped_sum = df.groupby('hour').sum(numeric_only=True)
+#     grouped_mean = df.groupby('hour').mean(numeric_only=True)
+#     grouped = grouped_sum/grouped_mean
+#     # Create the bar chart
+#     fig = px.bar(x=grouped.index, y=grouped.iloc[:,0])
+
+#     fig.update_layout(
+#         xaxis_title="Hour",
+#         yaxis_title="Cycle hires",
+#         title=f"Cycle Usage for {sheet_names[day_selected]}"
+#     )
+#     return fig
+
+# # Get the sheet names from the excel file
+# sheet_names = list(pd.read_excel("data_set_prepared.xlsx", sheet_name=None).keys())
+# # Remove the first two sheets from the list
+# sheet_names = sheet_names[2:]
+# # Remove the .xlsx to allow the sheet names to be sorted 
+# sheet_names = [name.rstrip('.xlsx') for name in sheet_names]
+# # Order the sheet names by date
+# sheet_names = sorted(sheet_names, key=lambda x: pd.to_datetime(x, format="%A, %b %d %Y"))
+
+# sheet_title=sheet_names
+# # Add the '.xlsx' backl into the file
+# sheet_names = [name + '.xlsx' for name in sheet_names]
 
 def create_daily_chart(day_selected):
     # Read the sheet from the excel file
@@ -116,6 +152,7 @@ def create_daily_chart(day_selected):
     grouped_sum = df.groupby('hour').sum(numeric_only=True)
     grouped_mean = df.groupby('hour').mean(numeric_only=True)
     grouped = grouped_sum/grouped_mean
+
     # Create the bar chart
     fig = px.bar(x=grouped.index, y=grouped.iloc[:,0])
 
@@ -134,10 +171,43 @@ sheet_names = sheet_names[2:]
 sheet_names = [name.rstrip('.xlsx') for name in sheet_names]
 # Order the sheet names by date
 sheet_names = sorted(sheet_names, key=lambda x: pd.to_datetime(x, format="%A, %b %d %Y"))
-
-sheet_title=sheet_names
-# Add the '.xlsx' backl into the file
+# Add the '.xlsx' back into the file
 sheet_names = [name + '.xlsx' for name in sheet_names]
+
+# Function for the stats panel
+def create_daily_stats(day_selected):
+    df = pd.read_excel("data_set_prepared.xlsx", sheet_name=sheet_names[day_selected])
+    # Convert the 'TimeString' column to a datetime type
+    df['TimeString'] = pd.to_datetime(df['TimeString'], format='%H:%M:%S:%f')
+    # Extract the hour from the datetime object
+    df['hour'] = df['TimeString'].dt.hour
+
+    # Group the data by hour and sum the usage
+    grouped_sum = df.groupby('hour').sum(numeric_only=True)
+    grouped_mean = df.groupby('hour').mean(numeric_only=True)
+    grouped = grouped_sum/grouped_mean
+    # calculate the average usage per hour
+    avg_usage_per_hour = round(grouped.iloc[:, 0].mean(), 2)
+
+    # calculate the total usage for the day
+    total_usage = round(grouped.iloc[:, 0].sum(), 2)
+
+    # create the stats panel
+    stats_panel = dbc.Card(
+        [
+            dbc.CardHeader("Daily Usage Stats"),
+            dbc.CardBody(
+                [
+                    html.P(f"Average Usage per Hour: {avg_usage_per_hour}"),
+                    html.P(f"Total Usage: {total_usage}"),
+                ]
+            ),
+        ],
+        color="dark",
+        inverse=True,
+    )
+
+    return stats_panel
 
 hours=('00:00-06:00','06:00-09:00','09:00-16:00','16:00-19:00','19:00-24:00')
 months=('January','February','March','April','May','June','July','August','September','October','November','December')
@@ -238,7 +308,7 @@ def create_choropleth_pollution_map():
                             featureidkey='properties.name',
                             locations='Borough',
                             center={"lat": 51.5, "lon": -0.1},
-                            zoom=9.3)
+                            zoom=8.85)
     return fig5
 
 
@@ -263,7 +333,7 @@ home_content = html.Div(
             html.Hr(),
             html.P(f'Choropleth Map Showing Pricing Data for Each Borough of London'),
             html.Hr(),
-            dcc.Graph(id='london-map', figure=create_pricing_choropleth_map(hour_selected=0,month_selected=0), style={'width': '1100px', 'height': '500px'}),
+            dcc.Graph(id='london-map', figure=create_pricing_choropleth_map(hour_selected=0,month_selected=0), style={'width': '1100px', 'height': '550px'}),
             dcc.Dropdown(id='hour-dropdown', options=[{'label': hour, 'value': i} for i, hour in enumerate(hours)], value=0),
             dcc.Dropdown(id='month-dropdown', options=[{'label': month, 'value': i} for i, month in enumerate(months)], value=0)
         ],
@@ -282,7 +352,9 @@ tab1_content = html.Div(style={'display': 'flex'}, children=[
         dcc.Graph(id='daily-usage-graph', figure=create_daily_chart(day_selected=0))
     ]),
     html.Div(style={'flex': 0.5, 'padding': 20}, children=[
-        dcc.Dropdown(id='day-dropdown', options=[{'label': sheet_name, 'value': i} for i, sheet_name in enumerate(sheet_names)], value=0)
+        dcc.Dropdown(id='day-dropdown', options=[{'label': sheet_name, 'value': i} for i, sheet_name in enumerate(sheet_names)], value=0),
+    html.Br(),
+    html.Div(id="stats-card"),
     ])
     ],
         className="p-3 bg-light rounded-3",
@@ -327,7 +399,7 @@ tab5_content = html.Div(
             html.Hr(),
             html.P(f'Choropleth Map Showing Total Recorded PM 2.5 Particle Data for Each Borough of London'),
             html.Hr(),
-            dcc.Graph(id='london-map', figure=create_choropleth_pollution_map(), style={'width': '1400px', 'height': '800px'})
+            dcc.Graph(id='london-map', figure=create_choropleth_pollution_map(), style={'width': '1100px', 'height': '600px'})
         ],
 )
 
@@ -466,6 +538,13 @@ def render_page_content(pathname):
 )
 def update_graph(day_selected):
     return create_daily_chart(day_selected)
+
+@app.callback(
+    Output("stats-card", "children"),
+    Input("day-dropdown", "value"),
+)
+def update_daily_stats(day_selected):
+    return create_daily_stats(day_selected=day_selected)
 
 @app.callback(
     dash.dependencies.Output('london-map', 'figure'),
