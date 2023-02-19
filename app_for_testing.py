@@ -30,6 +30,7 @@ sheet_names = sorted(sheet_names, key=lambda x: pd.to_datetime(x, format="%A, %b
 sheet_names = [name + '.xlsx' for name in sheet_names]
 
 # src for the gif created by using the free version of the Stripo aplication, ref: https://stripo.email
+# The gif logo was created by Canva
 top_card = dbc.Card(
     [
         dbc.CardImg(src="https://lzqqcs.stripocdn.email/content/guids/CABINET_797e23668dad8bd7e5aee86260d52cc9/images/the_coding_cyclists.gif", top=True),
@@ -214,6 +215,32 @@ def create_monthly_linechart():
 
     return fig3
 
+
+def create_choropleth_pollution_map():
+    # Load data
+    df = pd.read_excel("data_set_prepared.xlsx", sheet_name=0)
+
+    # Group the data by month and average the usage
+    grouped = df.groupby('Borough').sum('Total PM 2.5')
+
+    # Load GeoJSON file
+    with open('london_boroughs.json') as f:
+        geo = json.load(f)
+        
+    # Create a DataFrame with the borough names and usage values
+    data = pd.DataFrame({'Borough': grouped.index, 'Total PM 2.5': grouped.iloc[:, 3]})
+
+    # Create map figure
+    fig5 = px.choropleth_mapbox(data, geojson=geo, color='Total PM 2.5',
+                            color_continuous_scale='RdYlGn_r',
+                            opacity=0.8,
+                            mapbox_style='carto-positron',
+                            featureidkey='properties.name',
+                            locations='Borough',
+                            center={"lat": 51.5, "lon": -0.1},
+                            zoom=8.85)
+    return fig5
+
 hours=('00:00-06:00','06:00-09:00','09:00-16:00','16:00-19:00','19:00-24:00')
 months=('January','February','March','April','May','June','July','August','September','October','November','December')
 
@@ -234,17 +261,17 @@ app.layout = dbc.Container(
         dbc.Col(top_card, width="auto"),
     ]
 ),
-            html.Hr(),
-            html.H2('TFL Cycle Hire Pricing'),
-            html.P("The Coding Cyclists have tackled TFL's cycle hire pricing, masterminding an algorithm to adjust the price of the cycle hire dependent on hourly and monthly cycle hire data, alongside PM 2.5 pollution levels across the boroughs of London. The aim was to create a price map that increases TFL revenue by promoting cycle hire and taking advantage of rush hour prices, as well as, promoting cycle hire in highly polluted boroughs with hopes to reduce pollution across greater London."),
-            html.Hr(),
-            html.P(f'Choropleth Map Showing Pricing Data for Each Borough of London'),
-            dcc.Graph(id='london-map', figure=create_pricing_choropleth_map(hour_selected=0,month_selected=0), style={'width': '1100px', 'height': '550px'}),
-            dcc.Dropdown(id='hour-dropdown', options=[{'label': hour, 'value': i} for i, hour in enumerate(hours)], value=0),
-            html.Br(),
-            dcc.Dropdown(id='month-dropdown', options=[{'label': month, 'value': i} for i, month in enumerate(months)], value=0),
-            html.Br(),
-            html.Br()
+    html.Hr(),
+    html.H2('TFL Cycle Hire Pricing'),
+    html.P("The Coding Cyclists have tackled TFL's cycle hire pricing, masterminding an algorithm to adjust the price of the cycle hire dependent on hourly and monthly cycle hire data, alongside PM 2.5 pollution levels across the boroughs of London. The aim was to create a price map that increases TFL revenue by promoting cycle hire and taking advantage of rush hour prices, as well as, promoting cycle hire in highly polluted boroughs with hopes to reduce pollution across greater London."),
+    html.Hr(),
+    html.P(f'Choropleth Map Showing Pricing Data for Each Borough of London'),
+    dcc.Graph(id='london-map', figure=create_pricing_choropleth_map(hour_selected=0,month_selected=0), style={'width': '1100px', 'height': '550px'}),
+    dcc.Dropdown(id='hour-dropdown', options=[{'label': hour, 'value': i} for i, hour in enumerate(hours)], value=0),
+    html.Br(),
+    dcc.Dropdown(id='month-dropdown', options=[{'label': month, 'value': i} for i, month in enumerate(months)], value=0),
+    html.Br(),
+    html.Br()
            
         ],
 ),
@@ -278,13 +305,12 @@ app.layout = dbc.Container(
 
     html.Div(style={'display': 'flex'}, children=[
     html.Div(style={'flex': 1}, children=[
-    html.Hr(),
     html.P(f'Monthly Data'),
     html.Hr(),
     html.P("The monthly data consists of recorded cycle hire data for every month over multiple years. We used this data to identify and visualize how many cycles were hired in each month over multiple years, averaging the number of cycles for each month over the various years, to identify the average monthly cycle hire usage pattern. This can be viewed in the tab above. We also added a usage versus time line chart, to show the cycle hire trends from the beginning of TFL santander cycle history. This gives indications of monthly/seasonal trends aswell as for example, Covid effects in 2020."),  
     html.Hr(),
     dcc.Graph(figure=create_monthly_barchart()),
-    html.Hr(),
+    html.Br(),
     dcc.Graph(figure=create_monthly_linechart()),
     ]),
    
@@ -292,7 +318,47 @@ app.layout = dbc.Container(
     
         className="p-3 bg-light rounded-3",
     
-    )
+    ),
+
+     html.Br(),
+
+    html.Div(style={'display': 'flex'}, children=[
+    html.Div(style={'flex': 1}, children=[
+    html.P(f'Monthly Data'),
+    html.Hr(),
+    html.P("The monthly data consists of recorded cycle hire data for every month over multiple years. We used this data to identify and visualize how many cycles were hired in each month over multiple years, averaging the number of cycles for each month over the various years, to identify the average monthly cycle hire usage pattern. This can be viewed in the tab above. We also added a usage versus time line chart, to show the cycle hire trends from the beginning of TFL santander cycle history. This gives indications of monthly/seasonal trends aswell as for example, Covid effects in 2020."),  
+    html.Hr(),
+    dcc.Graph(figure=create_monthly_barchart()),
+    html.Br(),
+    dcc.Graph(figure=create_monthly_linechart()),
+    ]),
+   
+    ],
+    
+        className="p-3 bg-light rounded-3",
+    
+    ),
+
+
+    html.Div(style={'display': 'flex'}, children=[
+    html.Div(style={'flex': 1}, children=[
+    html.Hr(),
+    html.P(f'Choropleth Map Showing Total Recorded PM 2.5 Particle Data for Each Borough of London'),
+    html.Hr(),
+    dcc.Graph(id='london-map', figure=create_choropleth_pollution_map(), style={'width': '1100px', 'height': '600px'}),
+    html.Hr(),
+    html.P(f"Bar Chart Showing PM 2.5 Pollution in Each Borough of London"),
+    html.Hr(),
+    dcc.Graph(id='bar-chart2',
+    figure={'data': [{'x': dp.iloc[:,1], 'y': dp.iloc[:,4], 'type': 'bar'}]})
+       
+    ]),
+   
+    ],
+    
+        className="p-3 bg-light rounded-3",
+    
+    ),
     
 
     ]
