@@ -108,5 +108,14 @@ app.layout = dbc.Container(
     ]
 )
 
+@app.callback(
+    dash.dependencies.Output('london-map', 'figure'),
+    [dash.dependencies.Input('hour-dropdown', 'value')],
+    [dash.dependencies.Input('month-dropdown', 'value')]
+)
+def update_pricegraph(hour_selected,month_selected):
+    return create_pricing_choropleth_map(hour_selected,month_selected)
+
+
 if __name__ == '__main__':
     app.run_server(debug=True)
