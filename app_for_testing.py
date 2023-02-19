@@ -127,6 +127,40 @@ def create_daily_chart(day_selected):
     )
     return fig
 
+def create_daily_stats(day_selected):
+    df = pd.read_excel("data_set_prepared.xlsx", sheet_name=sheet_names[day_selected])
+    # Convert the 'TimeString' column to a datetime type
+    df['TimeString'] = pd.to_datetime(df['TimeString'], format='%H:%M:%S:%f')
+    # Extract the hour from the datetime object
+    df['hour'] = df['TimeString'].dt.hour
+
+    # Group the data by hour and sum the usage
+    grouped_sum = df.groupby('hour').sum(numeric_only=True)
+    grouped_mean = df.groupby('hour').mean(numeric_only=True)
+    grouped = grouped_sum/grouped_mean
+    # calculate the average usage per hour
+    avg_usage_per_hour = round(grouped.iloc[:, 0].mean(), 2)
+
+    # calculate the total usage for the day
+    total_usage = round(grouped.iloc[:, 0].sum(), 2)
+
+    # create the stats panel
+    stats_panel = dbc.Card(
+        [
+            dbc.CardHeader("Daily Usage Stats"),
+            dbc.CardBody(
+                [
+                    html.P(f"Average Usage per Hour: {avg_usage_per_hour}"),
+                    html.P(f"Total Usage: {total_usage}"),
+                ]
+            ),
+        ],
+        color="dark",
+        inverse=True,
+    )
+
+    return stats_panel
+
 hours=('00:00-06:00','06:00-09:00','09:00-16:00','16:00-19:00','19:00-24:00')
 months=('January','February','March','April','May','June','July','August','September','October','November','December')
 
@@ -182,6 +216,22 @@ app.layout = dbc.Container(
 
     ]
 )
+
+
+
+@app.callback(
+    dash.dependencies.Output('daily-usage-graph', 'figure'),
+    [dash.dependencies.Input('day-dropdown', 'value')]
+)
+def update_graph(day_selected):
+    return create_daily_chart(day_selected)
+
+@app.callback(
+    Output("stats-card", "children"),
+    Input("day-dropdown", "value"),
+)
+def update_daily_stats(day_selected):
+    return create_daily_stats(day_selected=day_selected)
 
 @app.callback(
     dash.dependencies.Output('london-map', 'figure'),
