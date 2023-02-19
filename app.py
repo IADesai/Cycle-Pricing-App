@@ -178,11 +178,10 @@ sheet_names = [name + '.xlsx' for name in sheet_names]
 top_card = dbc.Card(
     [
         dbc.CardImg(src="https://lzqqcs.stripocdn.email/content/guids/CABINET_797e23668dad8bd7e5aee86260d52cc9/images/the_coding_cyclists.gif", top=True),
-        dbc.CardBody(
-            html.P("This card has an image at the top", className="card-text")
-        ),
+        
     ],
-    style={"width": "18rem"},
+    style={"width": "12rem"},
+    
 )
 
 
@@ -345,9 +344,7 @@ home_content = html.Div(
            
             html.P("The Coding Cyclists have tackled TFL's cycle hire pricing, masterminding an algorithm to adjust the price of the cycle hire dependent on hourly and monthly cycle hire data, alongside PM 2.5 pollution levels across the boroughs of London. The aim was to create a price map that increases TFL revenue by promoting cycle hire and taking advantage of rush hour prices, as well as, promoting cycle hire in highly polluted boroughs with hopes to reduce pollution across greater London."),
             html.Br(),
-            dbc.Row(
-            [dbc.Col(top_card, width="auto"),
-            ]),
+        
             html.Br(),
             html.Hr(),
             html.P(f'Choropleth Map Showing Pricing Data for Each Borough of London'),
@@ -437,6 +434,10 @@ sidebar = html.Div(
         html.P(
             "TFL Cycle Hire Pricing Data Made Easy", className="lead"
         ),
+        dbc.Row(
+            [dbc.Col(top_card, width="auto"),
+            ]),
+        html.Br(),
         dbc.Nav(
             [
                 dbc.NavLink("Home", href="/", active="exact"),
