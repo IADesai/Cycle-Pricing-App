@@ -29,7 +29,7 @@ sheet_names = sorted(sheet_names, key=lambda x: pd.to_datetime(x, format="%A, %b
 # Add the '.xlsx' back into the file
 sheet_names = [name + '.xlsx' for name in sheet_names]
 
-
+# src for the gif created by using the free version of the Stripo aplication, ref: https://stripo.email
 top_card = dbc.Card(
     [
         dbc.CardImg(src="https://lzqqcs.stripocdn.email/content/guids/CABINET_797e23668dad8bd7e5aee86260d52cc9/images/the_coding_cyclists.gif", top=True),
@@ -171,6 +171,49 @@ def create_daily_stats(day_selected):
 
     return stats_panel
 
+#function for average monthly usage chart
+def create_monthly_barchart():
+    # Read the second sheet of the excel file
+    df = pd.read_excel("data_set_prepared.xlsx", sheet_name=1)
+
+    # Convert the 'Month' column to a datetime type
+    df['Month'] = pd.to_datetime(df['Month'], format='%Y-%m-%d %H:%M:%S')
+
+    # Extract the month from the datetime object
+    df['month'] = df['Month'].dt.month
+
+    # Slice the data frame to exclude the first 18 rows in order to prevent the skewing of the graph
+    df = df.iloc[18:, :]
+
+    # Group the data by month and average the usage
+    grouped = df.groupby('month').mean()
+
+    # Create the bar chart
+    fig2 = px.bar(x=grouped.index, y=grouped.iloc[:, 1])
+
+    fig2.update_layout(
+        xaxis_title="Month",
+        yaxis_title="Average Usage",
+        xaxis = dict(
+        tickmode = 'array',
+        tickvals = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+        ticktext = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    ))
+    return fig2
+
+#function for a monehtly line chart
+def create_monthly_linechart():
+
+    df = pd.read_excel("data_set_prepared.xlsx", sheet_name=1)
+
+    fig3 = px.line(df, x="Month", y="Number of Bicycle Hires.1")
+    fig3.update_layout(
+        xaxis_title="Time(year)",
+        yaxis_title="Average Usage"
+    )
+
+    return fig3
+
 hours=('00:00-06:00','06:00-09:00','09:00-16:00','16:00-19:00','19:00-24:00')
 months=('January','February','March','April','May','June','July','August','September','October','November','December')
 
@@ -202,17 +245,16 @@ app.layout = dbc.Container(
             dcc.Dropdown(id='month-dropdown', options=[{'label': month, 'value': i} for i, month in enumerate(months)], value=0),
             html.Br(),
             html.Br()
-            
-            
-    
            
         ],
 ),
+
+
+   
+       
     html.Div(style={'display': 'flex'}, children=[
     html.Div(style={'flex': 1}, children=[
     html.Br(),
-    html.Hr(),
-    html.Hr(),
     html.P(f'Daily Data'),
     html.Hr(),
     html.P("The daily data consists of recorded cycle hire data for every day in an entire month. We used this data to identify and visualize how many cycles were hired per hour of the day for each day in the month and then created a chart with the average of the entire month, to identify the average daily cycle hire pattern. This can be viewed in the tab above, where a selector can be used to view the data for each day. If you choose Monday and compare it to a Sunday for example, we see that the trends are slightly different. This can be seen throughout the month, where weekends have unusual patterns as opposed to working week days. This is only one of many trends visible."),
@@ -224,6 +266,28 @@ app.layout = dbc.Container(
     html.Br(),
     html.Div(id="stats-card"),
     ])
+    ],
+    
+        className="p-3 bg-light rounded-3",
+    
+    ),
+
+
+    html.Br(),
+
+
+    html.Div(style={'display': 'flex'}, children=[
+    html.Div(style={'flex': 1}, children=[
+    html.Hr(),
+    html.P(f'Monthly Data'),
+    html.Hr(),
+    html.P("The monthly data consists of recorded cycle hire data for every month over multiple years. We used this data to identify and visualize how many cycles were hired in each month over multiple years, averaging the number of cycles for each month over the various years, to identify the average monthly cycle hire usage pattern. This can be viewed in the tab above. We also added a usage versus time line chart, to show the cycle hire trends from the beginning of TFL santander cycle history. This gives indications of monthly/seasonal trends aswell as for example, Covid effects in 2020."),  
+    html.Hr(),
+    dcc.Graph(figure=create_monthly_barchart()),
+    html.Hr(),
+    dcc.Graph(figure=create_monthly_linechart()),
+    ]),
+   
     ],
     
         className="p-3 bg-light rounded-3",
