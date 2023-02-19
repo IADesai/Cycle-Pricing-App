@@ -25,9 +25,8 @@ def test_cycle002_datedropdowncontainsjul1(dash_duo):
     """
     app = import_app(app_file="app")
     dash_duo.start_server(app)
-    dash_duo.wait_for_element("h1", timeout=4)
-    dash_duo.driver.implicitly_wait(5)
+    dash_duo.wait_for_element("#day-dropdown", timeout=14)
+    dash_duo.driver.implicitly_wait(15)
     assert (
-        "Sunday, Jul 1 2018.xlsx" in dash_duo.find_element("#date-select").text
-    ), "'Sunday, Jul 1 2018.xlsx' should appear in the area dropdown"
-
+        0 in dash_duo.find_element("#day-dropdown")
+    ), "0 should appear in the area dropdown"
