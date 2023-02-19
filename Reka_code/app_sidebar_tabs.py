@@ -13,6 +13,7 @@ import dash_bootstrap_components as dbc
 from dash import Input, Output, dcc, html
 from dash import dcc
 import pandas as pd
+import plotly.express as px
 
 df = pd.read_excel("data_set_prepared.xlsx", sheet_name=1)
 dp = pd.read_excel("data_set_prepared.xlsx", sheet_name=0)
