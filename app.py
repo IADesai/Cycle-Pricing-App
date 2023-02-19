@@ -100,7 +100,7 @@ def create_pricing_choropleth_map(hour_selected,month_selected):
                             featureidkey='properties.name',
                             locations='Borough',
                             center={"lat": 51.4933, "lon": -0.1},
-                            zoom=9.2)
+                            zoom=8)
     return figprice
 
 def create_daily_chart(day_selected):
@@ -263,7 +263,7 @@ home_content = html.Div(
             html.Hr(),
             html.P(f'Choropleth Map Showing Pricing Data for Each Borough of London'),
             html.Hr(),
-            dcc.Graph(id='london-map', figure=create_pricing_choropleth_map(hour_selected=0,month_selected=0), style={'width': '1600px', 'height': '700px'}),
+            dcc.Graph(id='london-map', figure=create_pricing_choropleth_map(hour_selected=0,month_selected=0), style={'width': '1100px', 'height': '500px'}),
             dcc.Dropdown(id='hour-dropdown', options=[{'label': hour, 'value': i} for i, hour in enumerate(hours)], value=0),
             dcc.Dropdown(id='month-dropdown', options=[{'label': month, 'value': i} for i, month in enumerate(months)], value=0)
         ],
@@ -618,4 +618,4 @@ def update_pricegraph(hour_selected,month_selected):
 
 
 if __name__ == "__main__":
-    app.run_server(port=8889)
+    app.run_server(port=8050)
