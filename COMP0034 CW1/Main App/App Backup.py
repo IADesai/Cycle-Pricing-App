@@ -44,40 +44,40 @@ def create_pricing_choropleth_map(hour_selected,month_selected):
         geo = json.load(f)
 
     if hour_selected==1:
-        multiplier = 2.0
+        multiplier = 0.8
     elif hour_selected==2:
-        multiplier = 1.5
+        multiplier = 1.4
     elif hour_selected==3:
-        multiplier = 1.0
+        multiplier = 0.9
     elif hour_selected==4:
         multiplier = 1.0
     else:
-        multiplier = 1.2
+        multiplier = 0.85
 
     if month_selected==1:
-        multiplier2 = 2.0
+        multiplier2 = 0.9
     elif month_selected==2:
-        multiplier2 = 1.5
+        multiplier2 = 0.9
     elif month_selected==3:
         multiplier2 = 1.0
     elif month_selected==4:
         multiplier2 = 1.0
     elif month_selected==5:
-        multiplier2 = 1.0
+        multiplier2 = 1.1
     elif month_selected==6:
-        multiplier2 = 1.5
+        multiplier2 = 1.2
     elif month_selected==7:
-        multiplier2 = 1.0
+        multiplier2 = 1.3
     elif month_selected==8:
-        multiplier2 = 1.0
+        multiplier2 = 1.2
     elif month_selected==9:
-        multiplier2 = 1.0
+        multiplier2 = 1.1
     elif month_selected==10:
-        multiplier2 = 1.5
+        multiplier2 = 1.0
     elif month_selected==11:
         multiplier2 = 1.0
     else:
-        multiplier2 = 1.2
+        multiplier2 = 0.9
     
     for i in range(0,33):
         if  grouped.iloc[i, 3]> 0 and grouped.iloc[i, 3] < 25:
@@ -90,7 +90,7 @@ def create_pricing_choropleth_map(hour_selected,month_selected):
             grouped.iloc[i, 3]=1.00 * multiplier * multiplier2
 
     # Create a DataFrame with the borough names and usage values
-    data = pd.DataFrame({'Borough': grouped.index, 'Cycle Hire Price (£/30min)': grouped.iloc[:, 3]})
+    data = pd.DataFrame({'Borough': grouped.index, 'Cycle Hire Price (£/30min)': round(grouped.iloc[:, 3], 2)})
 
     # Create map figure
     figprice = px.choropleth_mapbox(data, geojson=geo, color='Cycle Hire Price (£/30min)',
@@ -717,5 +717,3 @@ def update_pricegraph(hour_selected,month_selected):
 
 if __name__ == "__main__":
     app.run_server(port=8050)
-# if __name__ == '__main__':
-#     app.run_server(debug=True)
