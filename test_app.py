@@ -61,6 +61,25 @@ def test_cycle003_monthdropdowncontainsjanuary(dash_duo):
 #         "February" in dash_duo.find_element("#month-select").text
 #     ), "'February' should appear in the month dropdown"
 
+# def test_cycle004_monthdropdownchangesdropdown(dash_duo):
+#     """
+#     GIVEN the recycle Dash app is running
+#     WHEN the area dropdown is changed to Hackney
+#     THEN the card title for the stats panel is also changed to Hackney.
+
+#     Note: using select_dcc_dropdown(elem_or_selector, value=None, index=None) didn't implement the selected value
+#     """
+#     app = import_app(app_file="app_for_testing")
+#     dash_duo.start_server(app)
+#     dash_duo.wait_for_element("#month-dropdown", timeout=4)
+#     select_input = dash_duo.find_element("#month-dropdown")
+#     select_input.send_keys("February")
+#     select_input.send_keys(Keys.RETURN)
+#     dash_duo.driver.implicitly_wait(5)
+#     assert (
+#         "February" in dash_duo.find_element("#month-dropdown").text
+#     ), "'February' should appear in the month dropdown"
+
 def test_cycle004_monthdropdownchangesdropdown(dash_duo):
     """
     GIVEN the recycle Dash app is running
@@ -72,7 +91,7 @@ def test_cycle004_monthdropdownchangesdropdown(dash_duo):
     app = import_app(app_file="app_for_testing")
     dash_duo.start_server(app)
     dash_duo.wait_for_element("#month-dropdown", timeout=4)
-    select_input = dash_duo.find_element("#month-dropdown")
+    select_input = dash_duo.find_element("#month-dropdown input")
     select_input.send_keys("February")
     select_input.send_keys(Keys.RETURN)
     dash_duo.driver.implicitly_wait(5)
