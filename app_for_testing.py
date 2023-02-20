@@ -249,16 +249,16 @@ app.layout = dbc.Container(
     # HTML layout elements here
     children=[
         
-        html.Div(
-        [  html.H1("The Coding Cyclists", className="display-4"),
+        html.Div([
+        # [  html.H1("The Coding Cyclists", className="display-4"),
            
-           html.P(
-            "TFL Cycle Hire Pricing Data Made Easy", className="lead"
-            ),
+        #    html.P(
+        #     "TFL Cycle Hire Pricing Data Made Easy", className="lead"
+        #     ),
         
     dbc.Row(
     [
-        dbc.Col(top_card, width="auto"),
+        dbc.Col(top_card,  width={"size": 6, "offset": 4}),
     ]
 ),
     html.Hr(),
@@ -342,7 +342,8 @@ app.layout = dbc.Container(
     html.P(f"Bar Chart Showing PM 2.5 Pollution in Each Borough of London"),
     dcc.Graph(id='bar-chart2',
     figure={'data': [{'x': dp.iloc[:,1], 'y': dp.iloc[:,4], 'type': 'bar'}]}),
-    html.Br()   
+    html.Br()
+
     ]),
    
     ],
