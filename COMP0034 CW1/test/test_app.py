@@ -15,14 +15,14 @@ def test_cycle001_h1_text_equals(dash_duo, app):
     h1_text = dash_duo.find_element("h1").text
     assert h1_text.casefold() == "The Coding Cyclists".casefold()
 
-def test_cycle002_h2_text_equals(dash_duo):
+def test_cycle002_h2_text_equals(dash_duo, app):
     """
     GIVEN the app is running
     WHEN the home page is available
     THEN the H2 heading element should include the text 'TFL Cycle Hire Pricing' (not case sensitive)
     """
-    app = import_app(app_file="app_for_testing")
-    dash_duo.start_server(app)
+    #app = import_app(app_file="app_for_testing")
+    #dash_duo.start_server(app)
     dash_duo.wait_for_element("h2", timeout=4)
     h1_text = dash_duo.find_element("h2").text
     assert h1_text.casefold() == "TFL Cycle Hire Pricing".casefold()
