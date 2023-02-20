@@ -267,8 +267,10 @@ app.layout = dbc.Container(
     html.Hr(),
     html.P(f'Choropleth Map Showing Pricing Data for Each Borough of London'),
     dcc.Graph(id='london-map', figure=create_pricing_choropleth_map(hour_selected=0,month_selected=0), style={'width': '1100px', 'height': '550px'}),
+    html.P("Time of Day (24 Hour Clock):"),
     dcc.Dropdown(id='hour-dropdown', options=[{'label': hour, 'value': i} for i, hour in enumerate(hours)], value=0),
     html.Br(),
+    html.P("Month of Year:"),
     dcc.Dropdown(id='month-dropdown', options=[{'label': month, 'value': i} for i, month in enumerate(months)], value=0),
     html.Br(),
     html.Br()
