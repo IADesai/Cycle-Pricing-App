@@ -25,9 +25,22 @@ import json
 import dash_bootstrap_components as dbc
 from dash import Input, Output, dcc, html
 from dash import dcc
+from pathLib import Path
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
+
+cwd=Path.cwd()
+
+prepared_data_path = (
+        cwd
+        / "data_set_prepared.xlsx"
+    )
+
+json_path=(
+    cwd
+    / 'london_boroughs.json'
+)
 
 df = pd.read_excel("data_set_prepared.xlsx", sheet_name=1)
 dp = pd.read_excel("data_set_prepared.xlsx", sheet_name=0)
