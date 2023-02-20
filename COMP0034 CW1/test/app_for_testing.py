@@ -6,6 +6,7 @@ from dash import dcc
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
+from pathlib import Path
 
 
 app = dash.Dash(
@@ -15,11 +16,17 @@ app = dash.Dash(
     ],
 )
 
-df = pd.read_excel("data_set_prepared.xlsx", sheet_name=1)
-dp = pd.read_excel("data_set_prepared.xlsx", sheet_name=0)
+cwd = Path(__file__).resolve().parent.parent
+
+excel_file_path = cwd / "data_set_prepared.xlsx"
+
+json_file_path = cwd / "london_boroughs.json"
+
+df = pd.read_excel(excel_file_path, sheet_name=1)
+dp = pd.read_excel(excel_file_path, sheet_name=0)
 
 # Get the sheet names from the excel file
-sheet_names = list(pd.read_excel("data_set_prepared.xlsx", sheet_name=None).keys())
+sheet_names = list(pd.read_excel(excel_file_path, sheet_name=None).keys())
 # Remove the first two sheets from the list
 sheet_names = sheet_names[2:]
 # Remove the .xlsx to allow the sheet names to be sorted 
@@ -44,13 +51,13 @@ top_card = dbc.Card(
 
 def create_pricing_choropleth_map(hour_selected,month_selected):
     # Load data
-    df = pd.read_excel("data_set_prepared.xlsx", sheet_name=0)
+    df = pd.read_excel(excel_file_path, sheet_name=0)
 
     # Group the data by month and average the usage
     grouped = df.groupby('Borough').sum('Total PM 2.5')
 
     # Load GeoJSON file
-    with open('london_boroughs.json') as f:
+    with open(json_file_path) as f:
         geo = json.load(f)
 
     if hour_selected==1:
@@ -116,7 +123,7 @@ def create_pricing_choropleth_map(hour_selected,month_selected):
 
 def create_daily_chart(day_selected):
     # Read the sheet from the excel file
-    df = pd.read_excel("data_set_prepared.xlsx", sheet_name=sheet_names[day_selected])
+    df = pd.read_excel(excel_file_path, sheet_name=sheet_names[day_selected])
     # Convert the 'TimeString' column to a datetime type
     df['TimeString'] = pd.to_datetime(df['TimeString'], format='%H:%M:%S:%f')
 
@@ -139,7 +146,7 @@ def create_daily_chart(day_selected):
     return fig
 
 def create_daily_stats(day_selected):
-    df = pd.read_excel("data_set_prepared.xlsx", sheet_name=sheet_names[day_selected])
+    df = pd.read_excel(excel_file_path, sheet_name=sheet_names[day_selected])
     # Convert the 'TimeString' column to a datetime type
     df['TimeString'] = pd.to_datetime(df['TimeString'], format='%H:%M:%S:%f')
     # Extract the hour from the datetime object
@@ -175,7 +182,7 @@ def create_daily_stats(day_selected):
 #function for average monthly usage chart
 def create_monthly_barchart():
     # Read the second sheet of the excel file
-    df = pd.read_excel("data_set_prepared.xlsx", sheet_name=1)
+    df = pd.read_excel(excel_file_path, sheet_name=1)
 
     # Convert the 'Month' column to a datetime type
     df['Month'] = pd.to_datetime(df['Month'], format='%Y-%m-%d %H:%M:%S')
@@ -205,7 +212,7 @@ def create_monthly_barchart():
 #function for a monehtly line chart
 def create_monthly_linechart():
 
-    df = pd.read_excel("data_set_prepared.xlsx", sheet_name=1)
+    df = pd.read_excel(excel_file_path, sheet_name=1)
 
     fig3 = px.line(df, x="Month", y="Number of Bicycle Hires.1")
     fig3.update_layout(
@@ -218,13 +225,13 @@ def create_monthly_linechart():
 
 def create_choropleth_pollution_map():
     # Load data
-    df = pd.read_excel("data_set_prepared.xlsx", sheet_name=0)
+    df = pd.read_excel(excel_file_path, sheet_name=0)
 
     # Group the data by month and average the usage
     grouped = df.groupby('Borough').sum('Total PM 2.5')
 
     # Load GeoJSON file
-    with open('london_boroughs.json') as f:
+    with open(json_file_path) as f:
         geo = json.load(f)
         
     # Create a DataFrame with the borough names and usage values
