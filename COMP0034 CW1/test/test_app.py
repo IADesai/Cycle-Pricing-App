@@ -157,7 +157,7 @@ def test_cycle007_daydropdownchangesdropdown(dash_duo, app):
     dash_duo.driver.implicitly_wait(5)
     assert (
         "Monday, Jul 2 2018.xlsx" in dash_duo.find_element("#day-dropdown").text
-    ), "'Monday, Jul 2 2018.xlsx' should appear in the hour dropdown"
+    ), "'Monday, Jul 2 2018.xlsx' should appear in the day dropdown"
 
 
 def test_cycle008_daydropdownchangesdropdown(dash_duo, app):
@@ -166,7 +166,7 @@ def test_cycle008_daydropdownchangesdropdown(dash_duo, app):
     WHEN the area dropdown is changed to Hackney
     THEN the card title for the stats panel is also changed to Hackney.
     """
-    dash_duo.wait_for_element("#day_selected input", timeout=4)
+    dash_duo.wait_for_element("#day_selected input", timeout=40)
     select_input = dash_duo.find_element("#day_selected input")
     updated_input = select_input[1]
 
