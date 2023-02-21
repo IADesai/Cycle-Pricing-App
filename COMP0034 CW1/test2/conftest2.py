@@ -13,7 +13,7 @@ def pytest_setup_options():
     return options
 
 @pytest.fixture(scope="function")
-def app(dash_duo):
+def app2(dash_duo):
     #app = import_app("dashapp.dashboard")
-    test_app = import_app(app_file="app2")
-    yield dash_duo.start_server(test_app)
+    test_app_2 = import_app(app_file="app2")
+    yield dash_duo.start_server(test_app_2)
