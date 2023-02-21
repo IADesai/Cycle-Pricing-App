@@ -314,7 +314,7 @@ def create_choropleth_pollution_map():
     grouped = df.groupby('Borough').sum('Total PM 2.5')
 
     # Load GeoJSON file
-    with open('london_boroughs.json') as f:
+    with open(json_file_path) as f:
         geo = json.load(f)
         
     # Create a DataFrame with the borough names and usage values
