@@ -166,7 +166,7 @@ def test_cycle008_daydropdownchangesdropdown(dash_duo, app):
     WHEN the area dropdown is changed to Hackney
     THEN the card title for the stats panel is also changed to Hackney.
     """
-    dash_duo.wait_for_element("#day-dropdown input", timeout=40)
+    dash_duo.wait_for_element("#day-dropdown", timeout=40)
     select_input = dash_duo.find_element("#day-dropdown input")
     updated_input = select_input[1]
 
