@@ -35,8 +35,8 @@ def test_cycle001_h2_text_equals(dash_duo, app):
     THEN the H2 heading element should include the text 'TFL Cycle Hire Pricing' (not case sensitive)
     """
     dash_duo.wait_for_element("h2", timeout=4)
-    h1_text = dash_duo.find_element("h2").text
-    assert h1_text.casefold() == "Choropleth Map Showing Pricing Data for Each Borough of London".casefold()
+    h2_text = dash_duo.find_element("h2").text
+    assert h2_text.casefold() == "Choropleth Map Showing Pricing Data for Each Borough of London".casefold()
 
 
 def test_cycle002_h2_text_equals_2(dash_duo, app):
@@ -46,6 +46,6 @@ def test_cycle002_h2_text_equals_2(dash_duo, app):
     THEN the H2 heading element should include the text 'TFL Cycle Hire Pricing' (not case sensitive)
     """
     dash_duo.wait_for_element("h2", timeout=4)
-    h1_text = dash_duo.find_element("h2").text
-    assert h1_text.casefold() == "Month of Year:".casefold()
+    h2_text_2 = dash_duo.find_element("h2").text
+    assert h2_text_2.casefold() == "Month of Year:".casefold()
     
