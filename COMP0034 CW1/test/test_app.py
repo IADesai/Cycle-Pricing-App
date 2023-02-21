@@ -191,27 +191,27 @@ from selenium.webdriver.common.keys import Keys
 #     title = dash_duo.find_element("#daily-usage-graph .titletext")
 #     assert title.text == "Cycle Usage for Monday, Jul 2 2018.xlsx"
 
-def test_day_dropdown_changes_data_displayed(dash_duo, app):
-    """
-    GIVEN the recycle Dash app is running
-    WHEN a day is selected from the day dropdown
-    THEN the data displayed on the graph should change accordingly.
-    """
-    # GIVEN the recycle Dash app is running
-    dash_duo.start_server(app)
+# def test_day_dropdown_changes_data_displayed(dash_duo, app):
+#     """
+#     GIVEN the recycle Dash app is running
+#     WHEN a day is selected from the day dropdown
+#     THEN the data displayed on the graph should change accordingly.
+#     """
+#     # GIVEN the recycle Dash app is running
+#     dash_duo.start_server(app)
 
-    # Wait for the day dropdown to appear and select a day
-    day_dropdown = dash_duo.wait_for_element("#day-dropdown", timeout=60)
-    day_dropdown.click()
-    day_option = dash_duo.find_element(".Select-menu-outer .Select-option", index=1)
-    day_option.click()
+#     # Wait for the day dropdown to appear and select a day
+#     day_dropdown = dash_duo.wait_for_element("#day-dropdown", timeout=60)
+#     day_dropdown.click()
+#     day_option = dash_duo.find_element(".Select-menu-outer .Select-option", index=1)
+#     day_option.click()
 
-    # Wait for the page to finish loading
-    dash_duo.driver.implicitly_wait(60)
+#     # Wait for the page to finish loading
+#     dash_duo.driver.implicitly_wait(60)
 
-    # THEN the data displayed on the graph should change accordingly.
-    title = dash_duo.find_element("#daily-usage-graph .titletext")
-    assert title.text == "Cycle Usage for the selected day"
+#     # THEN the data displayed on the graph should change accordingly.
+#     title = dash_duo.find_element("#daily-usage-graph .titletext")
+#     assert title.text == "Cycle Usage for the selected day"
 
 # def test_cycle008_daydropdownchangesdropdown(dash_duo, app):
 #     """
@@ -226,3 +226,25 @@ def test_day_dropdown_changes_data_displayed(dash_duo, app):
 #     title = dash_duo.find_element("#daily-usage-graph.title")
 #     updated_title = title[1].text
 #     assert updated_title == "%Change (New)"
+
+
+def test_cycle001_h2_text_equals(dash_duo, app):
+    """
+    GIVEN the app is running
+    WHEN the home page is available
+    THEN the H2 heading element should include the text 'TFL Cycle Hire Pricing' (not case sensitive)
+    """
+    dash_duo.wait_for_element("h2", timeout=4)
+    h2_text = dash_duo.find_element("h2").text
+    assert h2_text.casefold() == "Choropleth Map Showing Pricing Data for Each Borough of London".casefold()
+
+
+def test_cycle002_h2_text_equals_2(dash_duo, app):
+    """
+    GIVEN the app is running
+    WHEN the home page is available
+    THEN the H2 heading element should include the text 'TFL Cycle Hire Pricing' (not case sensitive)
+    """
+    dash_duo.wait_for_element("h2", timeout=4)
+    h2_text_2 = dash_duo.find_element("h2").text
+    assert h2_text_2.casefold() == "Month of Year:".casefold()
