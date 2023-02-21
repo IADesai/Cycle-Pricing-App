@@ -269,7 +269,7 @@ app.layout = dbc.Container(
     ]
 ),
     html.Hr(),
-    html.H2('TFL Cycle Hire Pricing'),
+    html.H1('TFL Cycle Hire Pricing'),
     html.P("The Coding Cyclists have tackled TFL's cycle hire pricing, masterminding an algorithm to adjust the price of the cycle hire dependent on hourly and monthly cycle hire data, alongside PM 2.5 pollution levels across the boroughs of London. The aim was to create a price map that increases TFL revenue by promoting cycle hire and taking advantage of rush hour prices, as well as, promoting cycle hire in highly polluted boroughs with hopes to reduce pollution across greater London."),
     html.Hr(),
     html.P(f'Choropleth Map Showing Pricing Data for Each Borough of London'),
