@@ -277,7 +277,7 @@ app.layout = dbc.Container(
     html.P("Time of Day (24 Hour Clock):"),
     dcc.Dropdown(id='hour-dropdown', options=[{'label': hour, 'value': i} for i, hour in enumerate(hours)], value=0),
     html.Br(),
-    html.H2("Month of Year:"),
+    html.P("Month of Year:"),
     dcc.Dropdown(id='month-dropdown', options=[{'label': month, 'value': i} for i, month in enumerate(months)], value=0),
     html.Br(),
     html.Br()
