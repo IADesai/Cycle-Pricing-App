@@ -113,7 +113,26 @@ def test_cycle005_hourdropdowncontains00_06(dash_duo, app):
         "00:00-06:00" in dash_duo.find_element("#hour-dropdown").text
     ), "'00:00-06:00' should appear in the hour dropdown"
 
-def test_cycle006_daydropdowncontainsjul1(dash_duo, app):
+def test_cycle006_hourdropdownchangesdropdown(dash_duo, app):
+    """
+    GIVEN the recycle Dash app is running
+    WHEN the area dropdown is changed to Hackney
+    THEN the card title for the stats panel is also changed to Hackney.
+
+    Note: using select_dcc_dropdown(elem_or_selector, value=None, index=None) didn't implement the selected value
+    """
+    #app = import_app(app_file="app_for_testing")
+    #dash_duo.start_server(app)
+    dash_duo.wait_for_element("#hour-dropdown", timeout=4)
+    select_input = dash_duo.find_element("#hour-dropdown input")
+    select_input.send_keys("06:00-09:00")
+    select_input.send_keys(Keys.RETURN)
+    dash_duo.driver.implicitly_wait(5)
+    assert (
+        "06:00-09:00" in dash_duo.find_element("#hour-dropdown").text
+    ), "'06:00-09:00' should appear in the hour dropdown"
+
+def test_cycle007_daydropdowncontainsjul1(dash_duo, app):
     """
     GIVEN the Dash app is running
     WHEN the Daily data page has loaded
@@ -127,3 +146,22 @@ def test_cycle006_daydropdowncontainsjul1(dash_duo, app):
         "Sunday, Jul 1 2018.xlsx" in dash_duo.find_element("#day-dropdown").text
     ), "'Sunday, Jul 1 2018.xlsx' should appear in the daydropdown"
 
+
+def test_cycle008_daydropdownchangesdropdown(dash_duo, app):
+    """
+    GIVEN the recycle Dash app is running
+    WHEN the area dropdown is changed to Hackney
+    THEN the card title for the stats panel is also changed to Hackney.
+
+    Note: using select_dcc_dropdown(elem_or_selector, value=None, index=None) didn't implement the selected value
+    """
+    #app = import_app(app_file="app_for_testing")
+    #dash_duo.start_server(app)
+    dash_duo.wait_for_element("#day-dropdown", timeout=4)
+    select_input = dash_duo.find_element("#day-dropdown input")
+    select_input.send_keys("Monday, Jul 2 2018.xlsx")
+    select_input.send_keys(Keys.RETURN)
+    dash_duo.driver.implicitly_wait(5)
+    assert (
+        "Monday, Jul 2 2018.xlsx" in dash_duo.find_element("#day-dropdown").text
+    ), "'Monday, Jul 2 2018.xlsx' should appear in the hour dropdown"
