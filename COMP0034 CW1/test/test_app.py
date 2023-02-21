@@ -173,6 +173,21 @@ def test_cycle008_daydropdownchangesdropdown(dash_duo, app):
 #    updated_input = dash_duo.find_element("#day-dropdown input")[1]
     updated_input.click()
     dash_duo.driver.implicitly_wait(50)
-    legend = dash_duo.find_element("#daily-usage-graph.legendtext")
-    updated_legend = legend[1].text
+    title = dash_duo.find_element("#daily-usage-graph.titletext")
+    updated_legend = title[1].text
     assert updated_legend == "%Change (New)"
+
+
+def test_cycle009_daydropdownchangesdropdown(dash_duo, app):
+    """
+    GIVEN the recycle Dash app is running
+    WHEN the area dropdown is changed to Hackney
+    THEN the card title for the stats panel is also changed to Hackney.
+    """
+    dash_duo.wait_for_element("#day-dropdown", timeout=4)
+    select_input = dash_duo.find_element("#day-dropdown input")
+    select_input.send_keys("Monday, Jul 2 2018.xlsx")
+    select_input.send_keys(Keys.RETURN)
+    dash_duo.driver.implicitly_wait(5)
+    title = dash_duo.find_element("#daily-usage-graph.titletext")
+    assert title == "Monday, Jul 2 2018.xlsx"
