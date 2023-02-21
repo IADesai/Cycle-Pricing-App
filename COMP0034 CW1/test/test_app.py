@@ -23,8 +23,8 @@ def test_cycle001_h1_text_equals(dash_duo, app):
     """
     #app = import_app(app_file="app_for_testing")
     #dash_duo.start_server(app)
-    dash_duo.wait_for_element("P", timeout=4)
-    h1_text = dash_duo.find_element("P").text
+    dash_duo.wait_for_element("H2", timeout=4)
+    h1_text = dash_duo.find_element("H2").text
     assert h1_text.casefold() == "Month of Year:".casefold()
 
 
