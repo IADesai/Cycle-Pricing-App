@@ -39,13 +39,13 @@ def test_cycle001_h2_text_equals(dash_duo, app):
     assert h2_text.casefold() == "Choropleth Map Showing Pricing Data for Each Borough of London".casefold()
 
 
-def test_cycle002_h2_text_equals_2(dash_duo, app):
+def test_cycle002_h3_text_equals(dash_duo, app):
     """
     GIVEN the app is running
     WHEN the home page is available
     THEN the H2 heading element should include the text 'TFL Cycle Hire Pricing' (not case sensitive)
     """
-    dash_duo.wait_for_element("h2", timeout=4)
-    h2_text_2 = dash_duo.find_element("h2").text
-    assert h2_text_2.casefold() == "Month of Year:".casefold()
+    dash_duo.wait_for_element("h3", timeout=4)
+    h3_text = dash_duo.find_element("h3").text
+    assert h3_text.casefold() == "Month of Year:".casefold()
     
