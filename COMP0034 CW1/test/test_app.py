@@ -1,5 +1,6 @@
 from dash.testing.application_runners import import_app
 from selenium.webdriver.common.keys import Keys
+
 # py -m pytest -v
 
 
@@ -162,9 +163,7 @@ def test_cycle007_daydropdownchangesdropdown(dash_duo, app):
 
 def test_cycle008_daydropdownchangesdropdown(dash_duo, app):
     """
-    GIVEN the recycle Dash app is running
-    WHEN the area dropdown is changed to Hackney
-    THEN the card title for the stats panel is also changed to Hackney.
+
     """
     dash_duo.wait_for_element("#day-dropdown", timeout=40)
     select_input = dash_duo.find_element("#day-dropdown input")
@@ -174,8 +173,8 @@ def test_cycle008_daydropdownchangesdropdown(dash_duo, app):
     updated_input.click()
     dash_duo.driver.implicitly_wait(50)
     title = dash_duo.find_element("#daily-usage-graph.title")
-    updated_legend = title[1].text
-    assert updated_legend == "%Change (New)"
+    updated_title = title[1].text
+    assert updated_title == "%Change (New)"
 
 
 def test_cycle009_daydropdownchangesdropdown(dash_duo, app):
@@ -191,3 +190,17 @@ def test_cycle009_daydropdownchangesdropdown(dash_duo, app):
     dash_duo.driver.implicitly_wait(5)
     title = dash_duo.find_element("#daily-usage-graph.titletext")
     assert title == "Cycle Usage for Monday, Jul 2 2018.xlsx"
+
+# def test_cycle008_daydropdownchangesdropdown(dash_duo, app):
+#     """
+#     Test that the daily usage chart updates when a different day is selected from the dropdown.
+#     """
+#     dash_duo.wait_for_element("#day-dropdown", timeout=40)
+#     select_input = dash_duo.find_element("#day-dropdown input")
+#     updated_input = select_input[1]
+#     dash_duo.driver.execute_script("arguments[0].scrollIntoView();", updated_input)
+#     updated_input.click()
+#     dash_duo.driver.implicitly_wait(50)
+#     title = dash_duo.find_element("#daily-usage-graph.title")
+#     updated_title = title[1].text
+#     assert updated_title == "%Change (New)"
