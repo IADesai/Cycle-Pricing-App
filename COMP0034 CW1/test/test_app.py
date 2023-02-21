@@ -168,9 +168,11 @@ def test_cycle008_daydropdownchangesdropdown(dash_duo, app):
     """
     dash_duo.wait_for_element("#day-dropdown input", timeout=4)
     select_input = dash_duo.find_element("#day-dropdown input")
-    updated_input = dash_duo.find_element("#day-dropdown input")[1]
+    updated_input = select_input[1]
+
+#    updated_input = dash_duo.find_element("#day-dropdown input")[1]
     updated_input.click()
     dash_duo.driver.implicitly_wait(50)
-    legend = dash_duo.find_element("#daily-usage-graph .legendtext")
+    legend = dash_duo.find_element("#daily-usage-graph.legendtext")
     updated_legend = legend[1].text
     assert updated_legend == "%Change (New)"
