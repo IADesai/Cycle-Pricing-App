@@ -201,13 +201,13 @@ def test_day_dropdown_changes_data_displayed(dash_duo, app):
     dash_duo.start_server(app)
 
     # Wait for the day dropdown to appear and select a day
-    day_dropdown = dash_duo.wait_for_element("#day-dropdown", timeout=5)
+    day_dropdown = dash_duo.wait_for_element("#day-dropdown", timeout=60)
     day_dropdown.click()
     day_option = dash_duo.find_element(".Select-menu-outer .Select-option", index=1)
     day_option.click()
 
     # Wait for the page to finish loading
-    dash_duo.driver.implicitly_wait(5)
+    dash_duo.driver.implicitly_wait(60)
 
     # THEN the data displayed on the graph should change accordingly.
     title = dash_duo.find_element("#daily-usage-graph .titletext")

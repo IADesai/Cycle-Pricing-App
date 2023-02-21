@@ -300,6 +300,16 @@ app.layout = dbc.Container(
     html.Div(style={'flex': 0.5, 'padding': 20}, children=[
     dcc.Dropdown(id='day-dropdown', options=[{'label': sheet_name, 'value': i} for i, sheet_name in enumerate(sheet_names)], value=0),
     html.Br(),
+    html.Br(),
+    html.Br(),
+    html.Br(),
+    html.Br(),
+    html.Br(),
+    html.Br(),
+    html.Br(),
+    html.Br(),
+    html.Br(),
+    html.Br(),
     html.Div(id="stats-card"),
     ])
     ],
