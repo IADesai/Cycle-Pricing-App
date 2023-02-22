@@ -69,10 +69,11 @@ The following functions test if the elements referenced by their given ID equals
  ### Test functions 6-11
 For each dropdown element (month-dropdown, hour-dropdown, day-dropdown) two tests were created, one to test if the intital month, hour and day apper in the dropdowns and the second to see if the dropdown is updated when the monrh, hour or day is changed.
   - `test_cycle006_monthdropdowncontainsjanuary(dash_duo, app)` tests if the month 'January' appers in the month-dropdown, when the corresponding figure (Pricing Data Choropleth Map, id='london-map') is loaded
-  - 
+  - `test_cycle007_monthdropdownchangesdropdown(dash_duo, app)` tests if the month-dropdown is updated when the month 'February' is selected in the dropdown
   - `test_cycle008_hourdropdowncontains00_06(dash_duo, app)` tests if the time period of '00:00-06:00' appers in the hour-dropdown, when the corresponding figure (Pricing Data Choropleth Map, id='london-map') is loaded
-  - kk
+  - `test_cycle009_hourdropdownchangesdropdown(dash_duo, app)` tests if the hour-dropdown is updated when the time period of '06:00-09:00' is selected in the dropdown
   - `test_cycle010_daydropdowncontainsjul1(dash_duo, app)` tests if the day 'Sunday, Jul 1 2018.xlsx' appers in the day-dropdown, when the corresponding figure (Daily data usage figure, id="daily-usage-graph") is loaded
+  - `test_cycle011_daydropdownchangesdropdown(dash_duo, app):` tests if the day-dropdown is updated when the day 'Monday, Jul 2 2018.xlsx' is selected in the dropdown
 
 ## Fixtures
 As all testing functions require the same input for the dash apo, to simplify the code, fixtures can be added to the `conftest.py` code to create a common function which returns the test app.The fixture added to `conftest.py` can be found below.
