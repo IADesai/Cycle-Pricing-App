@@ -130,15 +130,10 @@ With this workflow, all of these tests can now be carried out on the code each t
 ![WhatsApp Image 2023-02-22 at 14 47 24](https://user-images.githubusercontent.com/88077512/220657850-12b0683a-c329-4885-991b-ecfa0ecfaaab.jpeg)
 
 After investigating each build individually after a new commit has been made, we can see how pytest is run and a coverage report is generated for the tested files:
+
 ![WhatsApp Image 2023-02-22 at 15 01 35](https://user-images.githubusercontent.com/88077512/220662124-0d2c6d44-942d-425f-b2b1-7ac784886aa2.jpeg)
-
-
-
-![image](PICTURE OF TESTING WORKFLOW TAB ASWELL AS COVERAGE REPORT)
-
-The GitHub actions workflow also highlights failed tests. The example below is the same failed test as shown previously:
-
 ![WhatsApp Image 2023-02-22 at 15 02 06](https://user-images.githubusercontent.com/88077512/220662167-30792f4e-2085-424e-b64f-714f8c5658c5.jpeg)
 
+The GitHub actions workflow also highlights failed tests. The example below is the same failed test as shown previously:
 
 ![image](PICTURE OF FAILED TEST FROM WORKFLOW TAB)
