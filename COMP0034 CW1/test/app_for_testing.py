@@ -116,6 +116,9 @@ def create_pricing_choropleth_map(hour_selected,month_selected):
                             locations='Borough',
                             center={"lat": 51.4933, "lon": -0.1},
                             zoom=8.7)
+    figprice.update_layout(
+        title = f'Cycle Hire Price for Each Borough of London',
+    )
     return figprice
 
 
@@ -246,6 +249,9 @@ def create_choropleth_pollution_map():
                             locations='Borough',
                             center={"lat": 51.5, "lon": -0.1},
                             zoom=8.85)
+    fig5.update_layout(
+        title = f'Total Recorded PM 2.5 Particle Data for Each Borough of London',
+    )
     return fig5
 
 hours=('00:00-06:00','06:00-09:00','09:00-16:00','16:00-19:00','19:00-24:00')
