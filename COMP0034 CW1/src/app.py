@@ -1,25 +1,8 @@
 """
-This app creates a simple sidebar layout using inline style arguments and the
-dbc.Nav component.
+Sidebar element was created using the template from:
+https://dash-bootstrap-components.opensource.faculty.ai/examples/simple-sidebar/
+"""
 
-dcc.Location is used to track the current location, and a callback uses the
-current location to render the appropriate page content. The active prop of
-each NavLink is set automatically according to the current pathname. To use
-this feature you must install dash-bootstrap-components >= 0.11.0.
-
-For more details on building multi-page Dash applications, check out the Dash
-documentation: https://dash.plot.ly/urls
-"""
-"""
-This app creates a simple sidebar layout using inline style arguments and the
-dbc.Nav component.
-dcc.Location is used to track the current location, and a callback uses the
-current location to render the appropriate page content. The active prop of
-each NavLink is set automatically according to the current pathname. To use
-this feature you must install dash-bootstrap-components >= 0.11.0.
-For more details on building multi-page Dash applications, check out the Dash
-documentation: https://dash.plot.ly/urls
-"""
 #importing all necessary modules
 import dash
 import json
@@ -42,6 +25,16 @@ dp = pd.read_excel(excel_file_path, sheet_name=0)
 
 #function for the creation of the choropleth map for pricing
 def create_pricing_choropleth_map(hour_selected, month_selected):
+   """
+    Create a choropleth map figure showing price data for different month and hour
+
+    Args:
+        hour_selected(str): hours generated for the figure
+        month_selected(str):  month generated for the figure
+
+    Returns:
+         figprice(fig): figure of choropleth map
+    """
     # Load data
     df = pd.read_excel(excel_file_path, sheet_name=0)
 
@@ -115,6 +108,15 @@ def create_pricing_choropleth_map(hour_selected, month_selected):
 
 #function for the creation of the bar charts that show the number of cycle hires per hour for the 31 days in July 2018
 def create_daily_chart(day_selected):
+    """
+    Create a figure about the daily cycle usage, based on data imported from Excel
+
+    Args:
+       day_selected(str): days imported from the Excel file
+
+    Returns:
+         fig(fig): figure of daily cycle usage 
+    """
     # Read the sheet from the excel file
     df = pd.read_excel(excel_file_path, sheet_name=sheet_names[day_selected])
     # Convert the 'TimeString' column to a datetime type
@@ -165,6 +167,15 @@ top_card = dbc.Card(
 
 # Function for the creation of the stats panel for the daily usage data
 def create_daily_stats(day_selected):
+     """
+    Create a stats panel for the daily chart figure, based on data imported from Excel
+
+    Args:
+       day_selected(str): days imported from the Excel file
+
+    Returns:
+         stats_panel(panel): stats panel showing information about the selected day
+    """
     #reading the excel sheets
     df = pd.read_excel(excel_file_path, sheet_name=sheet_names[day_selected])
     # Convert the 'TimeString' column to a datetime type
@@ -206,6 +217,12 @@ months = ('January', 'February', 'March', 'April', 'May', 'June',
 
 # Function for the creation of the barchart for average usage per month
 def create_monthly_barchart():
+        """
+    Create a bar chart about the monthy cycle usage, based on data imported from Excel
+
+    Returns:
+         fig2(fig): bar chart figure about the onthy cycle usage
+    """
     # Read the second sheet of the excel file
     df = pd.read_excel(excel_file_path, sheet_name=1)
 
