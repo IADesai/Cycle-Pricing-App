@@ -54,9 +54,9 @@ Add any notes here (optional).
 # Testing
 
 EXPLAIN WHY WE DID A NEW APP FOR TESTING
-The created dash app was tested using the pytest library and Selenium. The following x number of tests were created, each of which are explained ind etail using the GIVEN-WHEN-THEN Approach in the `test_app.py` code.
+The created dash app was tested using the pytest library and Selenium. The following x number of tests were created, each of which are explained in detail using the GIVEN-WHEN-THEN Approach in the `test_app.py` code. The mmffddd format was used when naming the test functions, where m represents module (test), f file (cycle), and d three digits for the number of test case.
 
- ### Test functions 1 
+ ### Test function 1 
  - The function called `test_cycle001_h1_text_equals(dash_duo, app)` aims to test if element header 1 (H1) equals the text TFL Cycle Hire Pricing.
 
  ### Test functions 2-5
