@@ -24,6 +24,16 @@ dp = pd.read_excel(excel_file_path, sheet_name=0)
 
 #function for the creation of the choropleth map for pricing
 def create_pricing_choropleth_map(hour_selected, month_selected):
+   """
+    Create a choropleth map figure showing price data for different month and hour
+
+    Args:
+        hour_selected(str): hours generated for the figure
+        month_selected(str):  month generated for the figure
+
+    Returns:
+         figprice(fig): figure of choropleth map
+    """
     # Load data
     df = pd.read_excel(excel_file_path, sheet_name=0)
 
