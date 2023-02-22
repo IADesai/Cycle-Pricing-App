@@ -135,6 +135,27 @@ def test_cycle011_daydropdownchangesdropdown(dash_duo, app):
         "Monday, Jul 2 2018.xlsx" in dash_duo.find_element("#day-dropdown").text
     ), "'Monday, Jul 2 2018.xlsx' should appear in the day dropdown"
 
+def test_cycle012_daydropdownchangesdropdown(dash_duo, app):
+    """
+    .
+    """
+    dash_duo.wait_for_element("#day-dropdown", timeout=9)
+    select_input = dash_duo.find_element("#day-dropdown input")
+    select_input.send_keys("Sunday, Jul 1 2018.xlsx")
+    select_input.send_keys(Keys.RETURN)
+    dash_duo.driver.implicitly_wait(10)
+    title = dash_duo.find_element("#daily-usage-graph .gtitle")
+    assert title.text == "Cycle Usage for Sunday, Jul 1 2018.xlsx"
+
+
+
+
+
+
+
+
+
+#####
 
 
 # def test_cycle007_monthdropdownchangesdropdown(dash_duo):
@@ -339,17 +360,15 @@ def test_cycle011_daydropdownchangesdropdown(dash_duo, app):
 
 # def test_cycle009_daydropdownchangesdropdown(dash_duo, app):
 #     """
-#     GIVEN the recycle Dash app is running
-#     WHEN the area dropdown is changed to Hackney
-#     THEN the card title for the stats panel is also changed to Hackney.
+#     .
 #     """
-#     dash_duo.wait_for_element("#day-dropdown", timeout=4)
+#     dash_duo.wait_for_element("#day-dropdown", timeout=9)
 #     select_input = dash_duo.find_element("#day-dropdown input")
 #     select_input.send_keys("Monday, Jul 2 2018.xlsx")
 #     select_input.send_keys(Keys.RETURN)
-#     dash_duo.driver.implicitly_wait(5)
-#     title = dash_duo.find_element("#daily-usage-graph .titletext")
-#     assert title.text == "Cycle Usage for Monday, Jul 2 2018.xlsx"
+#     dash_duo.driver.implicitly_wait(10)
+#     title = dash_duo.find_element("#daily-usage-graph .gtitle")
+#     assert title[1].text == "Cycle Usage for Monday, Jul 2 2018.xlsx"
 
 # def test_day_dropdown_changes_data_displayed(dash_duo, app):
 #     """
