@@ -20,7 +20,7 @@ this feature you must install dash-bootstrap-components >= 0.11.0.
 For more details on building multi-page Dash applications, check out the Dash
 documentation: https://dash.plot.ly/urls
 """
-
+#importing all necessary modules
 import dash
 import json
 import dash_bootstrap_components as dbc
@@ -40,6 +40,7 @@ json_file_path = cwd / "london_boroughs.json"
 df = pd.read_excel(excel_file_path, sheet_name=1)
 dp = pd.read_excel(excel_file_path, sheet_name=0)
 
+#function for the creation of the choropleth map for pricing
 def create_pricing_choropleth_map(hour_selected, month_selected):
     # Load data
     df = pd.read_excel(excel_file_path, sheet_name=0)
@@ -112,6 +113,7 @@ def create_pricing_choropleth_map(hour_selected, month_selected):
                                     zoom=8.7)
     return figprice
 
+#function for the creation of the bar charts that show the number of cycle hires per hour for the 31 days in July 2018
 def create_daily_chart(day_selected):
     # Read the sheet from the excel file
     df = pd.read_excel(excel_file_path, sheet_name=sheet_names[day_selected])
@@ -130,12 +132,13 @@ def create_daily_chart(day_selected):
     fig = px.bar(x=grouped.index, y=grouped.iloc[:, 0])
 
     fig.update_layout(
+        title=f"Cycle Usage for {sheet_names[day_selected]}",
         xaxis_title="Hour",
-        yaxis_title="Cycle hires",
-        title=f"Cycle Usage for {sheet_names[day_selected]}"
+        yaxis_title="Cycle hires"
     )
     return fig
 
+# Preparing the sheet names for use in the day-dropdown for the daily cycle hire data
 # Get the sheet names from the excel file
 sheet_names = list(pd.read_excel(excel_file_path, sheet_name=None).keys())
 # Remove the first two sheets from the list
@@ -160,8 +163,9 @@ top_card = dbc.Card(
 
 )
 
-# Function for the stats panel
+# Function for the creation of the stats panel for the daily usage data
 def create_daily_stats(day_selected):
+    #reading the excel sheets
     df = pd.read_excel(excel_file_path, sheet_name=sheet_names[day_selected])
     # Convert the 'TimeString' column to a datetime type
     df['TimeString'] = pd.to_datetime(df['TimeString'], format='%H:%M:%S:%f')
@@ -200,8 +204,7 @@ hours = ('00:00-06:00', '06:00-09:00',
 months = ('January', 'February', 'March', 'April', 'May', 'June',
           'July', 'August', 'September', 'October', 'November', 'December')
 
-# function for average monthly usage chart
-
+# Function for the creation of the barchart for average usage per month
 def create_monthly_barchart():
     # Read the second sheet of the excel file
     df = pd.read_excel(excel_file_path, sheet_name=1)
@@ -220,8 +223,9 @@ def create_monthly_barchart():
 
     # Create the bar chart
     fig2 = px.bar(x=grouped.index, y=grouped.iloc[:, 1])
-
+    # Giving graph title and axis titles
     fig2.update_layout(
+        title = f'Average Cycle Hire Usage per Month',
         xaxis_title="Month",
         yaxis_title="Average Usage",
         xaxis=dict(
@@ -232,22 +236,23 @@ def create_monthly_barchart():
         ))
     return fig2
 
-# function for a monehtly line chart
-
+# Function for the creation of the linechart for usage per month for 11 years 
 def create_monthly_linechart():
-
+    # read the excel sheet
     df = pd.read_excel(excel_file_path, sheet_name=1)
-
+    #create the graph
     fig3 = px.line(df, x="Month", y="Number of Bicycle Hires.1")
+    # Giving graph title and axis titles
     fig3.update_layout(
+        title = f'Cycle Hire Usage per Month across 11 Years',
         xaxis_title="Time(year)",
         yaxis_title="Average Usage"
     )
-    
     return fig3
 
+# Function for the creation of the choropleth map for pollution in the London boroughs 
 def create_choropleth_pollution_map():
-    # Load data
+    # Reading excel file
     df = pd.read_excel(excel_file_path, sheet_name=0)
 
     # Group the data by month and average the usage
@@ -272,9 +277,28 @@ def create_choropleth_pollution_map():
                                 zoom=8.85)
     return fig5
 
+# Function for the creation of the barchart for pollution in the London boroughs
+def create_pollution_barchart():
+    # Read the first sheet of the excel file
+    df = pd.read_excel(excel_file_path, sheet_name=0)
+    # Grouping data by borough
+    grouped = df.groupby('Borough').sum('Total PM 2.5')
+
+    data = pd.DataFrame({'Borough': grouped.index, 'Total PM 2.5': round(grouped.iloc[:, 3],2)})
+    # Create the bar chart
+    fig = px.bar(x= data.index, y= data.iloc[:,1])
+    # Giving graph title and axis titles
+    fig.update_layout(
+        title =f'Pollution Levels in the Boroughs of London',
+        xaxis_title="London Borough",
+        yaxis_title="PM 2.5",
+    )
+    return fig
+
+# Creating the dash app
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 
-# the style arguments for the sidebar. We use position:fixed and a fixed width
+# The style arguments for the sidebar. We use position:fixed and a fixed width
 SIDEBAR_STYLE = {
     "position": "fixed",
     "top": 0,
@@ -285,17 +309,23 @@ SIDEBAR_STYLE = {
     "background-color": "#f8f9fa",
 }
 
+# Formatting the content for the home page
 home_content = html.Div(
     [
         dash.html.H1('TFL Cycle Hire Pricing'),
 
-        html.P("The Coding Cyclists have tackled TFL's cycle hire pricing, masterminding an algorithm to adjust the price of the cycle hire dependent on hourly and monthly cycle hire data, alongside PM 2.5 pollution levels across the boroughs of London. The aim was to create a price map that increases TFL revenue by promoting cycle hire and taking advantage of rush hour prices, as well as, promoting cycle hire in highly polluted boroughs with hopes to reduce pollution across greater London."),
+        html.P("The Coding Cyclists have tackled TFL's cycle hire pricing, masterminding an algorithm to adjust the price\
+             of the cycle hire dependent on hourly and monthly cycle hire data, alongside PM 2.5 pollution levels across the\
+                 boroughs of London. The aim was to create a price map that increases TFL revenue by promoting cycle hire and\
+                     taking advantage of rush hour prices, as well as, promoting cycle hire in highly polluted boroughs with \
+                        hopes to reduce pollution across greater London."),
         html.Hr(),
         html.P(f'Choropleth Map Showing Pricing Data for Each Borough of London'),
         html.Hr(),
         html.Div([
             dcc.Graph(id='london-map', figure=create_pricing_choropleth_map(hour_selected=0,
-                                                                            month_selected=0), style={'width': '1100px', 'height': '650px'}),
+                                                                            month_selected=0), style={'width': '1100px',
+                                                                                'height': '650px'}),
             html.Div([
                 html.P("Time of Day (24 Hour Clock):",
                        style={'margin-top': '200px'}),
@@ -308,17 +338,11 @@ home_content = html.Div(
         ], style={'display': 'flex', 'justify-content': 'space-between'})
     ]
 )
-daily_content = html.Div(
-    [
-        html.Hr(),
-        html.P(f'Choropleth Map Showing Pricing Data for Each Borough of London'),
-        html.Hr(),
-        html.P("The Coding Cyclists have tackled TFL's cycle hire pricing, masterminding an algorithm to adjust the price of the cycle hire dependent on hourly and monthly cycle hire data, alongside PM 2.5 pollution levels across the boroughs of London. The aim was to create a price map that increases TFL revenue by promoting cycle hire and taking advantage of rush hour prices, as well as, promoting cycle hire in highly polluted boroughs with hopes to reduce pollution across greater London."),
 
-    ],
-)
+# formatting the content for the first tab of the first page
 tab1_content = html.Div(style={'display': 'flex'}, children=[
     html.Div(style={'flex': 1}, children=[
+        html.Hr(),
         dcc.Graph(id='daily-usage-graph',
                   figure=create_daily_chart(day_selected=0))
     ]),
@@ -331,30 +355,25 @@ tab1_content = html.Div(style={'display': 'flex'}, children=[
 ],
     className="p-3 bg-light rounded-3",
 )
-
+# Formatting the content for the first tab of the second page
 tab2_content = html.Div(
     [
+        html.Hr(),
         dcc.Graph(figure=create_monthly_barchart())
     ],
     className="p-3 bg-light rounded-3",
 )
+
+# Formatting the content for the second tab of the second page
 tab3_content = html.Div(
     [
+        html.Hr(),
         dcc.Graph(figure=create_monthly_linechart())
     ],
     className="p-3 bg-light rounded-3",
 )
-
+# Formatting the content for the first tab of the third page
 tab4_content = html.Div(
-    [
-        html.Hr(),
-        html.P(f"Bar Chart Showing PM 2.5 Pollution in Each Borough of London"),
-        html.Hr(),
-        dcc.Graph(id='bar-chart2',
-                  figure={'data': [{'x': dp.iloc[:, 1], 'y': dp.iloc[:, 4], 'type': 'bar'}]})
-    ],
-)
-tab5_content = html.Div(
     [
         html.Hr(),
         html.P(
@@ -364,15 +383,22 @@ tab5_content = html.Div(
                   style={'width': '1100px', 'height': '600px'})
     ],
 )
+# Formatting the content for the second tab of the third page
+tab5_content = html.Div(
+    [
+        html.Hr(),
+        dcc.Graph(id='bar-chart2', figure=create_pollution_barchart())
+    ],
+)
 
-# the styles for the main content position it to the right of the sidebar and
-# add some padding.
+# The styles for the main content position it to the right of the sidebar and
+# Add some padding.
 CONTENT_STYLE = {
     "margin-left": "18rem",
     "margin-right": "2rem",
     "padding": "2rem 1rem",
 }
-
+# Formatting the sidebar in the dash app
 sidebar = html.Div(
     [
         dbc.Row(
@@ -397,11 +423,15 @@ sidebar = html.Div(
 content = html.Div(id="page-content", style=CONTENT_STYLE)
 
 app.layout = html.Div([dcc.Location(id="url"), sidebar, content])
+# App callbacks
 
+# Using callbacks to input the all content into the app
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
 def render_page_content(pathname):
+    # Formatting the home page of the app to present home_content
     if pathname == "/":
         return home_content
+    # Formatting Page-1 of the app to present tab1_content and a description of the data
     elif pathname == "/page-1":
         return html.Div([
             dbc.Tabs(
@@ -414,8 +444,15 @@ def render_page_content(pathname):
             html.Hr(),
             html.P(f'Daily Data'),
             html.Hr(),
-            html.P("The daily data consists of recorded cycle hire data for every day in an entire month. We used this data to identify and visualize how many cycles were hired per hour of the day for each day in the month and then created a chart with the average of the entire month, to identify the average daily cycle hire pattern. This can be viewed in the tab above, where a selector can be used to view the data for each day. If you choose Monday and compare it to a Sunday for example, we see that the trends are slightly different. This can be seen throughout the month, where weekends have unusual patterns as opposed to working week days. This is only one of many trends visible.")
+            html.P("The daily data consists of recorded cycle hire data for every day in an entire month. We used this data\
+                 to identify and visualize how many cycles were hired per hour of the day for each day in the month and then\
+                     created a chart with the average of the entire month, to identify the average daily cycle hire pattern.\
+                         This can be viewed in the tab above, where a selector can be used to view the data for each day. If\
+                             you choose Monday and compare it to a Sunday for example, we see that the trends are slightly \
+                                different. This can be seen throughout the month, where weekends have unusual patterns as \
+                                    opposed to working week days. This is only one of many trends visible.")
         ]),
+    # Formatting Page-2 of the app to show tab2_content and tab3_content aswell as a description of the data
     elif pathname == "/page-2":
         return html.Div([
             dbc.Tabs(
@@ -429,15 +466,21 @@ def render_page_content(pathname):
             html.Hr(),
             html.P(f'Monthly Data'),
             html.Hr(),
-            html.P("The monthly data consists of recorded cycle hire data for every month over multiple years. We used this data to identify and visualize how many cycles were hired in each month over multiple years, averaging the number of cycles for each month over the various years, to identify the average monthly cycle hire usage pattern. This can be viewed in the tab above. We also added a usage versus time line chart, to show the cycle hire trends from the beginning of TFL santander cycle history. This gives indications of monthly/seasonal trends aswell as for example, Covid effects in 2020.")
+            html.P("The monthly data consists of recorded cycle hire data for every month over multiple years. We used this\
+                 data to identify and visualize how many cycles were hired in each month over multiple years, averaging the\
+                     number of cycles for each month over the various years, to identify the average monthly cycle hire usage\
+                         pattern. This can be viewed in the tab above. We also added a usage versus time line chart, to show\
+                             the cycle hire trends from the beginning of TFL santander cycle history. This gives indications\
+                                 of monthly/seasonal trends aswell as for example, Covid effects in 2020.")
         ]),
+    # Formatting Page-2 of the app to show tab4_content and tab5_content and a discription of the data
     elif pathname == "/page-3":
         return html.Div([
             dbc.Tabs(
                 [
-                    dbc.Tab(tab5_content,
-                        label="London Borough Pollution Choropleth Map"),
                     dbc.Tab(tab4_content,
+                        label="London Borough Pollution Choropleth Map"),
+                    dbc.Tab(tab5_content,
                             label="London Borough Pollution Bar Chart"),
                 ],
                 id="tabs",
@@ -446,7 +489,11 @@ def render_page_content(pathname):
             html.Hr(),
             html.P(f'Pollution Data'),
             html.Hr(),
-            html.P("The pollution data consists of numerous recorded PM 2.5 particle data pieces from each borough of London. The recorded data was summed for each borough, providing data for the total PM 2.5 particles released from methods of transport, in each borough. This data was plotted onto a choropleth map, where it is possible to visibily see the levels of PM 2.5 in each specified borough. This can be seen above, accompanied by a bar chart for extra clarity.")
+            html.P("The pollution data consists of numerous recorded PM 2.5 particle data pieces from each borough of London.\
+                 The recorded data was summed for each borough, providing data for the total PM 2.5 particles released from\
+                     methods of transport, in each borough. This data was plotted onto a choropleth map, where it is possible\
+                         to visibily see the levels of PM 2.5 in each specified borough. This can be seen above, accompanied\
+                             by a bar chart for extra clarity.")
         ]),
     # If the user tries to reach a different page, return a 404 message
     return html.Div(
@@ -457,7 +504,8 @@ def render_page_content(pathname):
         ],
         className="p-3 bg-light rounded-3",
     )
-    
+
+# app callback for changing the daily-usage-graph depending on the selected day
 @app.callback(
     dash.dependencies.Output('daily-usage-graph', 'figure'),
     [dash.dependencies.Input('day-dropdown', 'value')]
@@ -465,6 +513,7 @@ def render_page_content(pathname):
 def update_graph(day_selected):
     return create_daily_chart(day_selected)
 
+# App callback for changing the stats-card depending on the selected day
 @app.callback(
     Output("stats-card", "children"),
     Input("day-dropdown", "value"),
@@ -472,6 +521,7 @@ def update_graph(day_selected):
 def update_daily_stats(day_selected):
     return create_daily_stats(day_selected=day_selected)
 
+# App callback for changing the choropleth map depending on the chosen hour or month
 @app.callback(
     dash.dependencies.Output('london-map', 'figure'),
     [dash.dependencies.Input('hour-dropdown', 'value')],
