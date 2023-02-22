@@ -7,7 +7,6 @@ Path
 dcc
 Input
 Output
-html
 pytest
 plotly
 plotly.express
