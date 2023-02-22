@@ -2,8 +2,14 @@ pandas
 openpyxl
 dash
 dash-bootstrap-components
+pathlib
+Path
+dcc
+Input
+Output
 pytest
 plotly
+plotly.express
 colorlover
 pytest-cov 
 selenium
