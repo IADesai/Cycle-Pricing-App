@@ -76,7 +76,6 @@ The above screenshots show that even with the warnings, all the 15 tests passed.
 
 ![WhatsApp Image 2023-02-22 at 15 07 22](https://user-images.githubusercontent.com/88077512/220663463-01b80d17-f3cb-486a-9983-15ae45630654.jpeg)
 
-
 After all 15 tests were successfully run, the coverage report indicates 89% coverage across all files since they are all relatively large-medium in size.
 
 # Continuous Integration
