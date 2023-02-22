@@ -309,6 +309,13 @@ def create_choropleth_pollution_map():
 
 # Function for the creation of the barchart for pollution in the London boroughs
 def create_pollution_barchart():
+   """
+    Create a bar chart about the total pollution (Pm2.5) level in each borough of London,
+    based on data imported from Excel
+    
+    Returns:
+         fig5(fig): bar chart about the pollution level in each borough of London
+    """
     # Read the first sheet of the excel file
     df = pd.read_excel(excel_file_path, sheet_name=0)
     # Grouping data by borough
