@@ -7,10 +7,10 @@ Path
 dcc
 Input
 Output
+html
 pytest
 plotly
 plotly.express
-plotly.graph_objects
 colorlover
 pytest-cov 
 selenium
