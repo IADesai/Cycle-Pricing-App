@@ -77,3 +77,11 @@ def app(dash_duo):
     test_app = import_app(app_file="app_for_testing")
     yield dash_duo.start_server(test_app)
 ```
+## Test Results
+
+Add screenshots, run test with incorrect data to show when a test fails 
+
+# Continuous Integration
+
+Add the code, screenshot and explanation
+
