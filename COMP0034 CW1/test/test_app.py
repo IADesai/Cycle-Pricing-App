@@ -4,9 +4,9 @@ from selenium.webdriver.common.keys import Keys
 # py -m pytest -v
 def test_cycle001_h1_text_equals(dash_duo, app):
     """
-    GIVEN the app is running
+    GIVEN the Dash app is running
     WHEN the home page is available
-    THEN the H2 heading element should include the text 'TFL Cycle Hire Pricing' (not case sensitive)
+    THEN the H1 heading element should include the text 'TFL Cycle Hire Pricing' (not case sensitive)
     """
     dash_duo.wait_for_element("h1", timeout=4)
     h1_text = dash_duo.find_element("h1").text
@@ -14,9 +14,9 @@ def test_cycle001_h1_text_equals(dash_duo, app):
 
 def test_cycle002_id_d2_text_equals(dash_duo, app):
     """
-    GIVEN the app is running
+    GIVEN the Dash app is running
     WHEN the home page is available
-    THEN the H2 heading element should include the text 'TFL Cycle Hire Pricing' (not case sensitive)
+    THEN the element with id = '#id-d2' should include the text 'Month of Year:' (not case sensitive)
     """
     dash_duo.wait_for_element("#id-d2", timeout=4)
     id_d2_text = dash_duo.find_element("#id-d2").text
@@ -24,7 +24,7 @@ def test_cycle002_id_d2_text_equals(dash_duo, app):
 
 def test_cycle003_id_title1_text_equals(dash_duo, app):
     """
-    GIVEN the app is running
+    GIVEN the Dash app is running
     WHEN the home page is available
     THEN the element with id = '#id-title1'should include the text 'Daily Data' (not case sensitive)
     """
@@ -34,7 +34,7 @@ def test_cycle003_id_title1_text_equals(dash_duo, app):
 
 def test_cycle004_id_title2_text_equals(dash_duo, app):
     """
-    GIVEN the app is running
+    GIVEN the Dash app is running
     WHEN the home page is available
     THEN the element with id = '#id-title2'should include the text 'Monthly Data' (not case sensitive)
     """
@@ -44,7 +44,7 @@ def test_cycle004_id_title2_text_equals(dash_duo, app):
 
 def test_cycle005_id_title3_text_equals(dash_duo, app):
     """
-    GIVEN the app is running
+    GIVEN the Dash app is running
     WHEN the home page is available
     THEN the element with id = '#id-title3'should include the text 'Pollution Data' (not case sensitive)
     """
@@ -57,7 +57,7 @@ def test_cycle006_monthdropdowncontainsjanuary(dash_duo, app):
     """
     GIVEN the Dash app is running
     WHEN the Choropleth Map Showing Pricing Data for Each Borough of London has loaded
-    THEN 'January' should appear in the area dropdown created for months
+    THEN 'January' should appear in the month dropdown
     """
     dash_duo.wait_for_element("#month-dropdown", timeout=4)
     dash_duo.driver.implicitly_wait(5)
@@ -65,49 +65,11 @@ def test_cycle006_monthdropdowncontainsjanuary(dash_duo, app):
         "January" in dash_duo.find_element("#month-dropdown").text
     ), "'January' should appear in the month dropdown"
 
-def test_cycle007_monthdropdownchangesdropdown(dash_duo):
+def test_cycle007_monthdropdownchangesdropdown(dash_duo, app):
     """
     GIVEN the recycle Dash app is running
-    WHEN the area dropdown is changed to Hackney
-    THEN the card title for the stats panel is also changed to Hackney.
-
-    Note: using select_dcc_dropdown(elem_or_selector, value=None, index=None) didn't implement the selected value
-    """
-    app = import_app(app_file="app_for_testing")
-    dash_duo.start_server(app)
-    dash_duo.wait_for_element("#month-select", timeout=4)
-    select_input = dash_duo.find_element("#month-select input")
-    select_input.send_keys("February")
-    select_input.send_keys(Keys.RETURN)
-    dash_duo.driver.implicitly_wait(5)
-    assert (
-        "February" in dash_duo.find_element("#month-select").text
-    ), "'February' should appear in the month dropdown"
-
-def test_cycle008_monthdropdownchangesdropdown(dash_duo):
-    """
-    GIVEN the recycle Dash app is running
-    WHEN the area dropdown is changed to Hackney
-    THEN the card title for the stats panel is also changed to Hackney.
-
-    Note: using select_dcc_dropdown(elem_or_selector, value=None, index=None) didn't implement the selected value
-    """
-    app = import_app(app_file="app_for_testing")
-    dash_duo.start_server(app)
-    dash_duo.wait_for_element("#month-dropdown", timeout=4)
-    select_input = dash_duo.find_element("#month-dropdown")
-    select_input.send_keys("February")
-    select_input.send_keys(Keys.RETURN)
-    dash_duo.driver.implicitly_wait(5)
-    assert (
-        "February" in dash_duo.find_element("#month-dropdown").text
-    ), "'February' should appear in the month dropdown"
-
-def test_cycle009_monthdropdownchangesdropdown(dash_duo, app):
-    """
-    GIVEN the recycle Dash app is running
-    WHEN the area dropdown is changed to Hackney
-    THEN the card title for the stats panel is also changed to Hackney.
+    WHEN the month dropdown for the Pricing Data Choropleth Map is changed to 'February'
+    THEN 'February' should appear in the month dropdown"
     """
     dash_duo.wait_for_element("#month-dropdown", timeout=4)
     select_input = dash_duo.find_element("#month-dropdown input")
@@ -118,11 +80,11 @@ def test_cycle009_monthdropdownchangesdropdown(dash_duo, app):
         "February" in dash_duo.find_element("#month-dropdown").text
     ), "'February' should appear in the month dropdown"
 
-def test_cycle010_hourdropdowncontains00_06(dash_duo, app):
+def test_cycle008_hourdropdowncontains00_06(dash_duo, app):
     """
     GIVEN the Dash app is running
     WHEN the Choropleth Map Showing Pricing Data for Each Borough of London has loaded
-    THEN 'January' should appear in the area dropdown created for months
+    THEN '00:00-06:00' should appear in the hour dropdown
     """
     dash_duo.wait_for_element("#hour-dropdown", timeout=4)
     dash_duo.driver.implicitly_wait(5)
@@ -130,11 +92,11 @@ def test_cycle010_hourdropdowncontains00_06(dash_duo, app):
         "00:00-06:00" in dash_duo.find_element("#hour-dropdown").text
     ), "'00:00-06:00' should appear in the hour dropdown"
 
-def test_cycle011_hourdropdownchangesdropdown(dash_duo, app):
+def test_cycle009_hourdropdownchangesdropdown(dash_duo, app):
     """
-    GIVEN the recycle Dash app is running
-    WHEN the area dropdown is changed to Hackney
-    THEN the card title for the stats panel is also changed to Hackney.
+    GIVEN the Dash app is running
+    WHEN the hour dropdown for the Pricing Data Choropleth Map is changed to '06:00-09:00'
+    THEN '06:00-09:00' should appear in the hour dropdown
     """
     dash_duo.wait_for_element("#hour-dropdown", timeout=4)
     select_input = dash_duo.find_element("#hour-dropdown input")
@@ -145,24 +107,24 @@ def test_cycle011_hourdropdownchangesdropdown(dash_duo, app):
         "06:00-09:00" in dash_duo.find_element("#hour-dropdown").text
     ), "'06:00-09:00' should appear in the hour dropdown"
 
-def test_cycle012_daydropdowncontainsjul1(dash_duo, app):
+def test_cycle010_daydropdowncontainsjul1(dash_duo, app):
     """
     GIVEN the Dash app is running
-    WHEN the Daily data page has loaded
-    THEN 'Sunday, Jul 1 2018.xlsx' should appear in the area dropdown
+    WHEN the Daily data usage figure has loaded
+    THEN 'Sunday, Jul 1 2018.xlsx' should appear in the day dropdown
     """
     dash_duo.wait_for_element("#day-dropdown", timeout=4)
     dash_duo.driver.implicitly_wait(5)
     assert (
         "Sunday, Jul 1 2018.xlsx" in dash_duo.find_element("#day-dropdown").text
-    ), "'Sunday, Jul 1 2018.xlsx' should appear in the daydropdown"
+    ), "'Sunday, Jul 1 2018.xlsx' should appear in the day dropdown"
 
 
-def test_cycle013_daydropdownchangesdropdown(dash_duo, app):
+def test_cycle011_daydropdownchangesdropdown(dash_duo, app):
     """
-    GIVEN the recycle Dash app is running
-    WHEN the area dropdown is changed to Hackney
-    THEN the card title for the stats panel is also changed to Hackney.
+    GIVEN the Dash app is running
+    WHEN the day dropdown for the Daily data usage figure has changed to 'Monday, Jul 2 2018.xlsx'
+    THEN 'Monday, Jul 2 2018.xlsx' should appear in the day dropdown
     """
     dash_duo.wait_for_element("#day-dropdown", timeout=4)
     select_input = dash_duo.find_element("#day-dropdown input")
@@ -172,6 +134,42 @@ def test_cycle013_daydropdownchangesdropdown(dash_duo, app):
     assert (
         "Monday, Jul 2 2018.xlsx" in dash_duo.find_element("#day-dropdown").text
     ), "'Monday, Jul 2 2018.xlsx' should appear in the day dropdown"
+
+
+
+# def test_cycle007_monthdropdownchangesdropdown(dash_duo):
+#     """
+#     GIVEN the Dash app is running
+#     WHEN the area dropdown is changed to Hackney
+#     THEN the card title for the stats panel is also changed to Hackney.
+#     """
+#     app = import_app(app_file="app_for_testing")
+#     dash_duo.start_server(app)
+#     dash_duo.wait_for_element("#month-select", timeout=4)
+#     select_input = dash_duo.find_element("#month-select input")
+#     select_input.send_keys("February")
+#     select_input.send_keys(Keys.RETURN)
+#     dash_duo.driver.implicitly_wait(5)
+#     assert (
+#         "February" in dash_duo.find_element("#month-select").text
+#     ), "'February' should appear in the month dropdown"
+
+# def test_cycle008_monthdropdownchangesdropdown(dash_duo):
+#     """
+#     GIVEN the recycle Dash app is running
+#     WHEN the area dropdown is changed to Hackney
+#     THEN the card title for the stats panel is also changed to Hackney.
+#     """
+#     app = import_app(app_file="app_for_testing")
+#     dash_duo.start_server(app)
+#     dash_duo.wait_for_element("#month-dropdown", timeout=4)
+#     select_input = dash_duo.find_element("#month-dropdown")
+#     select_input.send_keys("February")
+#     select_input.send_keys(Keys.RETURN)
+#     dash_duo.driver.implicitly_wait(5)
+#     assert (
+#         "February" in dash_duo.find_element("#month-dropdown").text
+#     ), "'February' should appear in the month dropdown"
 
 
 # # # def test_cycle001_h1_text_equals(dash_duo, app):
