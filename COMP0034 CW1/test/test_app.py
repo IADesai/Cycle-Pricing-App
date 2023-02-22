@@ -10,7 +10,7 @@ def test_cycle001_h1_text_equals(dash_duo, app):
     """
     dash_duo.wait_for_element("h1", timeout=4)
     h1_text = dash_duo.find_element("h1").text
-    assert h1_text.casefold() == "TFL Cycle".casefold()
+    assert h1_text.casefold() == "TFL Cycle Hire Pricing".casefold()
 
 def test_cycle002_id_d2_text_equals(dash_duo, app):
     """
