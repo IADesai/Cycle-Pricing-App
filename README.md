@@ -52,6 +52,12 @@ def app(dash_duo):
 
 Running the tests in Visual Studio code, using `Pytest` and selenium, the produced output was the following:
 
+![WhatsApp Image 2023-02-22 at 13 56 33](https://user-images.githubusercontent.com/88077512/220644984-935d9d3c-24c6-47b6-b118-14c40c4de595.jpeg)
+![WhatsApp Image 2023-02-22 at 13 57 44](https://user-images.githubusercontent.com/88077512/220645035-6d13f4c2-01f0-4920-9756-2a0d0ad12357.jpeg)
+![WhatsApp Image 2023-02-22 at 13 58 13](https://user-images.githubusercontent.com/88077512/220645075-d7cd3b68-e2e2-4022-af78-aaba549fe7a0.jpeg)
+![WhatsApp Image 2023-02-22 at 13 58 37](https://user-images.githubusercontent.com/88077512/220645125-b86f58b8-a7f6-49d9-a460-8a534b03c718.jpeg)
+![WhatsApp Image 2023-02-22 at 14 00 01](https://user-images.githubusercontent.com/88077512/220645188-a055046b-927f-44fc-abde-dfb820f3a468.jpeg)
+![WhatsApp Image 2023-02-22 at 14 00 37](https://user-images.githubusercontent.com/88077512/220645204-00d2d593-ae97-4ce0-bc62-2e90d03366ef.jpeg)
 ![WhatsApp Image 2023-02-22 at 13 56 13](https://user-images.githubusercontent.com/88077512/220644220-c9314e4a-9c97-479a-8861-20687be24d28.jpeg)
 
 # Continuous Integration
