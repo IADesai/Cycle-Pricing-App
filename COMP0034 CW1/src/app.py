@@ -255,6 +255,12 @@ def create_monthly_barchart():
 
 # Function for the creation of the linechart for usage per month for 11 years 
 def create_monthly_linechart():
+   """
+    Create monthly linechart about cycle usage, based on data imported from Excel
+    
+    Returns:
+         fig3(fig): monthly line chart about cycle usage
+    """
     # read the excel sheet
     df = pd.read_excel(excel_file_path, sheet_name=1)
     #create the graph
@@ -269,6 +275,13 @@ def create_monthly_linechart():
 
 # Function for the creation of the choropleth map for pollution in the London boroughs 
 def create_choropleth_pollution_map():
+   """
+    Create a choropleth map about the total pollution (Pm2.5) level in each borough of London,
+    based on data imported from Excel
+    
+    Returns:
+         fig5(fig): choropleth map about the pollution level in each borough of London
+    """
     # Reading excel file
     df = pd.read_excel(excel_file_path, sheet_name=0)
 
