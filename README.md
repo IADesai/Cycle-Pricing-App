@@ -76,7 +76,7 @@ The above screenshots show that even with the warnings, all the 15 tests passed.
 
 ![image](COVERAGE REPORT PICTURE)
 
-After all 15 tests were successfully run, the coverage report indicates FILL THIS IN% coverage across both files since they are both relatively large in size.
+After all 15 tests were successfully run, the coverage report indicates 89% coverage across all files since they are all relatively large-medium in size.
 
 # Continuous Integration
 A continuous integration workflow was employed to run every time a commit is made to the master branch. The YAML code used to do this can be seen below:
