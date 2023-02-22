@@ -136,4 +136,5 @@ After investigating each build individually after a new commit has been made, we
 
 The GitHub actions workflow also highlights failed tests. The example below is the same failed test as shown previously:
 
-![image](PICTURE OF FAILED TEST FROM WORKFLOW TAB)
+![WhatsApp Image 2023-02-22 at 15 07 22](https://user-images.githubusercontent.com/88077512/220667735-e0af6112-395c-45d6-816e-33aa5bd2e075.jpeg)
+
