@@ -372,7 +372,7 @@ app.layout = dbc.Container(
     dcc.Graph(id='london-map2', figure=create_choropleth_pollution_map(), style={'width': '1100px', 'height': '600px'}),
     html.Hr(),
     html.H4(id = 'id-gname5', children =f"Bar Chart Showing PM 2.5 Pollution in Each Borough of London"),
-    dcc.Graph(figure = create_pollution_barchart()),
+    dcc.Graph(id='pollution-bar-graph',figure = create_pollution_barchart()),
     html.Br()
 
     ]),
