@@ -46,7 +46,7 @@ top_card = dbc.Card(
     style={"width": "18rem"},
 )
 
-
+# Function for the creation of the choropleth map for pricing
 def create_pricing_choropleth_map(hour_selected,month_selected):
     # Load data
     df = pd.read_excel(excel_file_path, sheet_name=0)
@@ -120,8 +120,12 @@ def create_pricing_choropleth_map(hour_selected,month_selected):
         title = f'Cycle Hire Price for Each Borough of London',
     )
     return figprice
+# Options for the dropdowns
+hours=('00:00-06:00','06:00-09:00','09:00-16:00','16:00-19:00','19:00-24:00')
+months=('January','February','March','April','May','June','July','August','September','October','November','December')
 
 
+# Function for the creation of the bar charts that show the number of cycle hires per hour for the 31 days in July 2018
 def create_daily_chart(day_selected):
     # Read the sheet from the excel file
     df = pd.read_excel(excel_file_path, sheet_name=sheet_names[day_selected])
@@ -138,7 +142,7 @@ def create_daily_chart(day_selected):
 
     # Create the bar chart
     fig = px.bar(x=grouped.index, y=grouped.iloc[:,0])
-
+    # Giving graph title and axis titles
     fig.update_layout(
         xaxis_title="Hour",
         yaxis_title="Cycle hires",
@@ -199,7 +203,7 @@ def create_monthly_barchart():
 
     # Create the bar chart
     fig2 = px.bar(x=grouped.index, y=grouped.iloc[:, 1])
-
+    # Giving graph title and axis titles
     fig2.update_layout(
         title = f'Average Cycle Hire Usage per Month',
         xaxis_title="Month",
@@ -213,10 +217,11 @@ def create_monthly_barchart():
 
 #function for a monehtly line chart
 def create_monthly_linechart():
-
+    # Read the second sheet of the excel file
     df = pd.read_excel(excel_file_path, sheet_name=1)
-
+    # Create the graph
     fig3 = px.line(df, x="Month", y="Number of Bicycle Hires.1")
+    # Giving graph title and axis titles
     fig3.update_layout(
         title = f'Cycle Hire Usage per Month across 11 Years',
         xaxis_title="Time(year)",
@@ -249,13 +254,12 @@ def create_choropleth_pollution_map():
                             locations='Borough',
                             center={"lat": 51.5, "lon": -0.1},
                             zoom=8.85)
+    # Giving the graph a title
     fig5.update_layout(
         title = f'Total Recorded PM 2.5 Particle Data for Each Borough of London',
     )
     return fig5
 
-hours=('00:00-06:00','06:00-09:00','09:00-16:00','16:00-19:00','19:00-24:00')
-months=('January','February','March','April','May','June','July','August','September','October','November','December')
 
 #create a barchart for pollution
 def create_pollution_barchart():
@@ -269,28 +273,25 @@ def create_pollution_barchart():
     fig = px.bar(x= data.index, y= data.iloc[:,1])
 
     fig.update_layout(
+        # Giving graph title and axis titles
         title =f'Pollution Levels in the Boroughs of London',
         xaxis_title="London Borough",
         yaxis_title="PM 2.5",
     )
     return fig
 
+# Formatting the app layout to contain all the graphs and descriptions
 app.layout = dbc.Container(
     # HTML layout elements here
     children=[
         
         html.Div([
-        # [  html.H1("The Coding Cyclists", className="display-4"),
-           
-        #    html.P(
-        #     "TFL Cycle Hire Pricing Data Made Easy", className="lead"
-        #     ),
-        
     dbc.Row(
     [
         dbc.Col(top_card,  width={"size": 6, "offset": 4}),
     ]
 ),
+    # This section is for the pricing choropleth graph and its descripiton
     html.Hr(),
     html.H1('TFL Cycle Hire Pricing'),
     html.P("The Coding Cyclists have tackled TFL's cycle hire pricing, masterminding an algorithm to adjust the price of the cycle hire dependent on hourly and monthly cycle hire data, alongside PM 2.5 pollution levels across the boroughs of London. The aim was to create a price map that increases TFL revenue by promoting cycle hire and taking advantage of rush hour prices, as well as, promoting cycle hire in highly polluted boroughs with hopes to reduce pollution across greater London."),
@@ -310,7 +311,7 @@ app.layout = dbc.Container(
 
 
    
-       
+    # This section is for the daily usage graph and its stats panel and description    
     html.Div(style={'display': 'flex'}, children=[
     html.Div(style={'flex': 1}, children=[
     html.Br(),
@@ -342,7 +343,7 @@ app.layout = dbc.Container(
 
     html.Br(),
 
-
+    # This section is for the monthly usage bar and line charts and their and descriptions    
     html.Div(style={'display': 'flex'}, children=[
     html.Div(style={'flex': 1}, children=[
     html.H3(id = 'id-title2', children = f'Monthly Data'),
@@ -367,7 +368,7 @@ app.layout = dbc.Container(
 
 
 
-
+    # This section is for the pollution choropleth graph and bar chart and their description    
     html.Div(style={'display': 'flex'}, children=[
     html.Div(style={'flex': 1}, children=[
     html.H3(id = 'id-title3', children =f'Pollution Data'),
@@ -394,7 +395,7 @@ app.layout = dbc.Container(
 )
 
 
-
+# App callback for changing the daily-usage-graph depending on the selected day
 @app.callback(
     dash.dependencies.Output('daily-usage-graph', 'figure'),
     [dash.dependencies.Input('day-dropdown', 'value')]
@@ -402,6 +403,7 @@ app.layout = dbc.Container(
 def update_graph(day_selected):
     return create_daily_chart(day_selected)
 
+# App callback for changing the stats-card depending on the selected day
 @app.callback(
     Output("stats-card", "children"),
     Input("day-dropdown", "value"),
@@ -409,6 +411,7 @@ def update_graph(day_selected):
 def update_daily_stats(day_selected):
     return create_daily_stats(day_selected=day_selected)
 
+# App callback for changing the choropleth map depending on the chosen hour or month
 @app.callback(
     dash.dependencies.Output('london-map', 'figure'),
     [dash.dependencies.Input('hour-dropdown', 'value')],
