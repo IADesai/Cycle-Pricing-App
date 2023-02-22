@@ -30,6 +30,7 @@ import plotly.graph_objects as go
 from dash import Input, Output, dcc, html
 from dash import dcc
 from pathlib import Path
+
 cwd = Path(__file__).resolve().parent.parent
 
 excel_file_path = cwd / "data_set_prepared.xlsx"
