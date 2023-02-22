@@ -39,6 +39,15 @@ For each dropdown element (month-dropdown, hour-dropdown, day-dropdown) two test
   - `test_cycle010_daydropdowncontainsjul1(dash_duo, app)` tests if the day 'Sunday, Jul 1 2018.xlsx' appers in the day-dropdown, when the corresponding figure (Daily data usage figure, id="daily-usage-graph") is loaded
   - `test_cycle011_daydropdownchangesdropdown(dash_duo, app):` tests if the day-dropdown is updated when the day 'Monday, Jul 2 2018.xlsx' is selected in the dropdown
 
+ ### Test functions 12-15
+For each figure that had a title provided in the dash app, tests have been created to test if the titles equal the expected texts.
+- `test_cycle012_daily_usage_graph_title_equals(dash_duo, app)` tests if the title of the Daily data usage figure (id="daily-usage-graph") equals 'Cycle Usage for Sunday, Jul 1 2018.xlsx' 
+- `test_cycle013_monthly_avgusage_graph_title_equals(dash_duo, app)` tests if the title of the Monthly average usage figure (id="monthly-avgusage-graph") equals 'Average Cycle Hire Usage per Month' 
+- `test_cycle014_monthly_totusage_graph_title_equals(dash_duo, app)` tests if the title of the Monthly total usage figure (id="monthly-totusage-graph") equals 'Cycle Hire Usage per Month across 11 Years' 
+- `test_cycle015_pollution_bar_graph_title_equals(dash_duo, app)` tests if the title of the Pollution bar chart (id="pollution-bar-graph") equals 'Pollution Levels in the Boroughs of London' 
+
+These functions allowed us to test all the created figures and dropdown features in the single-page app.
+
 ## Fixtures
 As all testing functions require the same input for the dash apo, to simplify the code, fixtures can be added to the `conftest.py` code to create a common function which returns the test app.The fixture added to `conftest.py` can be found below.
 
@@ -61,6 +70,13 @@ Running the tests in Visual Studio code, using `Pytest` and selenium, the produc
 ![WhatsApp Image 2023-02-22 at 13 56 13](https://user-images.githubusercontent.com/88077512/220644220-c9314e4a-9c97-479a-8861-20687be24d28.jpeg)
 
 The above screenshots show that even with the warnings, all the 15 tests passed.
+
+# Coverage Reports
+`pytest` was also used with coverage to generate coverage reports. These show what percentage of the code that requires testing is tested. Therefore, we should aim for code coverage of 80% or above across all testing files (`app_for_testing.py`, `conftest.py`, and `test_app.py`) to ensure the majority of the relavent code is tested. The generated coverage report can be seen below:
+
+![WhatsApp Image 2023-02-22 at 15 07 22](https://user-images.githubusercontent.com/88077512/220663463-01b80d17-f3cb-486a-9983-15ae45630654.jpeg)
+
+After all 15 tests were successfully run, the coverage report indicates 89% coverage across all files since they are all relatively large-medium in size.
 
 # Continuous Integration
 A continuous integration workflow was employed to run every time a commit is made to the master branch. The YAML code used to do this can be seen below:
@@ -105,17 +121,18 @@ jobs:
 From the YAML script above we can see the build is divided into 5 main sections:
 1. Python 3.11 is set up
 2. Dependencies are installed including pip to install the other modules, `flake8` for linting, `pytest` for testing, `pytest-cov` for coverage, as well as any other modules listed in `requirements.txt`
-3. The `src` folder which contains the `app.py` code must be identified as a package
+3. The `test` folder which contains the `app_for_testing.py` code must be identified as a package
 4. The code is linted using `flake8` to find any presentation errors
 5. `pytest` is run on the code as well as coverage to generate a coverage report
 
 With this workflow, all of these tests can now be carried out on the code each time a commit is made to the master branch. These can be seen below in the GitHub Actions tab:
 
-![image](PICTURE OF GITHUB ACTIONS TAB)
+![WhatsApp Image 2023-02-22 at 14 47 24](https://user-images.githubusercontent.com/88077512/220657850-12b0683a-c329-4885-991b-ecfa0ecfaaab.jpeg)
 
 After investigating each build individually after a new commit has been made, we can see how pytest is run and a coverage report is generated for the tested files:
 
-![image](PICTURE OF TESTING WORKFLOW TAB ASWELL AS COVERAGE REPORT)
+![WhatsApp Image 2023-02-22 at 15 01 35](https://user-images.githubusercontent.com/88077512/220662124-0d2c6d44-942d-425f-b2b1-7ac784886aa2.jpeg)
+![WhatsApp Image 2023-02-22 at 15 02 06](https://user-images.githubusercontent.com/88077512/220662167-30792f4e-2085-424e-b64f-714f8c5658c5.jpeg)
 
 The GitHub actions workflow also highlights failed tests. The example below is the same failed test as shown previously:
 
