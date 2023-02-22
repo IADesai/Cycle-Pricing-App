@@ -60,4 +60,7 @@ The created dash app was tested using the pytest library and Selenium. The follo
 
  ### Test functions 2-5
 - The following functions test if the elements referenced by their given ID equals the text they expected to equal:
-- - `test_cycle002_id_d2_text_equals(dash_duo, app)` tests if element "#id-d2" equals the text 'Month of Year:'
+ - `test_cycle002_id_d2_text_equals(dash_duo, app)` tests if element "#id-d2" equals the text 'Month of Year:'
+ - `test_cycle003_id_title1_text_equals(dash_duo, app)` tests if element "#id-title1" equals the text 'Daily Data'
+ - `test_cycle004_id_title2_text_equals(dash_duo, app)` tests if element "#id-title2" equals the text 'Monthly Data"'
+ - `test_cycle005_id_title3_text_equals(dash_duo, app)` tests if element "#id-title3" equals the text 'Pollution Data"'
