@@ -74,7 +74,8 @@ The above screenshots show that even with the warnings, all the 15 tests passed.
 # Coverage Reports
 `pytest` was also used with coverage to generate coverage reports. These show what percentage of the code that requires testing is tested. Therefore, we should aim for code coverage of 80% or above across all testing files (`app_for_testing.py`, `conftest.py`, and `test_app.py`) to ensure the majority of the relavent code is tested. The generated coverage report can be seen below:
 
-![image](COVERAGE REPORT PICTURE)
+![WhatsApp Image 2023-02-22 at 15 07 22](https://user-images.githubusercontent.com/88077512/220663463-01b80d17-f3cb-486a-9983-15ae45630654.jpeg)
+
 
 After all 15 tests were successfully run, the coverage report indicates FILL THIS IN% coverage across both files since they are both relatively large in size.
 
