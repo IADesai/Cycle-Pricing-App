@@ -50,9 +50,12 @@ def app(dash_duo):
 ```
 ## Test Results
 
-Add screenshots, run test with incorrect data to show when a test fails 
+Running the tests in Visual Studio code, using `Pytest` and selenium, the produced output was the following:
+
+![WhatsApp Image 2023-02-22 at 13 56 13](https://user-images.githubusercontent.com/88077512/220644220-c9314e4a-9c97-479a-8861-20687be24d28.jpeg)
 
 # Continuous Integration
 
 Add the code, screenshot and explanation
+
 
