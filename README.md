@@ -39,8 +39,14 @@ For each dropdown element (month-dropdown, hour-dropdown, day-dropdown) two test
   - `test_cycle010_daydropdowncontainsjul1(dash_duo, app)` tests if the day 'Sunday, Jul 1 2018.xlsx' appers in the day-dropdown, when the corresponding figure (Daily data usage figure, id="daily-usage-graph") is loaded
   - `test_cycle011_daydropdownchangesdropdown(dash_duo, app):` tests if the day-dropdown is updated when the day 'Monday, Jul 2 2018.xlsx' is selected in the dropdown
 
- ### Test functions 11-15
-For each figure that had a title provided in the dash app, tests have been created to test if the titles equal the expected texts;
+ ### Test functions 12-15
+For each figure that had a title provided in the dash app, tests have been created to test if the titles equal the expected texts.
+- `test_cycle012_daily_usage_graph_title_equals(dash_duo, app)` tests if the title of the Daily data usage figure (id="daily-usage-graph") equals 'Cycle Usage for Sunday, Jul 1 2018.xlsx' 
+- `test_cycle013_monthly_avgusage_graph_title_equals(dash_duo, app)` tests if the title of the Monthly average usage figure (id="monthly-avgusage-graph") equals 'Average Cycle Hire Usage per Month' 
+- `test_cycle014_monthly_totusage_graph_title_equals(dash_duo, app)` tests if the title of the Monthly total usage figure (id="monthly-totusage-graph") equals 'Cycle Hire Usage per Month across 11 Years' 
+- `test_cycle015_pollution_bar_graph_title_equals(dash_duo, app)` tests if the title of the Pollution bar chart (id="pollution-bar-graph") equals 'Pollution Levels in the Boroughs of London' 
+
+These functions allowed us to test all the created figures and dropdown features in the single-page app.
 
 ## Fixtures
 As all testing functions require the same input for the dash apo, to simplify the code, fixtures can be added to the `conftest.py` code to create a common function which returns the test app.The fixture added to `conftest.py` can be found below.
@@ -124,9 +130,15 @@ With this workflow, all of these tests can now be carried out on the code each t
 ![WhatsApp Image 2023-02-22 at 14 47 24](https://user-images.githubusercontent.com/88077512/220657850-12b0683a-c329-4885-991b-ecfa0ecfaaab.jpeg)
 
 After investigating each build individually after a new commit has been made, we can see how pytest is run and a coverage report is generated for the tested files:
+![WhatsApp Image 2023-02-22 at 15 01 35](https://user-images.githubusercontent.com/88077512/220662124-0d2c6d44-942d-425f-b2b1-7ac784886aa2.jpeg)
+
+
 
 ![image](PICTURE OF TESTING WORKFLOW TAB ASWELL AS COVERAGE REPORT)
 
 The GitHub actions workflow also highlights failed tests. The example below is the same failed test as shown previously:
+
+![WhatsApp Image 2023-02-22 at 15 02 06](https://user-images.githubusercontent.com/88077512/220662167-30792f4e-2085-424e-b64f-714f8c5658c5.jpeg)
+
 
 ![image](PICTURE OF FAILED TEST FROM WORKFLOW TAB)
