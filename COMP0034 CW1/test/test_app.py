@@ -240,12 +240,53 @@ from selenium.webdriver.common.keys import Keys
 #     assert h2_text.casefold() == "Choropleth Map Showing Pricing Data for Each Borough of London".casefold()
 
 
-def test_cycle002_h5_text_equals(dash_duo, app):
+def test_cycle001_id_d1_text_equals(dash_duo, app):
+    """
+    GIVEN the app is running
+    WHEN the home page is available
+    THEN the H2 heading element should include the text 'TFL Cycle Hire Pricing' (not case sensitive)
+    """
+    dash_duo.wait_for_element("#id-d1", timeout=4)
+    id_d1_text = dash_duo.find_element("#id-d1").text
+    assert id_d1_text.casefold() == "Time of Day (24 Hour Clock):".casefold()
+
+def test_cycle002_id_d2_text_equals(dash_duo, app):
     """
     GIVEN the app is running
     WHEN the home page is available
     THEN the H2 heading element should include the text 'TFL Cycle Hire Pricing' (not case sensitive)
     """
     dash_duo.wait_for_element("#id-d2", timeout=4)
-    h5_text = dash_duo.find_element("#id-d2").text
-    assert h5_text.casefold() == "Month of Year:".casefold()
+    id_d2_text = dash_duo.find_element("#id-d2").text
+    assert id_d2_text.casefold() == "Month of Year:".casefold()
+
+
+def test_cycle003_id_title1_text_equals(dash_duo, app):
+    """
+    GIVEN the app is running
+    WHEN the home page is available
+    THEN the element with id = '#id-title1'should include the text 'Daily Data' (not case sensitive)
+    """
+    dash_duo.wait_for_element("#id-title1", timeout=4)
+    id_title_1_text = dash_duo.find_element("#id-title1").text
+    assert id_title_1_text.casefold() == "Daily Data".casefold()
+
+def test_cycle004_id_title2_text_equals(dash_duo, app):
+    """
+    GIVEN the app is running
+    WHEN the home page is available
+    THEN the element with id = '#id-title2'should include the text 'Monthly Data' (not case sensitive)
+    """
+    dash_duo.wait_for_element("#id-title2", timeout=4)
+    id_title_2_text = dash_duo.find_element("#id-title2").text
+    assert id_title_2_text.casefold() == "Monthly Data".casefold()
+
+def test_cycle005_id_title3_text_equals(dash_duo, app):
+    """
+    GIVEN the app is running
+    WHEN the home page is available
+    THEN the element with id = '#id-title3'should include the text 'Pollution Data' (not case sensitive)
+    """
+    dash_duo.wait_for_element("#id-title3", timeout=4)
+    id_title_3_text = dash_duo.find_element("#id-title3").text
+    assert id_title_3_text.casefold() == "Pollution Data".casefold()
