@@ -66,7 +66,7 @@ Running the tests in Visual Studio code, using `Pytest` and selenium, the produc
 The above screenshots show that even with the warnings, all the 15 tests passed.
 
 # Coverage Reports
-`pytest` was also used with coverage to generate coverage reports. These show what percentage of the code that requires testing is tested. Therefore, we should aim for code coverage of 90% or above across all testing files (`app.py` and `conftest.py`) to ensure the majority of the relavent code is tested. The generated coverage report can be seen below:
+`pytest` was also used with coverage to generate coverage reports. These show what percentage of the code that requires testing is tested. Therefore, we should aim for code coverage of 80% or above across all testing files (`app_for_testing.py`, `conftest.py`, and `test_app.py`) to ensure the majority of the relavent code is tested. The generated coverage report can be seen below:
 
 ![image](COVERAGE REPORT PICTURE)
 
@@ -115,7 +115,7 @@ jobs:
 From the YAML script above we can see the build is divided into 5 main sections:
 1. Python 3.11 is set up
 2. Dependencies are installed including pip to install the other modules, `flake8` for linting, `pytest` for testing, `pytest-cov` for coverage, as well as any other modules listed in `requirements.txt`
-3. The `src` folder which contains the `app.py` code must be identified as a package
+3. The `test` folder which contains the `app_for_testing.py` code must be identified as a package
 4. The code is linted using `flake8` to find any presentation errors
 5. `pytest` is run on the code as well as coverage to generate a coverage report
 
