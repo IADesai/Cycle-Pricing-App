@@ -39,6 +39,9 @@ For each dropdown element (month-dropdown, hour-dropdown, day-dropdown) two test
   - `test_cycle010_daydropdowncontainsjul1(dash_duo, app)` tests if the day 'Sunday, Jul 1 2018.xlsx' appers in the day-dropdown, when the corresponding figure (Daily data usage figure, id="daily-usage-graph") is loaded
   - `test_cycle011_daydropdownchangesdropdown(dash_duo, app):` tests if the day-dropdown is updated when the day 'Monday, Jul 2 2018.xlsx' is selected in the dropdown
 
+ ### Test functions 11-15
+For each figure that had a title provided in the dash app, tests have been created to test if the titles equal the expected texts;
+
 ## Fixtures
 As all testing functions require the same input for the dash apo, to simplify the code, fixtures can be added to the `conftest.py` code to create a common function which returns the test app.The fixture added to `conftest.py` can be found below.
 
@@ -111,7 +114,11 @@ From the YAML script above we can see the build is divided into 5 main sections:
 
 With this workflow, all of these tests can now be carried out on the code each time a commit is made to the master branch. These can be seen below in the GitHub Actions tab:
 
-![image](https://liveuclac.sharepoint.com/:i:/r/sites/TheCodingCyclists/Shared%20Documents/General/Comp34%20Cw1/Screenshot%202023-02-22%20144511.png?csf=1&web=1&e=HQBqkY)
+
+![WhatsApp Image 2023-02-22 at 14 47 24](https://user-images.githubusercontent.com/88077512/220657850-12b0683a-c329-4885-991b-ecfa0ecfaaab.jpeg)
+
+
+![image](PICTURE OF GITHUB ACTIONS TAB)
 
 After investigating each build individually after a new commit has been made, we can see how pytest is run and a coverage report is generated for the tested files:
 
