@@ -135,47 +135,42 @@ def test_cycle011_daydropdownchangesdropdown(dash_duo, app):
         "Monday, Jul 2 2018.xlsx" in dash_duo.find_element("#day-dropdown").text
     ), "'Monday, Jul 2 2018.xlsx' should appear in the day dropdown"
 
-def test_cycle012_daydropdownchangesdropdown(dash_duo, app):
+def test_cycle012_daily_usage_graph_title_equals(dash_duo, app):
     """
-    .
-    """
-    dash_duo.wait_for_element("#day-dropdown", timeout=9)
-    select_input = dash_duo.find_element("#day-dropdown input")
-    select_input.send_keys("Sunday, Jul 1 2018.xlsx")
-    select_input.send_keys(Keys.RETURN)
-    dash_duo.driver.implicitly_wait(10)
-    title = dash_duo.find_element("#daily-usage-graph .gtitle")
-    assert title.text == "Cycle Usage for Sunday, Jul 1 2018.xlsx"
-
-
-def test_cycle012_daydropdownchangesdropdown(dash_duo, app):
-    """
-    .
+    GIVEN the Dash app is running
+    WHEN the Daily data usage figure has loaded
+    THEN the title should include the text "Cycle Usage for Sunday, Jul 1 2018.xlsx"
     """
     dash_duo.driver.implicitly_wait(10)
     title = dash_duo.find_element("#daily-usage-graph .gtitle")
     assert title.text == "Cycle Usage for Sunday, Jul 1 2018.xlsx"
 
 
-def test_cycle013_daydropdownchangesdropdown(dash_duo, app):
+def test_cycle013_monthly_avgusage_graph_title_equals(dash_duo, app):
     """
-    .
+    GIVEN the Dash app is running
+    WHEN the Monthly average usage figure has loaded
+    THEN the title should include the text "Average Cycle Hire Usage per Month"
     """
     dash_duo.driver.implicitly_wait(10)
     title = dash_duo.find_element("#monthly-avgusage-graph .gtitle")
     assert title.text == "Average Cycle Hire Usage per Month"
 
-def test_cycle014_daydropdownchangesdropdown(dash_duo, app):
+def test_cycle014_monthly_totusage_graph_title_equals(dash_duo, app):
     """
-    .
+    GIVEN the Dash app is running
+    WHEN the Monthly total usage figure has loaded
+    THEN the title should include the text "Cycle Hire Usage per Month across 11 Years""
     """
     dash_duo.driver.implicitly_wait(10)
     title = dash_duo.find_element("#monthly-totusage-graph .gtitle")
     assert title.text == "Cycle Hire Usage per Month across 11 Years"
 
-def test_cycle015_daydropdownchangesdropdown(dash_duo, app):
+def test_cycle015_pollution_bar_graph_title_equals(dash_duo, app):
     """
-    .
+    GIVEN the Dash app is running
+    WHEN the Pollution bar chart has loaded
+    THEN the title should include the text "Pollution Levels in the Boroughs of London"
     """
     dash_duo.driver.implicitly_wait(10)
     title = dash_duo.find_element("#pollution-bar-graph .gtitle")
