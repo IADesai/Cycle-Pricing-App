@@ -53,4 +53,24 @@ Add any notes here (optional).
 
 # Testing
 
-Add evidence here (groups).
+The created dash app was tested using the pytest library and Selenium. The following x number of tests were created:
+
+ ### Test functions 1 
+ - The function called `test_cycle001_h1_text_equals(dash_duo, app)` aims to test if element header 1 (H1) equals the text TFL Cycle Hire Pricing.
+
+ ### Test functions 2-5
+- The following functions test if the elements referenced by their given ID equals the text they expected to equal:
+ - `test_cycle002_id_d2_text_equals(dash_duo, app)` tests if element "#id-d2" equals the text 'Month of Year:'
+ - `test_cycle003_id_title1_text_equals(dash_duo, app)` tests if element "#id-title1" equals the text 'Daily Data'
+ - `test_cycle004_id_title2_text_equals(dash_duo, app)` tests if element "#id-title2" equals the text 'Monthly Data"'
+ - `test_cycle005_id_title3_text_equals(dash_duo, app)` tests if element "#id-title3" equals the text 'Pollution Data"'
+
+## Fixtures
+As all testing functions require the same input for the dash apo, to simplify the code, fixtures can be added to the `conftest.py` code to create a common function which returns the test app.The fixture added to `conftest.py` can be found below.
+
+```py
+@pytest.fixture(scope="function")
+def app(dash_duo):
+    test_app = import_app(app_file="app_for_testing")
+    yield dash_duo.start_server(test_app)
+```
