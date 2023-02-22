@@ -60,13 +60,19 @@ The created dash app was tested using the pytest library and Selenium. The follo
  - The function called `test_cycle001_h1_text_equals(dash_duo, app)` aims to test if element header 1 (H1) equals the text TFL Cycle Hire Pricing.
 
  ### Test functions 2-5
-- The following functions test if the elements referenced by their given ID equals the text they expected to equal:
+The following functions test if the elements referenced by their given ID equals the text they expected to equal:
  - `test_cycle002_id_d2_text_equals(dash_duo, app)` tests if element "#id-d2" equals the text 'Month of Year:'
  - `test_cycle003_id_title1_text_equals(dash_duo, app)` tests if element "#id-title1" equals the text 'Daily Data'
  - `test_cycle004_id_title2_text_equals(dash_duo, app)` tests if element "#id-title2" equals the text 'Monthly Data"'
  - `test_cycle005_id_title3_text_equals(dash_duo, app)` tests if element "#id-title3" equals the text 'Pollution Data"'
 
-
+ ### Test functions 6-11
+For each dropdown element (month-dropdown, hour-dropdown, day-dropdown) two tests were created, one to test if the intital month, hour and day apper in the dropdowns and the second to see if the dropdown is updated when the monrh, hour or day is changed.
+  - `test_cycle006_monthdropdowncontainsjanuary(dash_duo, app)` tests if the month 'January' appers in the month-dropdown, when the corresponding figure (Pricing Data Choropleth Map, id='london-map') is loaded
+  - 
+  - `test_cycle008_hourdropdowncontains00_06(dash_duo, app)` tests if the time period of '00:00-06:00' appers in the hour-dropdown, when the corresponding figure (Pricing Data Choropleth Map, id='london-map') is loaded
+  - kk
+  - `test_cycle010_daydropdowncontainsjul1(dash_duo, app)` tests if the day 'Sunday, Jul 1 2018.xlsx' appers in the day-dropdown, when the corresponding figure (Daily data usage figure, id="daily-usage-graph") is loaded
 
 ## Fixtures
 As all testing functions require the same input for the dash apo, to simplify the code, fixtures can be added to the `conftest.py` code to create a common function which returns the test app.The fixture added to `conftest.py` can be found below.
