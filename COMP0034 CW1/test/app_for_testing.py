@@ -251,6 +251,21 @@ def create_choropleth_pollution_map():
 hours=('00:00-06:00','06:00-09:00','09:00-16:00','16:00-19:00','19:00-24:00')
 months=('January','February','March','April','May','June','July','August','September','October','November','December')
 
+def create_pollution_barchart():
+    # Read the first sheet of the excel file
+    df = pd.read_excel(excel_file_path, sheet_name=0)
+    
+    grouped = df.groupby('Borough').sum('Total PM 2.5')
+
+    data = pd.DataFrame({'Borough': grouped.index, 'Total PM 2.5': round(grouped.iloc[:, 3],2)})
+    # Create the bar chart
+    fig = px.bar(x= data.index, y= data.iloc[:,1])
+
+    fig.update_layout(
+        xaxis_title="London Borough",
+        yaxis_title="PM 2.5",
+    )
+    return fig
 
 app.layout = dbc.Container(
     # HTML layout elements here
@@ -308,8 +323,6 @@ app.layout = dbc.Container(
     html.Br(),
     html.Br(),
     html.Br(),
-    html.Br(),
-    html.Br(),
     html.Div(id="stats-card"),
     ])
     ],
@@ -357,8 +370,7 @@ app.layout = dbc.Container(
     dcc.Graph(id='london-map2', figure=create_choropleth_pollution_map(), style={'width': '1100px', 'height': '600px'}),
     html.Hr(),
     html.H4(id = 'id-gname5', children =f"Bar Chart Showing PM 2.5 Pollution in Each Borough of London"),
-    dcc.Graph(id='bar-chart2',
-    figure={'data': [{'x': dp.iloc[:,1], 'y': dp.iloc[:,4], 'type': 'bar'}]},style={}),
+    dcc.Graph(figure = create_pollution_barchart()),
     html.Br()
 
     ]),
