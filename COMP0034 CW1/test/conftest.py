@@ -2,7 +2,6 @@ import pytest
 from dash.testing.application_runners import import_app
 from selenium.webdriver.chrome.options import Options
 
-
 def pytest_setup_options():
     """Setup options for the Chromedriver when using Selenium"""
     options = Options()
@@ -14,6 +13,5 @@ def pytest_setup_options():
 
 @pytest.fixture(scope="function")
 def app(dash_duo):
-    #app = import_app("dashapp.dashboard")
     test_app = import_app(app_file="app_for_testing")
     yield dash_duo.start_server(test_app)
