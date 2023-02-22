@@ -47,8 +47,6 @@ top_card = dbc.Card(
 )
 
 
-
-
 def create_pricing_choropleth_map(hour_selected,month_selected):
     # Load data
     df = pd.read_excel(excel_file_path, sheet_name=0)
@@ -200,6 +198,7 @@ def create_monthly_barchart():
     fig2 = px.bar(x=grouped.index, y=grouped.iloc[:, 1])
 
     fig2.update_layout(
+        title = f'Average Cycle Hire Usage per Month',
         xaxis_title="Month",
         yaxis_title="Average Usage",
         xaxis = dict(
@@ -216,6 +215,7 @@ def create_monthly_linechart():
 
     fig3 = px.line(df, x="Month", y="Number of Bicycle Hires.1")
     fig3.update_layout(
+        title = f'Cycle Hire Usage per Month across 11 Years',
         xaxis_title="Time(year)",
         yaxis_title="Average Usage"
     )
@@ -251,6 +251,7 @@ def create_choropleth_pollution_map():
 hours=('00:00-06:00','06:00-09:00','09:00-16:00','16:00-19:00','19:00-24:00')
 months=('January','February','March','April','May','June','July','August','September','October','November','December')
 
+#create a barchart for pollution
 def create_pollution_barchart():
     # Read the first sheet of the excel file
     df = pd.read_excel(excel_file_path, sheet_name=0)
@@ -262,6 +263,7 @@ def create_pollution_barchart():
     fig = px.bar(x= data.index, y= data.iloc[:,1])
 
     fig.update_layout(
+        title =f'Pollution Levels in the Boroughs of London',
         xaxis_title="London Borough",
         yaxis_title="PM 2.5",
     )
