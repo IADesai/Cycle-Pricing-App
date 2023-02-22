@@ -14,5 +14,4 @@ colorlover
 pytest-cov 
 selenium
 dash[testing]
-Options
 import_app
