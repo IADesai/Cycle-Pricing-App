@@ -53,4 +53,11 @@ Add any notes here (optional).
 
 # Testing
 
-Add evidence here (groups).
+The created dash app was tested using the pytest library and Selenium. The following x number of tests were created:
+
+ ### Test functions 1 
+ - The function called `test_cycle001_h1_text_equals(dash_duo, app)` aims to test if element header 1 (H1) equals the text TFL Cycle Hire Pricing.
+
+ ### Test functions 2-5
+- The following functions test if the elements referenced by their given ID equals the text they expected to equal:
+- - `test_cycle002_id_d2_text_equals(dash_duo, app)` tests if element "#id-d2" equals the text 'Month of Year:'
