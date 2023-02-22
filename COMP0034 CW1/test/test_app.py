@@ -157,7 +157,7 @@ def test_cycle012_daydropdownchangesdropdown(dash_duo, app):
     # select_input.send_keys("Sunday, Jul 1 2018.xlsx")
     # select_input.send_keys(Keys.RETURN)
     # dash_duo.driver.implicitly_wait(10)
-    title = dash_duo.find_element("#daily-usage-graph .gtitle")
+    title = dash_duo.find_element("#daily-usage-graph.gtitle")
     assert title.text == "Cycle Usage for Sunday, Jul 1 2018.xlsx"
 
 
@@ -170,9 +170,32 @@ def test_cycle013_daydropdownchangesdropdown(dash_duo, app):
     # select_input.send_keys("Sunday, Jul 1 2018.xlsx")
     # select_input.send_keys(Keys.RETURN)
     # dash_duo.driver.implicitly_wait(10)
-    title = dash_duo.find_element("#daily-usage-graph .gtitle")
+    title = dash_duo.find_element("#monthly-avgusage-graph.gtitle")
     assert title.text == "Average Cycle Hire Usage per Month"
 
+def test_cycle014_daydropdownchangesdropdown(dash_duo, app):
+    """
+    .
+    """
+    #dash_duo.wait_for_element("#day-dropdown", timeout=9)
+    # select_input = dash_duo.find_element("#day-dropdown input")
+    # select_input.send_keys("Sunday, Jul 1 2018.xlsx")
+    # select_input.send_keys(Keys.RETURN)
+    # dash_duo.driver.implicitly_wait(10)
+    title = dash_duo.find_element("#monthly-totusage-graph.gtitle")
+    assert title.text == "Cycle Hire Usage per Month across 11 Years"
+
+def test_cycle015_daydropdownchangesdropdown(dash_duo, app):
+    """
+    .
+    """
+    #dash_duo.wait_for_element("#day-dropdown", timeout=9)
+    # select_input = dash_duo.find_element("#day-dropdown input")
+    # select_input.send_keys("Sunday, Jul 1 2018.xlsx")
+    # select_input.send_keys(Keys.RETURN)
+    # dash_duo.driver.implicitly_wait(10)
+    title = dash_duo.find_element("#pollution-bar-graph.gtitle")
+    assert title.text == "Pollution Levels in the Boroughs of London"
 
 
 
