@@ -344,11 +344,11 @@ app.layout = dbc.Container(
     html.P("The monthly data consists of recorded cycle hire data for every month over multiple years. We used this data to identify and visualize how many cycles were hired in each month over multiple years, averaging the number of cycles for each month over the various years, to identify the average monthly cycle hire usage pattern. This can be viewed in the tab above. We also added a usage versus time line chart, to show the cycle hire trends from the beginning of TFL santander cycle history. This gives indications of monthly/seasonal trends aswell as for example, Covid effects in 2020."),  
     html.Hr(),
     html.H4(id = 'id-gname2', children =f'Average Monthly Usage Bar Chart'),
-    dcc.Graph(figure=create_monthly_barchart()),
+    dcc.Graph(id='monthly-avgusage-graph',figure=create_monthly_barchart()),
     html.Br(),
     html.Hr(),
     html.H4(id = 'id-gname3', children =f'Usage Vs Time Line Chart'),
-    dcc.Graph(figure=create_monthly_linechart()),
+    dcc.Graph(id='monthly-totusage-graph',figure=create_monthly_linechart()),
     ]),
    
     ],
@@ -372,7 +372,7 @@ app.layout = dbc.Container(
     dcc.Graph(id='london-map2', figure=create_choropleth_pollution_map(), style={'width': '1100px', 'height': '600px'}),
     html.Hr(),
     html.H4(id = 'id-gname5', children =f"Bar Chart Showing PM 2.5 Pollution in Each Borough of London"),
-    dcc.Graph(figure = create_pollution_barchart()),
+    dcc.Graph(id='pollution-bar-graph',figure = create_pollution_barchart()),
     html.Br()
 
     ]),
