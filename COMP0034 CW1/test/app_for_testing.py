@@ -272,7 +272,7 @@ app.layout = dbc.Container(
     html.H1('TFL Cycle Hire Pricing'),
     html.P("The Coding Cyclists have tackled TFL's cycle hire pricing, masterminding an algorithm to adjust the price of the cycle hire dependent on hourly and monthly cycle hire data, alongside PM 2.5 pollution levels across the boroughs of London. The aim was to create a price map that increases TFL revenue by promoting cycle hire and taking advantage of rush hour prices, as well as, promoting cycle hire in highly polluted boroughs with hopes to reduce pollution across greater London."),
     html.Hr(),
-    html.H3(f'Choropleth Map Showing Pricing Data for Each Borough of London'),
+    html.H4(id = 'id-gname1', children = f'Choropleth Map Showing Pricing Data for Each Borough of London'),
     dcc.Graph(id='london-map', figure=create_pricing_choropleth_map(hour_selected=0,month_selected=0), style={'width': '1100px', 'height': '550px'}),
     html.H5(id='id-d1', children = "Time of Day (24 Hour Clock):"),
     dcc.Dropdown(id='hour-dropdown', options=[{'label': hour, 'value': i} for i, hour in enumerate(hours)], value=0),
@@ -291,7 +291,7 @@ app.layout = dbc.Container(
     html.Div(style={'display': 'flex'}, children=[
     html.Div(style={'flex': 1}, children=[
     html.Br(),
-    html.P(f'Daily Data'),
+    html.H3(id = 'id-title1', children =f'Daily Data'),
     html.Hr(),
     html.P("The daily data consists of recorded cycle hire data for every day in an entire month. We used this data to identify and visualize how many cycles were hired per hour of the day for each day in the month and then created a chart with the average of the entire month, to identify the average daily cycle hire pattern. This can be viewed in the tab above, where a selector can be used to view the data for each day. If you choose Monday and compare it to a Sunday for example, we see that the trends are slightly different. This can be seen throughout the month, where weekends have unusual patterns as opposed to working week days. This is only one of many trends visible."),
     html.Br(),
@@ -324,15 +324,15 @@ app.layout = dbc.Container(
 
     html.Div(style={'display': 'flex'}, children=[
     html.Div(style={'flex': 1}, children=[
-    html.P(f'Monthly Data'),
+    html.H3(id = 'id-title2', children = f'Monthly Data'),
     html.Hr(),
     html.P("The monthly data consists of recorded cycle hire data for every month over multiple years. We used this data to identify and visualize how many cycles were hired in each month over multiple years, averaging the number of cycles for each month over the various years, to identify the average monthly cycle hire usage pattern. This can be viewed in the tab above. We also added a usage versus time line chart, to show the cycle hire trends from the beginning of TFL santander cycle history. This gives indications of monthly/seasonal trends aswell as for example, Covid effects in 2020."),  
     html.Hr(),
-    html.P(f'Average Monthly Usage Bar Chart'),
+    html.H4(id = 'id-gname2', children =f'Average Monthly Usage Bar Chart'),
     dcc.Graph(figure=create_monthly_barchart()),
     html.Br(),
     html.Hr(),
-    html.P(f'Usage Vs Time Line Chart'),
+    html.H4(id = 'id-gname3', children =f'Usage Vs Time Line Chart'),
     dcc.Graph(figure=create_monthly_linechart()),
     ]),
    
@@ -349,14 +349,14 @@ app.layout = dbc.Container(
 
     html.Div(style={'display': 'flex'}, children=[
     html.Div(style={'flex': 1}, children=[
-    html.P(f'Pollution Data'),
+    html.H3(id = 'id-title3', children =f'Pollution Data'),
     html.Hr(),
     html.P("The pollution data consists of numerous recorded PM 2.5 particle data pieces from each borough of London. The recorded data was summed for each borough, providing data for the total PM 2.5 particles released from methods of transport, in each borough. This data was plotted onto a choropleth map, where it is possible to visibily see the levels of PM 2.5 in each specified borough. This can be seen above, accompanied by a bar chart for extra clarity."),    
     html.Hr(),
-    html.P(f'Choropleth Map Showing Total Recorded PM 2.5 Particle Data for Each Borough of London'),
+    html.H4(id = 'id-gname4', children =f'Choropleth Map Showing Total Recorded PM 2.5 Particle Data for Each Borough of London'),
     dcc.Graph(id='london-map2', figure=create_choropleth_pollution_map(), style={'width': '1100px', 'height': '600px'}),
     html.Hr(),
-    html.P(f"Bar Chart Showing PM 2.5 Pollution in Each Borough of London"),
+    html.H4(id = 'id-gname5', children =f"Bar Chart Showing PM 2.5 Pollution in Each Borough of London"),
     dcc.Graph(id='bar-chart2',
     figure={'data': [{'x': dp.iloc[:,1], 'y': dp.iloc[:,4], 'type': 'bar'}]},style={}),
     html.Br()
