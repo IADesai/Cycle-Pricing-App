@@ -220,7 +220,7 @@ def create_monthly_linechart():
     fig3.update_layout(
         title = f'Cycle Hire Usage per Month across 11 Years',
         xaxis_title="Time(year)",
-        yaxis_title="Average Usage"
+        yaxis_title="Usage"
     )
 
     return fig3
