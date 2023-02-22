@@ -64,7 +64,7 @@ The above screenshots show that even with the warnings, all the 15 tests passed.
 
 # Continuous Integration
 A continuous integration workflow was employed to run every time a commit is made to the master branch. The YAML code used to do this can be seen below:
-
+```YML
 name: Python application
 
 on:
@@ -101,23 +101,22 @@ jobs:
     - name: Test with pytest and coverage
       run: |
         coverage run -m pytest -v && coverage report
-
+```
 From the YAML script above we can see the build is divided into 5 main sections:
-
 1. Python 3.11 is set up
-2. Dependencies are installed including pip to install the other modules, flake8 for linting, pytest for testing, pytest-cov for coverage, as well as any other modules listed in requirements.txt
-4. The src folder which contains the app.py code must be identified as a package
-5. The code is linted using flake8 to find any presentation errors
-6. pytest is run on the code as well as coverage to generate a coverage report
+2. Dependencies are installed including pip to install the other modules, `flake8` for linting, `pytest` for testing, `pytest-cov` for coverage, as well as any other modules listed in `requirements.txt`
+3. The `src` folder which contains the `app.py` code must be identified as a package
+4. The code is linted using `flake8` to find any presentation errors
+5. `pytest` is run on the code as well as coverage to generate a coverage report
 
 With this workflow, all of these tests can now be carried out on the code each time a commit is made to the master branch. These can be seen below in the GitHub Actions tab:
 
-PICTURE OF GITHUB ACTIONS TAB
+![image](PICTURE OF GITHUB ACTIONS TAB)
 
 After investigating each build individually after a new commit has been made, we can see how pytest is run and a coverage report is generated for the tested files:
 
-PICTURE OF TESTING WORKFLOW TAB ASWELL AS COVERAGE REPORT
+![image](PICTURE OF TESTING WORKFLOW TAB ASWELL AS COVERAGE REPORT)
 
 The GitHub actions workflow also highlights failed tests. The example below is the same failed test as shown previously:
 
-PICTURE OF FAILED TEST FROM WORKFLOW TAB
+![image](PICTURE OF FAILED TEST FROM WORKFLOW TAB)
