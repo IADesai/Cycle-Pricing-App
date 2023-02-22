@@ -114,11 +114,7 @@ From the YAML script above we can see the build is divided into 5 main sections:
 
 With this workflow, all of these tests can now be carried out on the code each time a commit is made to the master branch. These can be seen below in the GitHub Actions tab:
 
-
 ![WhatsApp Image 2023-02-22 at 14 47 24](https://user-images.githubusercontent.com/88077512/220657850-12b0683a-c329-4885-991b-ecfa0ecfaaab.jpeg)
-
-
-![image](PICTURE OF GITHUB ACTIONS TAB)
 
 After investigating each build individually after a new commit has been made, we can see how pytest is run and a coverage report is generated for the tested files:
 
