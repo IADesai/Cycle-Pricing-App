@@ -25,7 +25,7 @@ dp = pd.read_excel(excel_file_path, sheet_name=0)
 
 #function for the creation of the choropleth map for pricing
 def create_pricing_choropleth_map(hour_selected, month_selected):
-   """
+    """
     Create a choropleth map figure showing price data for different month and hour
 
     Args:
@@ -167,7 +167,7 @@ top_card = dbc.Card(
 
 # Function for the creation of the stats panel for the daily usage data
 def create_daily_stats(day_selected):
-     """
+    """
     Create a stats panel for the daily chart figure, based on data imported from Excel
 
     Args:
@@ -217,7 +217,7 @@ months = ('January', 'February', 'March', 'April', 'May', 'June',
 
 # Function for the creation of the barchart for average usage per month
 def create_monthly_barchart():
-        """
+    """
     Create a bar chart about the monthy cycle usage, based on data imported from Excel
 
     Returns:
@@ -255,7 +255,7 @@ def create_monthly_barchart():
 
 # Function for the creation of the linechart for usage per month for 11 years 
 def create_monthly_linechart():
-   """
+    """
     Create monthly linechart about cycle usage, based on data imported from Excel
     
     Returns:
@@ -275,7 +275,7 @@ def create_monthly_linechart():
 
 # Function for the creation of the choropleth map for pollution in the London boroughs 
 def create_choropleth_pollution_map():
-   """
+    """
     Create a choropleth map about the total pollution (Pm2.5) level in each borough of London,
     based on data imported from Excel
     
@@ -309,7 +309,7 @@ def create_choropleth_pollution_map():
 
 # Function for the creation of the barchart for pollution in the London boroughs
 def create_pollution_barchart():
-   """
+    """
     Create a bar chart about the total pollution (Pm2.5) level in each borough of London,
     based on data imported from Excel
     
