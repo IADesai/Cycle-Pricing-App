@@ -4,11 +4,6 @@ dash
 dash-bootstrap-components
 json
 pathlib
-Path
-dcc
-Input
-Output
-html
 pytest
 plotly
 plotly.express
@@ -17,7 +12,3 @@ colorlover
 pytest-cov 
 selenium
 dash[testing]
-dash.testing.application_runners
-selenium.webdriver.chrome.options
-Options
-import_app
