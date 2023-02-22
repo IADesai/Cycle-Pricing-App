@@ -65,6 +65,13 @@ Running the tests in Visual Studio code, using `Pytest` and selenium, the produc
 
 The above screenshots show that even with the warnings, all the 15 tests passed.
 
+# Coverage Reports
+`pytest` was also used with coverage to generate coverage reports. These show what percentage of the code that requires testing is tested. Therefore, we should aim for code coverage of 90% or above across all testing files (`app.py` and `conftest.py`) to ensure the majority of the relavent code is tested. The generated coverage report can be seen below:
+
+![image](COVERAGE REPORT PICTURE)
+
+After all 15 tests were successfully run, the coverage report indicates FILL THIS IN% coverage across both files since they are both relatively large in size.
+
 # Continuous Integration
 A continuous integration workflow was employed to run every time a commit is made to the master branch. The YAML code used to do this can be seen below:
 ```YML
