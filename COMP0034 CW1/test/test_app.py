@@ -201,6 +201,109 @@ def test_cycle015_daydropdownchangesdropdown(dash_duo, app):
 
 
 
+def test_cycle016_daily_usage_graph_x_axis_equals(dash_duo, app):
+    """
+    .
+    """
+    # dash_duo.wait_for_element("#day-dropdown", timeout=9)
+    # select_input = dash_duo.find_element("#day-dropdown input")
+    # select_input.send_keys("Sunday, Jul 1 2018.xlsx")
+    # select_input.send_keys(Keys.RETURN)
+    dash_duo.driver.implicitly_wait(10)
+    x_axis = dash_duo.find_element("#daily-usage-graph .x-axis")
+    assert x_axis.text == "Hour"
+
+def test_cycle017_daily_usage_graph_y_axis_equals(dash_duo, app):
+    """
+    .
+    """
+    # dash_duo.wait_for_element("#day-dropdown", timeout=9)
+    # select_input = dash_duo.find_element("#day-dropdown input")
+    # select_input.send_keys("Sunday, Jul 1 2018.xlsx")
+    # select_input.send_keys(Keys.RETURN)
+    dash_duo.driver.implicitly_wait(10)
+    y_axis = dash_duo.find_element("#daily-usage-graph .y-axis")
+    assert y_axis.text == "Cycle hires"
+
+
+
+def test_cycle017_monthly_avgusage_graph_x_axis_equals(dash_duo, app):
+    """
+    .
+    """
+    # dash_duo.wait_for_element("#day-dropdown", timeout=9)
+    # select_input = dash_duo.find_element("#day-dropdown input")
+    # select_input.send_keys("Sunday, Jul 1 2018.xlsx")
+    # select_input.send_keys(Keys.RETURN)
+    dash_duo.driver.implicitly_wait(10)
+    x_axis = dash_duo.find_element("#monthly-avgusage-graph .x-axis")
+    assert x_axis.text == "Month"
+
+def test_cycle018_monthly_avgusage_graph_y_axis_equals(dash_duo, app):
+    """
+    .
+    """
+    # dash_duo.wait_for_element("#day-dropdown", timeout=9)
+    # select_input = dash_duo.find_element("#day-dropdown input")
+    # select_input.send_keys("Sunday, Jul 1 2018.xlsx")
+    # select_input.send_keys(Keys.RETURN)
+    dash_duo.driver.implicitly_wait(10)
+    y_axis = dash_duo.find_element("#monthly-avgusage-graph .y-axis")
+    assert y_axis.text == "Average Usage"
+
+
+
+def test_cycle019_monthly_totusage_graph_x_axis_equals(dash_duo, app):
+    """
+    .
+    """
+    # dash_duo.wait_for_element("#day-dropdown", timeout=9)
+    # select_input = dash_duo.find_element("#day-dropdown input")
+    # select_input.send_keys("Sunday, Jul 1 2018.xlsx")
+    # select_input.send_keys(Keys.RETURN)
+    dash_duo.driver.implicitly_wait(10)
+    x_axis = dash_duo.find_element("#monthly-totusage-graph .x-axis")
+    assert x_axis.text == "Time(year)"
+
+def test_cycle020_monthly_totusage_graph_y_axis_equals(dash_duo, app):
+    """
+    .
+    """
+    # dash_duo.wait_for_element("#day-dropdown", timeout=9)
+    # select_input = dash_duo.find_element("#day-dropdown input")
+    # select_input.send_keys("Sunday, Jul 1 2018.xlsx")
+    # select_input.send_keys(Keys.RETURN)
+    dash_duo.driver.implicitly_wait(10)
+    y_axis = dash_duo.find_element("#monthly-totusage-graph .y-axis")
+    assert y_axis.text == "Usage"
+
+
+
+def test_cycle021_pollution_bar_graph_x_axis_equals(dash_duo, app):
+    """
+    .
+    """
+    # dash_duo.wait_for_element("#day-dropdown", timeout=9)
+    # select_input = dash_duo.find_element("#day-dropdown input")
+    # select_input.send_keys("Sunday, Jul 1 2018.xlsx")
+    # select_input.send_keys(Keys.RETURN)
+    dash_duo.driver.implicitly_wait(10)
+    x_axis = dash_duo.find_element("#pollution-bar-graph .x-axis")
+    assert x_axis.text == "London Borough"
+
+def test_cycle022_pollution_bar_graph_y_axis_equals(dash_duo, app):
+    """
+    .
+    """
+    # dash_duo.wait_for_element("#day-dropdown", timeout=9)
+    # select_input = dash_duo.find_element("#day-dropdown input")
+    # select_input.send_keys("Sunday, Jul 1 2018.xlsx")
+    # select_input.send_keys(Keys.RETURN)
+    dash_duo.driver.implicitly_wait(10)
+    y_axis = dash_duo.find_element("#pollution-bar-graph .y-axis")
+    assert y_axis.text == "PM 2.5"
+
+
 
 
 #####
