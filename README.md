@@ -16,8 +16,8 @@ visualisation-design.pdf can be found in COMP0034 CW1 folder of the repository
 The Coding Cyclists have tackled TFL's cycle hire pricing, masterminding an algorithm to adjust the price of the cycle hire dependent on hourly and monthly cycle hire data, alongside PM 2.5 pollution levels across the boroughs of London. Our dash app displays this pricing with an interactive pricing choropleth map as the main homepage feature, allowing users to identify the price of santander cycles in different boroughs of london, at different times of day, and different months of the year. This map can be broken down into the varioius graphs, identifying and visualizing the hourly, monthly, and pollution data used to form the main map. These graphs are stored in tabs on a sidebar, accessible to the users to view and analyse. 
 
 # Testing
+As the Dash app originally created is a multi-page app and the sidebar feature used wasn't testable, a single-page app was created for the purpose of testing. It was named as `app_for_testing.py` and can be found in the test folder.
 
-EXPLAIN WHY WE DID A NEW APP FOR TESTING
 The created dash app was tested using the pytest library and Selenium. The following x number of tests were created, each of which are explained in detail using the GIVEN-WHEN-THEN Approach in the `test_app.py` code. The mmffddd format was used when naming the test functions, where m represents module (test), f file (cycle), and d three digits for the number of test case.
 
  ### Test function 1 
@@ -59,6 +59,8 @@ Running the tests in Visual Studio code, using `Pytest` and selenium, the produc
 ![WhatsApp Image 2023-02-22 at 14 00 01](https://user-images.githubusercontent.com/88077512/220645188-a055046b-927f-44fc-abde-dfb820f3a468.jpeg)
 ![WhatsApp Image 2023-02-22 at 14 00 37](https://user-images.githubusercontent.com/88077512/220645204-00d2d593-ae97-4ce0-bc62-2e90d03366ef.jpeg)
 ![WhatsApp Image 2023-02-22 at 13 56 13](https://user-images.githubusercontent.com/88077512/220644220-c9314e4a-9c97-479a-8861-20687be24d28.jpeg)
+
+The above screenshots show that even with the warnings, all the 15 tests passed.
 
 # Continuous Integration
 
